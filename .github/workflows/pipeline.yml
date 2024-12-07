@@ -24,40 +24,31 @@ jobs:
           java-version: 21
           distribution: 'temurin'
 
+      # Étape 3: Construire et tester chaque microservice
       - name: Build and test Config Server
-        run: |
-          cd Back-end/Config-server
-          mvn clean package
+        working-directory: Back-end/Config-server
+        run: mvn clean package
 
       - name: Build and test Discovery Service
-        run: |
-          cd Back-end/Discovery
-          mvn clean package
+        working-directory: Back-end/Discovery
+        run: mvn clean package
 
       - name: Build and test Gateway Service
-        run: |
-          cd Back-end/gateway
-          mvn clean package
+        working-directory: Back-end/gateway
+        run: mvn clean package
 
       - name: Build and test User Service
-        run: |
-          cd Back-end/UserService
-          mvn clean package
+        working-directory: Back-end/UserService
+        run: mvn clean package
 
-      - name: Run tests without Selenium
-        run: mvn clean test -Dtest=!com.example.AuthService.SeleniumTest
-
-      - name: Build and test Auth Service
-        run: |
-          cd Back-end/AuthService
-          mvn clean package
+      - name: Build and test Auth Service (without Selenium tests)
+        working-directory: Back-end/AuthService
+        run: mvn clean package -Dtest=!com.example.AuthService.SeleniumTest
 
       # Étape 4: Construire les images Docker
       - name: Build Docker images
-        run: |
-          docker-compose build
+        run: docker-compose build
 
       # Étape 5: Lancer docker-compose pour démarrer les services
       - name: Run Docker Compose
-        run: |
-          docker-compose up -d
+        run: docker-compose up -d
