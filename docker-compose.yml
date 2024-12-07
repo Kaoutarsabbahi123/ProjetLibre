@@ -1,0 +1,131 @@
+services:
+  config-server:
+    build:
+      context: ./Back-end/Config-server
+      dockerfile: Dockerfile
+    container_name: config-server
+    ports:
+      - '8888:8888'
+    expose:
+      - '8888'
+    environment:
+      - SPRING_PROFILES_ACTIVE=native
+    volumes:
+      - ./Back-end/Config-server/src/main/resources/configurations:/configurations
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8888/actuator/health"]
+      interval: 10s
+      retries: 4
+  discovery-service:
+    build: ./Back-end/Discovery
+    container_name: discovery-service
+    ports:
+      - '8761:8761'
+    expose:
+      - '8761'
+    environment:
+      - CONFIG_SERVER_URL=http://config-server:8888
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8761/actuator/health" ]
+      interval: 10s
+      retries: 10
+    depends_on:
+      config-server:
+        condition: service_healthy
+  gateway-service:
+    build: ./Back-end/gateway
+    container_name: gateway-service
+    ports:
+      - '8222:8222'
+    expose:
+      - '8222'
+    environment:
+      - CONFIG_SERVER_URL=http://config-server:8888
+      - DISCOVERY_SERVICE_URL=http://discovery-service:8761/eureka
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8222/actuator/health" ]
+      interval: 10s
+      retries: 4
+    depends_on:
+      discovery-service:
+        condition: service_healthy
+  user-service_mysql:
+    image: mysql:8.0
+    container_name: user-service_mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: usermanagement
+      CONFIG_SERVER_URL: http://config-server:8888
+      DISCOVERY_SERVICE_URL: http://discovery-service:8761/eureka
+      GATEWAY_SERVICE_URL: http://gateway-service:8222
+    ports:
+      - "3306:3306"
+    expose:
+      - '3306'
+    depends_on:
+      gateway-service:
+        condition: service_healthy
+    volumes:
+      - c:/docker/mysql_data:/var/lib/mysql
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+  user-service:
+    container_name: user-service
+    build:
+      context: ./Back-end/UserService
+    ports:
+      - "8088:8088"
+    expose:
+      - '8088'
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://user-service_mysql:3306/usermanagement
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD:
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: true
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
+      CONFIG_SERVER_URL: http://config-server:8888
+      DISCOVERY_SERVICE_URL: http://discovery-service:8761/eureka
+      GATEWAY_SERVICE_URL: http://gateway-service:8222
+    depends_on:
+      user-service_mysql:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8088/actuator/health" ]
+      interval: 10s
+      retries: 4
+  auth-service:
+    build: ./Back-end/AuthService
+    container_name: auth-service
+    ports:
+      - '8085:8085'
+    expose:
+      - '8085'
+    environment:
+      CONFIG_SERVER_URL: http://config-server:8888
+      DISCOVERY_SERVICE_URL: http://discovery-service:8761/eureka
+      GATEWAY_SERVICE_URL: http://gateway-service:8222
+      SPRING_DATASOURCE_URL: jdbc:mysql://user-service_mysql:3306/usermanagement
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD:
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_J PA_SHOW_SQL: true
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
+      interval: 10s
+      retries: 4
+    depends_on:
+      user-service:
+        condition: service_healthy
+
+  front-end-angular:
+    build: ./frontend
+    container_name: front-end-angular
+    ports:
+      - '82:80'
+    expose:
+      - '82'

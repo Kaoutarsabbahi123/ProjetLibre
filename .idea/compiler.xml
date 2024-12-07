@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Config-server" />
+        <module name="LaboratoryService" />
+        <module name="AddressService" />
+        <module name="ContactService" />
+        <module name="TestService" />
+        <module name="UserService" />
+        <module name="AuthService" />
+        <module name="Discovery" />
+        <module name="AnalysisService" />
+        <module name="ExamService" />
+        <module name="gateway" />
+        <module name="FolderService" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="KeycloakSPI" target="21" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="AddressService" options="-parameters" />
+      <module name="AnalysisService" options="-parameters" />
+      <module name="AuthService" options="-parameters" />
+      <module name="Config-server" options="-parameters" />
+      <module name="ContactService" options="-parameters" />
+      <module name="Discovery" options="-parameters" />
+      <module name="ExamService" options="-parameters" />
+      <module name="FolderService" options="-parameters" />
+      <module name="LaboratoryService" options="-parameters" />
+      <module name="TestService" options="-parameters" />
+      <module name="UserService" options="-parameters" />
+      <module name="gateway" options="-parameters" />
+    </option>
+  </component>
+</project>

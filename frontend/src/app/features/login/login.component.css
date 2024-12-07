@@ -1,0 +1,16 @@
+.container{
+   margin-top:100px;
+}
+.login-button {
+  background-color: #2cbce4; /* Couleur de fond */
+  color: white; /* Couleur du texte pour un meilleur contraste */
+  border: none; /* Supprimer la bordure si nécessaire */
+  padding: 10px 20px; /* Ajouter du padding pour une meilleure apparence */
+  border-radius: 5px; /* Coins arrondis (optionnel) */
+  font-size: 16px; /* Taille de la police */
+  cursor: pointer; /* Afficher le curseur pointeur */
+}
+
+.login-button:hover {
+  background-color: #1ca8d1; /* Couleur légèrement plus foncée au survol */
+}

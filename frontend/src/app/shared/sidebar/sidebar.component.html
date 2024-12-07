@@ -1,0 +1,75 @@
+<div class="d-flex">
+  <!-- Sidebar -->
+  <nav class="sidebar vh-100 bg-light shadow-sm" [class.hidden]="isSidebarHidden">
+    <div class="p-3">
+      <!-- Logo et Nom -->
+      <div class="text-center mb-4">
+        <img src="assets/logo-removebg-preview.png" alt="Logo" class="logo mb-2" />
+      </div>
+      <!-- Liens -->
+      <ul class="nav flex-column">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">
+            <span class="icon"><i class="fas fa-users"></i></span>
+            <span class="text">Utilisateurs</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">
+            <span class="icon"><i class="fas fa-flask"></i></span>
+            <span class="text">Laboratoires</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="flex-grow-1">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+      <div class="container-fluid">
+        <button
+          class="btn btn-primary btn-sidebar-toggle"
+          (click)="toggleSidebar()"
+        >
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="d-flex align-items-center ms-auto">
+          <div ngbDropdown class="dropdown">
+            <a
+              class="nav-link dropdown-toggle profile-link"
+              id="profileDropdown"
+              ngbDropdownToggle
+              aria-expanded="false"
+            >
+              <img
+                src="assets/woman (1).png"
+                alt="User Icon"
+                width="30"
+                height="30"
+                style="vertical-align: middle; margin-right: 8px;"
+              />
+            </a>
+            <ul
+              ngbDropdownMenu
+              aria-labelledby="profileDropdown"
+              class="dropdown-menu"
+            >
+              <li>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-user-circle"></i> Mon Profil
+                </a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">
+                  <i class="fas fa-sign-out-alt"></i> Déconnexion
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </div>
+</div>

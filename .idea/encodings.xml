@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/AddressService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/AnalysisService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Api_Gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/AuthService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Back-end/AddressService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Back-end/AuthService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Back-end/Config-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Back-end/ContactService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Back-end/Discovery/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Back-end/LaboratoryService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Back-end/UserService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Back-end/gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Config-server/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ContactService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Discovery/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ExamService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/FolderService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/LaboratoryService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/TestService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/UserService/src/main/java" charset="UTF-8" />
+  </component>
+</project>

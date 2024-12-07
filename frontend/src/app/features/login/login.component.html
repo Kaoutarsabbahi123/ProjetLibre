@@ -1,0 +1,57 @@
+<div class="container ">
+    <div class="row justify-content-center">
+        <div class="col-md-3 col-lg-4">
+            <div class="card shadow-lg rounded border-0">
+                <div class="card-body p-5">
+                    <!-- Logo de l'entreprise -->
+                    <div class="text-center mb-1" style="margin-top: -40px;">
+                        <img
+                                src="/assets/logo-removebg-preview.png"
+                                alt="SmartLab Logo"
+                                class="img-fluid"
+                                style="max-width: 250px; border-radius: 10px; "
+                        />
+                    </div>
+
+                    <form (submit)="onSubmit()">
+                        <!-- Username field -->
+                        <div class="form-group">
+                            <label for="email" class="font-weight-semibold">Email</label>
+                            <input
+                                    type="text"
+                                    id="email"
+                                    class="form-control form-control-lg border-0 shadow-sm"
+                                    [(ngModel)]="email"
+                                    name="email"
+                                    required
+                            />
+                        </div>
+                        <!-- Password field -->
+                        <div class="form-group mt-4">
+                            <label for="password" class="font-weight-semibold">Mot de passe</label>
+                            <input
+                                    type="password"
+                                    id="password"
+                                    class="form-control form-control-lg border-0 shadow-sm"
+                                    [(ngModel)]="password"
+                                    name="password"
+                                    required
+                            />
+                        </div>
+                        <!-- Submit button -->
+                        <button
+                                type="submit"
+                                class="login-button w-100 mt-4 py-2 font-weight-bold shadow-sm"
+                        >
+                            Se connecter
+                        </button>
+                        <!-- Forgot password link -->
+                        <div class="text-center mt-3">
+                            <a href="#" class="text-muted small">Mot de passe oublié ?</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

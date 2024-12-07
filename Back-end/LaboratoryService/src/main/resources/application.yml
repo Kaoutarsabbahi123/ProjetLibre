@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: labo-service
+  config:
+    import: optional:configserver:http://localhost:8888
+
+services:
+  contact:
+    url: http://localhost:8885
+  adresse:
+    url: http://localhost:8084
