@@ -16,6 +16,7 @@ services:
       test: ["CMD", "curl", "-f", "http://localhost:8888/actuator/health"]
       interval: 10s
       retries: 4
+
   discovery-service:
     build: ./Back-end/Discovery
     container_name: discovery-service
@@ -32,6 +33,7 @@ services:
     depends_on:
       config-server:
         condition: service_healthy
+
   gateway-service:
     build: ./Back-end/gateway
     container_name: gateway-service
@@ -49,6 +51,7 @@ services:
     depends_on:
       discovery-service:
         condition: service_healthy
+
   user-service_mysql:
     image: mysql:8.0
     container_name: user-service_mysql
@@ -72,6 +75,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
+
   user-service:
     container_name: user-service
     build:
@@ -83,10 +87,10 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://user-service_mysql:3306/usermanagement
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD:
+      SPRING_DATASOURCE_PASSWORD: ""
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      SPRING_JPA_SHOW_SQL: true
-      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
+      SPRING_JPA_SHOW_SQL: "true"  # Fixed to string "true"
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"  # Fixed to string "true"
       CONFIG_SERVER_URL: http://config-server:8888
       DISCOVERY_SERVICE_URL: http://discovery-service:8761/eureka
       GATEWAY_SERVICE_URL: http://gateway-service:8222
@@ -97,6 +101,7 @@ services:
       test: [ "CMD", "curl", "-f", "http://localhost:8088/actuator/health" ]
       interval: 10s
       retries: 4
+
   auth-service:
     build: ./Back-end/AuthService
     container_name: auth-service
@@ -110,10 +115,10 @@ services:
       GATEWAY_SERVICE_URL: http://gateway-service:8222
       SPRING_DATASOURCE_URL: jdbc:mysql://user-service_mysql:3306/usermanagement
       SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD:
+      SPRING_DATASOURCE_PASSWORD: ""
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      SPRING_J PA_SHOW_SQL: true
-      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
+      SPRING_JPA_SHOW_SQL: "true"  # Fixed to string "true"
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"  # Fixed to string "true"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
       interval: 10s
