@@ -23,15 +23,11 @@ class SeleniumTest {
     @BeforeEach
     void setUp() {
         // Configuration et initialisation du WebDriver
-       // WebDriverManager.chromedriver()
-         //       .driverVersion("131.0") // Remplacez par une version compatible de ChromeDriver
-           //     .setup();
-        //driver = new ChromeDriver();
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless"); // Exécuter en mode sans tête
-        options.addArguments("--no-sandbox"); // Nécessaire dans CI/CD
-        options.addArguments("--disable-dev-shm-usage"); // Éviter les problèmes de mémoire partagée
-        driver = new ChromeDriver(options);
+        WebDriverManager.chromedriver()
+                .driverVersion("131.0") // Remplacez par une version compatible de ChromeDriver
+                .setup();
+        driver = new ChromeDriver();
+
     }
 
     @AfterEach
