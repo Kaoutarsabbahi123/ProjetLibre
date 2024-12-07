@@ -24,6 +24,18 @@ jobs:
           java-version: 21
           distribution: 'temurin'
 
+      - name: Install Chrome
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y google-chrome-stable
+
+      - name: Install WebDriverManager
+        run: |
+             wget https://github.com/bonigarcia/webdrivermanager/releases/download/WebDriverManager-5.4.1/webdrivermanager-5.4.1-linux64.tar.gz
+             tar -xzf webdrivermanager-5.4.1-linux64.tar.gz
+             sudo mv webdrivermanager /usr/local/bin/
+            webdrivermanager chrome --force-download
+
       - name: Build and test Config Server
         run: |
           cd Back-end/Config-server

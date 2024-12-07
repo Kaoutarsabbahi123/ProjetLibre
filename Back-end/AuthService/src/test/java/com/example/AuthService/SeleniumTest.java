@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -22,10 +23,15 @@ class SeleniumTest {
     @BeforeEach
     void setUp() {
         // Configuration et initialisation du WebDriver
-        WebDriverManager.chromedriver()
-                .driverVersion("131.0") // Remplacez par une version compatible de ChromeDriver
-                .setup();
-        driver = new ChromeDriver();
+       // WebDriverManager.chromedriver()
+         //       .driverVersion("131.0") // Remplacez par une version compatible de ChromeDriver
+           //     .setup();
+        //driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless"); // Exécuter en mode sans tête
+        options.addArguments("--no-sandbox"); // Nécessaire dans CI/CD
+        options.addArguments("--disable-dev-shm-usage"); // Éviter les problèmes de mémoire partagée
+        driver = new ChromeDriver(options);
     }
 
     @AfterEach
