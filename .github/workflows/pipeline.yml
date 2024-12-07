@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Étape 1: Checker le code
+      # Étape 1: Checkout code
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -24,10 +24,11 @@ jobs:
           java-version: 21
           distribution: 'temurin'
 
-      # Étape 3: Installer Docker
+      # Étape 3: Installer Docker (et résoudre les conflits)
       - name: Install Docker
         run: |
           sudo apt-get update
+          sudo apt-get remove -y containerd containerd.io docker docker-engine docker.io
           sudo apt-get install -y docker.io
 
       # Étape 4: Installer Docker Compose
