@@ -134,3 +134,8 @@ services:
       - '82:80'
     expose:
       - '82'
+
+# Declare the volume to prevent the error
+volumes:
+  mysql_data:
+    driver: local
