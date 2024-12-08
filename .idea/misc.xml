@@ -17,23 +17,17 @@
         <option value="$PROJECT_DIR$/LaboratoryService/pom.xml" />
         <option value="$PROJECT_DIR$/TestService/pom.xml" />
         <option value="$PROJECT_DIR$/UserService/pom.xml" />
-        <option value="$PROJECT_DIR$/Back-end/Discovery/pom.xml" />
-        <option value="$PROJECT_DIR$/Back-end/Config-server/pom.xml" />
-        <option value="$PROJECT_DIR$/Back-end/Api_Gateway/pom.xml" />
-        <option value="$PROJECT_DIR$/Back-end/AddressService/pom.xml" />
-        <option value="$PROJECT_DIR$/Back-end/gateway/pom.xml" />
         <option value="$PROJECT_DIR$/Back-end/AuthService/pom.xml" />
-        <option value="$PROJECT_DIR$/KeycloakSPI/pom.xml" />
-        <option value="$PROJECT_DIR$/Back-end/KeycloakSPI/pom.xml" />
+        <option value="$PROJECT_DIR$/Back-end/Api_Gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/Back-end/Config-server/pom.xml" />
+        <option value="$PROJECT_DIR$/Back-end/Discovery/pom.xml" />
         <option value="$PROJECT_DIR$/Back-end/UserService/pom.xml" />
-        <option value="$PROJECT_DIR$/Back-end/LaboratoryService/pom.xml" />
-        <option value="$PROJECT_DIR$/Back-end/ContactService/pom.xml" />
+        <option value="$PROJECT_DIR$/Back-end/gateway/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/../Api_Gateway/Api_Gateway/pom.xml" />
-        <option value="$PROJECT_DIR$/Back-end/AuthService/KeycloakSPI/pom.xml" />
       </set>
     </option>
   </component>

@@ -22,6 +22,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Api_Gateway" target="21" />
       <module name="KeycloakSPI" target="21" />
     </bytecodeTargetLevel>
   </component>
