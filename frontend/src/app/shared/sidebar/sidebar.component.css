@@ -4,13 +4,17 @@
 }
 
 .sidebar {
-  width: 250px;
+   position: sticky;
+    top: 0;
+    bottom: 0;
+    height: 100vh;
+    overflow-y: auto;
+    width: 250px;
   background-color: #ffffff;
   border-right: 1px solid #e5e5e5;
   box-shadow: 2px 0 6px var(--shadow-light);
   transition: width 0.3s ease-in-out, box-shadow 0.3s ease;
 }
-
 .sidebar.hidden {
   width: 70px; /* Réduction minimale pour un mode compact */
   overflow: hidden;
@@ -76,9 +80,9 @@
 
 /* Navbar */
 .navbar {
-  position: sticky;
+  position: relative;
   top: 0;
-  z-index: 10;
+  z-index: 1;
   background-color: #ffffff;
   border-bottom: 1px solid #e5e5e5;
   box-shadow: 0 2px 8px var(--shadow-light);
@@ -105,24 +109,7 @@
   transform: scale(1.05);
 }
 
-.profile-link {
-  font-size: 16px;
-  font-weight: bold;
-  color: var(--primary-color);
-  padding: 10px 15px;
-  border-radius: 6px;
-  transition: all 0.3s ease;
-}
 
-.profile-link:hover {
-  background-color: var(--hover-color);
-  transform: scale(1.1);
-}
-
-.profile-link i {
-  font-size: 18px;
-  margin-right: 8px;
-}
 
 /* Bouton de la sidebar */
 .btn-sidebar-toggle {
@@ -157,7 +144,6 @@
     display: none;
   }
 }
-/* Dropdown Styles */
 /* Dropdown Styles */
 .dropdown-menu {
   background-color: #ffffff;
@@ -198,7 +184,7 @@
 /* Hover sophistiqué */
 .dropdown-item:hover {
   background-color: var(--hover-color);
-  color: #ffffff; /* Contraste pour une meilleure visibilité */
+  color: var(--primary-color); /* Contraste pour une meilleure visibilité */
   transform: scale(1.05); /* Légère augmentation de taille */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Effet flottant */
 }
@@ -210,9 +196,20 @@
   transition: transform 0.3s ease, color 0.3s ease;
 }
 
+/* Animation de rebond subtil au hover */
 .dropdown-item:hover i {
-  color: #ffffff; /* Uniformité avec le texte */
-  transform: rotate(10deg); /* Petite rotation pour dynamisme */
+  color: var(--primary-color); /* Uniformité avec le texte */
+  animation: bounce 0.5s ease;
+}
+
+/* Définition de l'animation bounce */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px); /* Léger rebond vers le haut */
+  }
 }
 
 /* Séparateur */
@@ -272,38 +269,6 @@
   }
 }
 
-
-
-.profile-link i {
-  font-size: 20px;
-  color: var(--primary-color);
-  transition: color 0.3s ease;
-}
-
-.profile-link:hover i {
-  color: #ffffff;
-}
-.profile-link {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  border-radius: 6px;
-  padding: 8px 12px;
-  transition: all 0.3s ease;
-}
-
-.profile-link:hover {
-  background-color: var(--secondary-color); /* Couleur de fond au survol */
-  color: #f8f9fa; /* Couleur du texte */
-  transform: scale(1.05); /* Légère mise en évidence */
-}
-
-
-.profile-link img {
-  width: 24px;
-  height: 24px;
-  transition: transform 0.3s ease;
-}
 
 .dropdown-menu[data-bs-popper] {
     top: 100%;

@@ -1,5 +1,8 @@
 package com.example.LaboratoryService.DTO;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,12 +13,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContactRequest {
-   private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String numTel;    // Numéro de téléphone du contact
     private String fax;       // Numéro de fax du contact
     private String email;     // Email du contact
     private Long fkIdLaboratoire;
-// ID du laboratoire auquel le contact est associé
+    private List<AdressRequest> adresses;
 
-    // Ajouter des annotations de validation si nécessaire, par exemple @Email ou @NotNull
 }

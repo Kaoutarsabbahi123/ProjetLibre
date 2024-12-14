@@ -6,7 +6,11 @@
     --shadow-light: rgba(0, 0, 0, 0.1);
     --shadow-dark: rgba(0, 0, 0, 0.2);
 }
-
+html,
+body {
+  height: 100%; /* Assurez que la hauteur est 100% pour toute la page */
+  margin: 0;
+}
 
 
 

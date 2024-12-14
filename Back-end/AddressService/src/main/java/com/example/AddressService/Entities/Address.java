@@ -24,5 +24,5 @@ public class Address {
     private String codePostal;
     private String ville;
     private String commune;
-    private String country;
+    private Long fkIdcontact;
 }

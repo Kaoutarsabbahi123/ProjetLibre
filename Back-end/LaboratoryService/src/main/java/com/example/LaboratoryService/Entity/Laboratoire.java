@@ -19,12 +19,9 @@ public class Laboratoire {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String nom;
-
     @Lob
-    private byte[] logo;  // Stockage du logo sous forme de BLOB
-
+    private byte[] logo;
     private String nrc;
     private boolean active;
     private LocalDate dateActivation;

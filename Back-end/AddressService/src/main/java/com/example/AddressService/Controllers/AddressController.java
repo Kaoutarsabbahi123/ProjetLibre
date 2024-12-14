@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -25,23 +26,10 @@ public class AddressController {
         return new ResponseEntity<>(savedAddress, HttpStatus.CREATED);
     }
 
-    // Récupérer toutes les adresses avec pagination
-    @GetMapping
-    public ResponseEntity<Page<Address>> getAllAddresses(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        Page<Address> addresses = addressService.getAllAddresses(page, size);
-        return ResponseEntity.ok(addresses);
+    @GetMapping("/contact/{contactId}")
+    public List<Address> getAddressesByLaboratoireId(@PathVariable Long contactId) {
+        return addressService.findByFkIdcontact(contactId);
     }
-
-    // Récupérer une adresse par ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Address> getAddressById(@PathVariable Integer id) {
-        Optional<Address> address = addressService.getAddressById(id);
-        return address.map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
     // Mettre à jour une adresse
     @PutMapping("/{id}")
     public ResponseEntity<Address> updateAddress(@PathVariable Integer id, @RequestBody Address address) {
