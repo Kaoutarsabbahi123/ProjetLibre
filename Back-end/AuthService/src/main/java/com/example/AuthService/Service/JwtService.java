@@ -45,4 +45,12 @@ public class JwtService {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET);
         return Keys.hmacShaKeyFor(keyBytes);
     }
+
+    public String extractEmail(String token) {
+        Claims claims = Jwts.parser()
+                .setSigningKey(SECRET.getBytes())
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.getSubject();
+    }
 }

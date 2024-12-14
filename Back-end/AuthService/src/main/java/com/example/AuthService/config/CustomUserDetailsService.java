@@ -17,7 +17,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        String userServiceUrl = "http://gateway-service:8222/users/email/" + email;
+        String userServiceUrl = "http://localhost:8222/users/email/" + email;
 
         UserResponse userResponse = restTemplate.getForObject(userServiceUrl, UserResponse.class);
 

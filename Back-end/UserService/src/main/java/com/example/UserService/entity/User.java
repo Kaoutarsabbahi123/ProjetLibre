@@ -17,12 +17,8 @@ public class User {
     private String email;
     private String password;
     private String nomComplet;
-    private String profession;
     private String numTel;
     private String role;
-    @Lob
-    @Column(name = "signature", columnDefinition = "BLOB")
-    private byte[] signature;
     private Integer fkIdLaboratoire;
 
     public User(String email, String password) {
