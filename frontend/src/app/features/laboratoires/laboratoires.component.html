@@ -1,0 +1,59 @@
+<div class="laboratoires-container">
+  <div class="header">
+    <!-- Barre de recherche avec une icône -->
+    <div class="search-bar">
+      <i class="fas fa-search"></i>
+      <input
+        type="text"
+        placeholder="Rechercher un laboratoire..."
+        [(ngModel)]="searchText"
+      />
+    </div>
+
+    <button class="add-button" (click)="onAdd()">
+      <i class="fas fa-plus" style="font-size:20px;"></i>
+    </button>
+  </div>
+
+  <table class="laboratoires-table">
+    <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Logo</th>
+      <th>NRC</th>
+      <th>Statut</th>
+      <th>Date Activation</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let lab of paginatedData">
+      <td>{{ lab.nom }}</td>
+      <td>
+        <img *ngIf="lab.logo" [src]="'data:image/png;base64,' + lab.logo" alt="Logo" width="40" height="40" />
+        <span *ngIf="!lab.logo">Pas de logo</span>
+      </td>
+      <td>{{ lab.nrc }}</td>
+      <td>
+          <span [ngClass]="{ 'status-active': lab.active, 'status-archive': !lab.active }">
+            {{ lab.active ? 'Actif' : 'Inactif' }}
+          </span>
+      </td>
+      <td>{{ lab.dateActivation | date: 'dd/MM/yyyy' }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <button
+      *ngFor="let page of pages"
+      [class.active]="page === currentPage"
+      (click)="goToPage(page)">
+      {{ page }}
+    </button>
+
+    <!-- Afficher "..." si nécessaire -->
+    <button *ngIf="showEllipsis" (click)="goToPage(pages[pages.length - 1])">
+      ...
+    </button>
+  </div>
+

@@ -13,7 +13,7 @@ spring:
     name: labo-service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/Labodb
+    url: jdbc:mysql://localhost:3306/Labodb?useSSL=false&serverTimezone=UTC
     username: root
     password: ""
 

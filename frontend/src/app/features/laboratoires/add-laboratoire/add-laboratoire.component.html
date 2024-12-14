@@ -1,0 +1,197 @@
+<div class="form-container">
+  <h2 class="form-title">Ajouter un Laboratoire</h2>
+  <form (ngSubmit)="onSubmit()" #laboForm="ngForm">
+    <!-- Section Informations -->
+    <div class="info-section">
+      <h4>Informations générales</h4>
+      <div class="row">
+        <div class="form-group">
+          <label for="nom">Nom : <span class="required">*</span></label>
+          <input
+            type="text"
+            id="nom"
+            placeholder="Nom officiel du laboratoire"
+            name="nom"
+            [(ngModel)]="nom"
+            required
+            #nomField="ngModel" />
+          <div *ngIf="nomField.invalid && nomField.touched" class="error-message">
+            Le nom est requis.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="logo">Logo :</label>
+          <input
+            type="file"
+            id="logo"
+            name="logo"
+            (change)="onFileChange($event)" />
+        </div>
+      </div>
+      <div class="form-group full-width">
+        <label for="nrc">N° de Registre de Commerce : <span class="required">*</span></label>
+        <input
+          type="text"
+          id="nrc"
+          placeholder="Numéro de registre de commerce"
+          name="nrc"
+          [(ngModel)]="nrc"
+          required
+          #nrcField="ngModel" />
+        <div *ngIf="nrcField.invalid && nrcField.touched" class="error-message">
+          Le N° de Registre de Commerce est requis.
+        </div>
+      </div>
+    </div>
+
+    <!-- Section Contacts -->
+    <div class="contact-section">
+      <h4>Contacts</h4>
+      <button
+        type="button"
+        class="add-button small-button"
+        (click)="onAddContact()">
+        <i class="fas fa-plus"></i> Ajouter un contact
+      </button>
+
+      <!-- Conteneur des contacts -->
+      <div *ngFor="let contact of contacts; let contactIndex = index">
+        <div class="contact-item">
+          <div class="contact-form">
+            <div class="form-group half-width">
+              <label for="contactNumTel-{{contactIndex}}">Numéro de Téléphone :</label>
+              <input
+                type="text"
+                id="contactNumTel-{{contactIndex}}"
+                [(ngModel)]="contact.numTel"
+                placeholder="Numéro de téléphone"
+                name="contactNumTel-{{contactIndex}}" />
+            </div>
+            <div class="form-group half-width">
+              <label for="contactFax-{{contactIndex}}">Fax :</label>
+              <input
+                type="text"
+                id="contactFax-{{contactIndex}}"
+                [(ngModel)]="contact.fax"
+                placeholder="Fax"
+                name="contactFax-{{contactIndex}}" />
+            </div>
+          </div>
+          <div class="form-group full-width">
+            <label for="contactEmail-{{contactIndex}}">Email :</label>
+            <input
+              type="email"
+              id="contactEmail-{{contactIndex}}"
+              [(ngModel)]="contact.email"
+              placeholder="Email du contact"
+              name="contactEmail-{{contactIndex}}" />
+          </div>
+
+          <!-- Section Adresses du Contact -->
+          <div class="address-section">
+            <button
+              type="button"
+              class="add-button small-button"
+              (click)="onAddAdresse(contactIndex)">
+              <i class="fas fa-plus"></i> Ajouter une adresse
+            </button>
+
+            <div *ngFor="let adresse of contact.adresses; let adresseIndex = index" class="address-item">
+              <div class="address-form">
+                <div class="form-group half-width">
+                  <label for="numVoie-{{contactIndex}}-{{adresseIndex}}">Numéro de Voie :</label>
+                  <input
+                    type="text"
+                    id="numVoie-{{contactIndex}}-{{adresseIndex}}"
+                    [(ngModel)]="adresse.numVoie"
+                    placeholder="Numéro de voie"
+                    name="numVoie-{{contactIndex}}-{{adresseIndex}}" />
+                </div>
+                <div class="form-group half-width">
+                  <label for="nomVoie-{{contactIndex}}-{{adresseIndex}}">Nom de Voie :</label>
+                  <input
+                    type="text"
+                    id="nomVoie-{{contactIndex}}-{{adresseIndex}}"
+                    [(ngModel)]="adresse.nomVoie"
+                    placeholder="Nom de voie"
+                    name="nomVoie-{{contactIndex}}-{{adresseIndex}}" />
+                </div>
+              </div>
+              <div class="address-form">
+                <div class="form-group half-width">
+                  <label for="codePostal-{{contactIndex}}-{{adresseIndex}}">Code Postal :</label>
+                  <input
+                    type="text"
+                    id="codePostal-{{contactIndex}}-{{adresseIndex}}"
+                    [(ngModel)]="adresse.codePostal"
+                    placeholder="Code postal"
+                    name="codePostal-{{contactIndex}}-{{adresseIndex}}" />
+                </div>
+                <div class="form-group half-width">
+                  <label for="ville-{{contactIndex}}-{{adresseIndex}}">Ville :</label>
+                  <input
+                    type="text"
+                    id="ville-{{contactIndex}}-{{adresseIndex}}"
+                    [(ngModel)]="adresse.ville"
+                    placeholder="Ville"
+                    name="ville-{{contactIndex}}-{{adresseIndex}}" />
+                </div>
+              </div>
+              <div class="form-group full-width">
+                <label for="commune-{{contactIndex}}-{{adresseIndex}}">Commune :</label>
+                <input
+                  type="text"
+                  id="commune-{{contactIndex}}-{{adresseIndex}}"
+                  [(ngModel)]="adresse.commune"
+                  placeholder="Commune"
+                  name="commune-{{contactIndex}}-{{adresseIndex}}" />
+              </div>
+              <button
+                type="button"
+                class="remove-button"
+                (click)="onRemoveAdresse(contactIndex, adresseIndex)">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </div>
+          <button
+            type="button"
+            class="remove-button"
+            (click)="onRemoveContact(contactIndex)">
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Buttons -->
+    <div class="form-buttons">
+      <button type="submit" [disabled]="laboForm.invalid">Enregistrer</button>
+      <button type="button" (click)="onCancel()">Annuler</button>
+    </div>
+  </form>
+</div>
+
+
+<!-- Modal -->
+<div class="modal" [class.show]="isModalVisible" *ngIf="isModalVisible">
+  <div class="modal-content">
+
+    <!-- Bouton de fermeture -->
+    <button class="close-button" (click)="onModalOk()">×</button>
+
+    <div class="modal-body">
+      <!-- Icône et message en fonction de l'état (succès ou échec) -->
+      <img
+        [src]="isError ? 'assets/cancel.png' : 'assets/check (1).png'"
+        alt="Icône de statut"
+        class="modal-icon"
+      />
+      <h2 class="modal-title" [ngClass]="{'error-text': isError}">{{ isError ? 'Erreur' : 'Succès' }}</h2>
+      <p>{{ isError ? 'Une erreur est survenue lors de la création du laboratoire.' : 'Le laboratoire a été créé avec succès.' }}</p>
+    </div>
+
+    <!-- Bouton OK -->
+    <button class="ok-button" [ngClass]="{'error-button': isError}" (click)="onModalOk()">OK</button>
+  </div>
+</div>

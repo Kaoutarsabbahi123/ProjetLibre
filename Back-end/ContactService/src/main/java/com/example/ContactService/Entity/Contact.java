@@ -19,10 +19,8 @@ public class Contact {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long fkIdLaboratoire; // ID du laboratoire auquel le contact est associé
-
+    private Long fkIdLaboratoire;
     private String numTel;
     private String fax;
     private String email;
-    // Liste des IDs des adresses dans le microservice Adresse
 }

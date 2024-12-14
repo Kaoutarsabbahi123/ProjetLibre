@@ -17,7 +17,11 @@ public class LaboratoireService {
 
     // Ajouter un laboratoire
     public Laboratoire saveLaboratoire(Laboratoire laboratoire) {
+
         return laboratoireRepository.save(laboratoire);
+    }
+    public Optional<Laboratoire> getLaboratoireById(Long id) {
+        return laboratoireRepository.findById(id);
     }
 
     // Récupérer tous les laboratoires
@@ -25,10 +29,6 @@ public class LaboratoireService {
         return laboratoireRepository.findAll();
     }
 
-    // Récupérer un laboratoire par ID
-    public Optional<Laboratoire> getLaboratoireById(Long id) {
-        return laboratoireRepository.findById(id);
-    }
 
     // Supprimer un laboratoire
     public void deleteLaboratoire(Long id) {

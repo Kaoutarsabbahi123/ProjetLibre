@@ -13,12 +13,6 @@ public class LaboRequest {
     private String nrc;
     private boolean active;
     private LocalDate dateActivation;
+    private List<ContactRequest> contacts;
 
-    private String numTel;
-    private String fax;
-    private String email;
-    private List<AdressRequest> adresses;
-
-
-    // Getters et setters
 }

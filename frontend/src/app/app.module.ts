@@ -8,12 +8,16 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LaboratoiresComponent } from './features/laboratoires/laboratoires.component';
+import { AddLaboratoireComponent } from './features/laboratoires/add-laboratoire/add-laboratoire.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    SidebarComponent
+    SidebarComponent,
+    LaboratoiresComponent,
+    AddLaboratoireComponent,
   ],
   imports: [
     BrowserModule,

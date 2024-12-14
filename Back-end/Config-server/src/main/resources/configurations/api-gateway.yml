@@ -28,21 +28,33 @@ spring:
 
       routes:
         - id: auth-service
+          #uri: http://auth-service:8085
           uri: http://localhost:8085
           predicates:
             - Path=/auth/**
 
         - id: user-service
+          #uri: http://user-service:8088
           uri: http://localhost:8088
           predicates:
             - Path=/users/**
+
+        - id: contact-service
+          uri: http://localhost:8885
+          predicates:
+            - Path=/api/contacts/**
+
+        - id: labo-service
+          uri: http://localhost:8886
+          predicates:
+            - Path=/api/laboratoires/**
 
         - id: address-service
           uri: http://localhost:8084
           predicates:
             - Path=/api/addresses/**
           filters:
-            - AuthenticationFilter
+            #- AuthenticationFilter
             - DedupeResponseHeader=Access-Control-Allow-Credentials, RETAIN_FIRST
             - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_FIRST  # Ajout d'une nouvelle ligne avec la bonne syntaxe
 

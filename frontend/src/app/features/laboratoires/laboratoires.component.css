@@ -1,0 +1,315 @@
+:root {
+  --primary-color: #104b60;
+  --secondary-color: #2cbce4;
+  --accent-color: #f4a261;
+  --font-family: 'Roboto', sans-serif;
+  --text-color: #343a40;
+  --bg-color: #f9f9f9;
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-dark: rgba(0, 0, 0, 0.2);
+  --hover-color: rgba(16, 75, 96, 0.1);
+}
+
+body {
+  background-color: var(--bg-color);
+  font-family: var(--font-family);
+  margin: 20px;
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+/* Conteneur principal */
+.laboratoires-container {
+  background: linear-gradient(135deg, white, #fefefe);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 6px 18px var(--shadow-light);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.laboratoires-container:hover {
+  box-shadow: 0 8px 20px var(--shadow-dark);
+  transform: translateY(-2px);
+}
+
+/* Styles pour les filtres */
+.filter-button {
+  border-radius: 20px;
+  font-weight: bold;
+  border: 1px solid #ced4da;
+  color: #6c757d;
+  background-color: #f8f9fa;
+  transition: all 0.3s ease;
+  align-items: center;
+  padding: 8px 16px;
+  margin-top: 30px;
+  margin-right: 8px;
+}
+
+.filter-button:last-child {
+  margin-right: 0;
+}
+
+.filter-button:first-child {
+  margin-left: 7px;
+}
+
+.filter-button i {
+  margin-right: 8px;
+}
+
+.filter-button.active,
+.filter-button:hover {
+  background-color: var(--primary-color);
+  color: #fff;
+  transform: scale(1.05);
+}
+
+.filter-button:focus, .filter-button:active {
+  outline: none;
+  box-shadow: none;
+}
+
+/* Conteneur principal */
+.laboratoires-container {
+  background: linear-gradient(135deg, white, #fefefe);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 6px 18px var(--shadow-light);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.laboratoires-container:hover {
+  box-shadow: 0 8px 20px var(--shadow-dark);
+  transform: translateY(-2px);
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: flex-end; /* Espacement entre la barre de recherche et les filtres */
+  align-items: center;
+  gap: 15px;
+}
+
+.search-bar {
+  width:auto;
+  width: 300px; /* Limiter la taille de la barre de recherche */
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  font-size: 15px;
+  box-shadow: 0 2px 6px var(--shadow-light);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.search-bar input {
+  border: none;
+  outline: none;
+  flex-grow: 1;
+}
+
+.search-bar i {
+  margin-right: 10px;
+}
+
+/* Ajouter une icône à la barre de recherche */
+.search-bar:focus {
+  border-color: var(--accent-color);
+  outline: none;
+  box-shadow: 0 0 10px var(--accent-color);
+}
+
+/* Bouton Ajouter */
+.add-button {
+  padding: 4px 10px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  font-weight: bold;
+  font-size:25px;
+  border: none;
+  border-radius: 12px;
+  padding-top:1px;
+  cursor: pointer;
+  transition: box-shadow 0.3s, transform 0.3s, background-position 0.4s ease;
+  background-size: 200%;
+  background-position: left;
+}
+
+.add-button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 14px var(--shadow-dark);
+  background-position: right;
+}
+
+
+/* Table */
+.laboratoires-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px var(--shadow-light);
+}
+
+.laboratoires-table thead {
+  background: linear-gradient(135deg, #e9ecef, #f8f9fa);
+  color: var(--text-color);
+  font-size: 15px;
+}
+
+.laboratoires-table th,
+.laboratoires-table td {
+  padding: 14px 16px;
+  text-align: center;
+  border-bottom: none;
+}
+
+.laboratoires-table th {
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.laboratoires-table tbody tr {
+  background: white;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.laboratoires-table tbody tr:nth-child(even) {
+  background: #fdfdfd;
+}
+
+.laboratoires-table tbody tr:hover {
+  background-color: var(--hover-color);
+  transform: scale(1.02);
+  cursor: pointer;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  gap: 8px;
+}
+
+.pagination button {
+  border: 1px solid #ddd;
+  background: white;
+  color: var(--primary-color);
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: transform 0.2s, box-shadow 0.2s ease-in-out;
+}
+
+.pagination button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--shadow-light);
+}
+
+
+.pagination button.active {
+  background: var(--primary-color);
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 4px 8px var(--shadow-dark);
+}
+/* Styles pour le logo */
+.lab-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Statut Actif / Inactif */
+ .status-archive {
+    background-color: #f8d7da;  /* Lighter red */
+    color: #721c24;             /* Darker red text */
+    border-radius: 12px;
+    padding: 5px 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+ }
+
+ .status-active {
+    background-color: #c3e6cb;  /* Lighter green */
+    color: #155724;             /* Darker green text */
+    border-radius: 12px;
+    padding: 5px 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+ }
+
+
+ /* Actions */
+ .actions {
+   display: flex;
+   gap: 10px;
+ }
+
+ .actions .btn {
+   padding: 6px;
+   margin: 0 5px;
+   border-radius: 5px;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   cursor: pointer;
+   transition: color 0.3s, box-shadow 0.3s, transform 0.3s;
+ }
+
+ .actions .btn:first-child {
+   margin-left: 56px;
+ }
+
+
+ /* Couleurs spécifiques aux actions */
+ .actions .btn-view {
+   background-color: #dff4ff;
+   border: none;
+   color: #5bc0de;
+ }
+
+ .actions .btn-edit {
+   background-color: #fff3cd;
+   border: none;
+   color:  #856404;
+ }
+
+ .actions .btn-archive {
+   background-color:  #f8d7da;
+   border: none;
+   color: #dc3545;
+ }
+
+ /* Effet au survol */
+ .actions .btn:hover {
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+   transform: translateY(-2px);
+ }
+ .actions .btn-edit:hover {
+   background-color: #fff0a5; /* Hover jaune doux */
+ }
+ .actions .btn-archive:hover {
+   background-color: #f5c6cb; /* Hover rouge clair */
+ }
+
+ .actions .btn:focus {
+   box-shadow: none;
+   outline: none;
+ }
+
+

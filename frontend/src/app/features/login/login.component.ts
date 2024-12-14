@@ -25,7 +25,7 @@ export class LoginComponent {
         localStorage.setItem('user', JSON.stringify(response.user));  // Sauvegarde de l'utilisateur
 
         // Rediriger l'utilisateur après une connexion réussie
-        this.router.navigate(['/sidebar']); // Modifier avec votre route de destination
+        this.router.navigate(['/laboratoires']); // Modifier avec votre route de destination
       },
       error: () => {
         alert('Invalid username or password');

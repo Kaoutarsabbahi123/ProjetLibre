@@ -19,7 +19,5 @@ public class AdressRequest {
     private String codePostal;
     private String ville;
     private String commune;
-    private Long fkIdcontact;  // Propriété pour l'ID du contact
-
-    // La méthode setFkIdcontact() sera générée automatiquement par Lombok.
+    private Long fkIdcontact;
 }

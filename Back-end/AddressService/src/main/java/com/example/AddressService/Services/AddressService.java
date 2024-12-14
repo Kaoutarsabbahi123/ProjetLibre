@@ -22,10 +22,8 @@ public class AddressService {
         return addressRepository.save(address);
     }
 
-    // Récupérer toutes les adresses avec pagination
-    public Page<Address> getAllAddresses(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return addressRepository.findAll(pageable);
+    public List<Address> findByFkIdcontact(Long contactId) {
+        return addressRepository.findByFkIdcontact(contactId);
     }
 
     // Récupérer une adresse par ID
@@ -41,7 +39,6 @@ public class AddressService {
             address.setCodePostal(newAddress.getCodePostal());
             address.setVille(newAddress.getVille());
             address.setCommune(newAddress.getCommune());
-            address.setCountry(newAddress.getCountry());
             return addressRepository.save(address);
         }).orElseThrow(() -> new RuntimeException("Adresse non trouvée avec l'ID : " + id));
     }

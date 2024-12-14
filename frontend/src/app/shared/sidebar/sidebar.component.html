@@ -1,4 +1,4 @@
-<div class="d-flex">
+<div class="d-flex ">
   <!-- Sidebar -->
   <nav class="sidebar vh-100 bg-light shadow-sm" [class.hidden]="isSidebarHidden">
     <div class="p-3">
@@ -9,13 +9,13 @@
       <!-- Liens -->
       <ul class="nav flex-column">
         <li class="nav-item">
-          <a class="nav-link active" href="#">
+          <a class="nav-link " href="#">
             <span class="icon"><i class="fas fa-users"></i></span>
             <span class="text">Utilisateurs</span>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">
+          <a class="nav-link" routerLink="/laboratoires" routerLinkActive="active">
             <span class="icon"><i class="fas fa-flask"></i></span>
             <span class="text">Laboratoires</span>
           </a>
@@ -77,5 +77,10 @@
         </div>
       </div>
     </nav>
+
+    <!-- Contenu dynamique des routes enfants -->
+    <div class="content p-3">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>
