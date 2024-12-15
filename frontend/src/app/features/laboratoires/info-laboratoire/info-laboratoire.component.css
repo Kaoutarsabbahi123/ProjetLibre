@@ -1,0 +1,585 @@
+form {
+  display: flex;
+  flex-direction: column; /* Les sections seront empilées verticalement */
+  gap: 20px; /* Espacement entre les sections */
+}
+
+.info-section,
+.contact-section,
+.address-section {
+  flex: 1 1 100%; /* Chaque section prend toute la largeur */
+}
+.form-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px var(--shadow-light);
+  width: 90%;
+  margin: 20px auto;
+}
+
+h3 {
+  font-size: 20px;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.info-section,
+.contact-section,
+.address-section {
+  margin-bottom: 30px; /* Espacement entre les sections */
+  padding: 20px;
+  border: 1px solid var(--shadow-light);
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px var(--shadow-light);
+  display: flex;
+  flex-direction: column; /* Alignement vertical des éléments dans chaque section */
+}
+
+form .form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 calc(50% - 20px); /* 2 inputs par ligne */
+}
+
+form .form-group.full-width {
+  flex: 1 1 100%; /* Prend toute la largeur */
+}
+ label {
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+form input,
+form select {
+  padding: 10px;
+  border: 1px solid var(--shadow-light);
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+form input:focus,
+form select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 4px var(--primary-color);
+}
+
+.contact-section .form-group,
+.address-section .form-group {
+  margin-bottom: 20px; /* Espacement des groupes de champs */
+}
+
+.contact-section h4,
+.address-section h4,
+ .info-section h4{
+  font-size: 18px;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.address-section .address-container {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px dashed var(--shadow-dark);
+  border-radius: 6px;
+  background-color: var(--hover-color);
+}
+
+
+
+.contact-section .form-actions,
+.address-section .form-actions {
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .contact-section .form-group,
+  .address-section .form-group {
+    flex: 1 1 100%; /* Prend toute la largeur en mode responsive */
+  }
+}
+.form-buttons {
+  display: flex;
+  justify-content: flex-end; /* Aligne les boutons à droite */
+  gap: 10px; /* Espace entre les boutons */
+  margin-top: 20px; /* Espacement par rapport au contenu au-dessus */
+}
+
+.form-buttons button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.form-buttons button[type="submit"] {
+  background-color: var(--primary-color); /* Couleur de fond inchangée */
+  color: #fff; /* Couleur du texte */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animation pour le relief et l'ombre */
+}
+
+.form-buttons button[type="submit"]:hover {
+  transform: scale(1.05); /* Légère mise en relief */
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2); /* Ajout d'une ombre douce */
+}
+
+
+.form-buttons button[type="button"] {
+  background-color: #ccc;
+  color: #333;
+}
+
+.form-buttons button[type="button"]:hover {
+  background-color: #bbb; /* Couleur plus foncée au survol */
+  transform: scale(1.05);
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.form-group {
+  flex: 1 1 calc(50% - 20px);
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group.full-width {
+  flex: 1 1 100%;
+}
+
+/* Section Boutons Ajouter/Supprimer */
+.button-container {
+  display: flex;
+  justify-content: flex-start; /* Alignement à gauche */
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+/* Bouton Supprimer */
+.remove-button {
+  padding: 9px 10px;
+  background: linear-gradient(135deg, #ff4d4d, #b30000); /* Dégradé rouge */
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  gap: 5px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-position 0.4s ease;
+  background-size: 200%;
+  background-position: left; /* Changez à left pour que l'animation soit correcte */
+}
+
+/* Alignement du bouton Supprimer à droite */
+.remove-button-container {
+  display: flex;
+  justify-content: flex-end; /* Aligner à droite */
+  margin-top: 10px;
+}
+
+/* Taille de l'icône */
+.remove-button i{
+  font-size: 18px;
+}
+/* Effet de survol */
+.remove-button:hover {
+  transform: scale(1.08); /* Animation de mise en relief */
+  box-shadow: 0 6px 14px rgba(255, 0, 0, 0.5); /* Ombre rouge */
+  background-position: right; /* Animation du dégradé */
+}
+
+
+.address-item {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.address-item.empty {
+  text-align: center;
+  color: #aaa;
+  font-style: italic;
+}
+
+.bordered {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+/* Bouton Ajouter */
+.add-button {
+  padding: 4px 10px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  font-weight: bold;
+  font-size:25px;
+  border: none;
+  border-radius: 12px;
+  padding-top:1px;
+  cursor: pointer;
+  transition: box-shadow 0.3s, transform 0.3s, background-position 0.4s ease;
+  background-size: 200%;
+  background-position: left;
+}
+
+.add-button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 14px var(--shadow-dark);
+  background-position: right;
+}
+
+.form-title {
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #201e1e;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  padding-bottom: 8px; /* Espacement en bas */
+  font-family: 'Arial', sans-serif;
+}
+
+.form-title::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 3px;
+  background: var(--primary-color);
+  margin-top: 5px;
+  border-radius: 2px;
+  animation: lineExpand 1s ease forwards; /* Animation de la ligne */
+}
+
+
+@keyframes lineExpand {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    width: 70px; /* Longueur finale de la ligne */
+    opacity: 1;
+  }
+}
+/* Modal Overlay */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.6); /* Overlay sombre */
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out; /* Animation d'apparition */
+}
+
+/* Corps de la modal */
+.modal-body {
+  padding: 20px;
+  text-align: center;
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.5;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+/* Contenu de la modal */
+.modal-content {
+  background: white;
+  border-radius: 15px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 20px var(--shadow-dark);
+  overflow: hidden;
+  font-family: var(--font-family);
+  justify-content: center; /* Centrer les éléments verticalement */
+  align-items: center; /* Centrer les éléments horizontalement */
+  position: relative;
+}
+
+/* Titre de la modal */
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-top: 10px;
+}
+
+/* Bouton de fermeture */
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close-button:hover {
+  color: var(--primary-color);
+}
+
+/* Bouton OK */
+.ok-button {
+  background-color: var(--primary-color); /* Couleur verte pour le bouton */
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 12px 30px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  width: 90px;
+  margin-bottom: 15px;
+}
+
+/* Effet de survol du bouton OK */
+.ok-button:hover {
+  transform: translateY(-2px);
+}
+
+/* Animation pour la modale */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Affichage de la modal quand elle est active */
+.modal.show {
+  display: flex;
+}
+
+.modal-icon {
+  width: 60px;  /* Ajustez la taille de l'image selon vos besoins */
+  height: 60px;
+  margin-bottom: 10px;
+}
+/* Style for error text */
+.error-text {
+  color: #D1403F;  /* Red color for the error message */
+}
+
+/* Style for the error button */
+.error-button {
+  background-color: #D1403F; /* Red background for the error button */
+  color: white;           /* White text color for contrast */
+  border: none;           /* Remove border */
+}
+/* Style for required fields */
+.required {
+  color: red;
+  margin-left: 5px;
+}
+
+/* Style for error messages */
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+.small-button {
+  padding: 5px 10px; /* Réduit l'espace autour du texte */
+  font-size: 14px;    /* Réduit la taille du texte */
+  height: 30px;       /* Ajuste la hauteur */
+  width: 200px;        /* Adapte la largeur au contenu */
+  margin-right: 10px; /* Ajoute de l'espace à droite des boutons */
+  background-color: #e06927; /* Couleur de fond personnalisée (si nécessaire) */
+  color: white;       /* Couleur du texte */
+  border: none;       /* Retire la bordure */
+  border-radius: 4px; /* Coins arrondis */
+  cursor: pointer;    /* Curseur de survol */
+  transition: transform 0.2s ease; /* Transition au survol */
+}
+
+.small-button:hover {
+  transform: scale(1.05); /* Effet d'agrandissement au survol */
+}
+/* Conteneur principal */
+.contact-form,
+.address-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Espacement entre les champs */
+}
+
+/* Pour les champs à moitié large */
+.half-width {
+  flex: 1 1 calc(50% - 10px); /* 50% de largeur moins l'espacement */
+}
+
+/* Pour les champs prenant toute la largeur */
+.full-width {
+  width: 100%;
+}
+
+/* Pour les labels et champs de saisie */
+.form-group {
+  margin-bottom: 15px;
+}
+
+input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Boutons */
+.add-button,
+.remove-button {
+  padding: 5px 10px;
+  font-size: 12px;
+  margin-right: 10px;
+  background-color: #e06927;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom:12px;
+}
+
+.add-button:hover,
+.remove-button:hover {
+  transform: scale(1.05);
+}
+/* Bouton Archivage */
+/* Bouton Archivage */
+.archive-button .btn {
+  padding: 9px 10px;
+  background: linear-gradient(135deg, #ff4d4d, #b30000); /* Dégradé rouge similaire au bouton Supprimer */
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  gap: 5px;
+  align-items: center; /* Alignement de l'icône et du texte */
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-position 0.4s ease;
+  background-size: 200%;
+  background-position: left; /* Animation du dégradé */
+}
+
+/* Alignement du bouton Archivage à droite */
+.archive-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+  margin-right: 60px;
+}
+
+/* Effet de survol */
+.archive-button .btn:hover {
+  transform: scale(1.08); /* Animation de mise en relief */
+  box-shadow: 0 6px 14px rgba(255, 0, 0, 0.5); /* Ombre rouge */
+  background-position: right; /* Animation du dégradé */
+}
+
+/* Taille de l'icône dans le bouton */
+.archive-button .btn i {
+  font-size: 18px; /* Ajustez la taille de l'icône */
+}
+/* Conteneur pour aligner le logo et le bouton d'upload horizontalement */
+.logo-container {
+  display: flex;
+  align-items: center; /* Aligne verticalement les éléments */
+  gap: 10px; /* Espacement entre le logo et le bouton */
+}
+
+.logo-display {
+  display: flex;
+  align-items: center;
+}
+
+.logo-container img {
+  margin-right: 10px; /* Espacement entre le logo et l'icône */
+}
+
+/* Bouton de téléchargement avec une icône */
+.btn-upload {
+  background-color: transparent; /* Fond transparent */
+  color:  var(--primary-color); /* Couleur de l'icône */
+  border: none;
+  cursor: pointer;
+  font-size: 20px; /* Taille de l'icône */
+  padding: 5px;
+}
+
+.btn-upload:hover {
+  color:  var(--primary-color); /* Changement de couleur au survol */
+}
+
+/* Masquer l'input file */
+input[type="file"] {
+  display: none;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1050;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.modal.show {
+  display: block;
+}
+
+
+
+
+
+
+
+
+
+

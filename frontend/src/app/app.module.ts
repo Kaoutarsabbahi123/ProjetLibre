@@ -10,6 +10,7 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LaboratoiresComponent } from './features/laboratoires/laboratoires.component';
 import { AddLaboratoireComponent } from './features/laboratoires/add-laboratoire/add-laboratoire.component';
+import { InfoLaboratoireComponent } from './features/laboratoires/info-laboratoire/info-laboratoire.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { AddLaboratoireComponent } from './features/laboratoires/add-laboratoire
     SidebarComponent,
     LaboratoiresComponent,
     AddLaboratoireComponent,
+    InfoLaboratoireComponent
   ],
   imports: [
     BrowserModule,

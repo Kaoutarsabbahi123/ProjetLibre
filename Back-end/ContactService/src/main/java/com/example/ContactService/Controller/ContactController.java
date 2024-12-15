@@ -2,6 +2,7 @@ package com.example.ContactService.Controller;
 
 import com.example.ContactService.Entity.Contact;
 import com.example.ContactService.Service.ContactService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +37,25 @@ public class ContactController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(contact);
+    }
+    // Mettre à jour un contact par ID
+    @PutMapping("/{id}")
+    public ResponseEntity<Contact> updateContact(@PathVariable Long id, @RequestBody Contact contact) {
+        try {
+            // Vérifier si le contact existe
+            Contact existingContact = contactService.getContactById(id);
+            if (existingContact == null) {
+                return ResponseEntity.notFound().build(); // Retourner Not Found si le contact n'existe pas
+            }
+
+            // Mettre à jour le contact avec les nouvelles informations
+            contact.setId(id); // S'assurer que l'ID est le bon
+            Contact updatedContact = contactService.saveContact(contact);
+
+            return ResponseEntity.ok(updatedContact); // Retourner le contact mis à jour
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     // Supprimer un contact

@@ -70,4 +70,8 @@ updatePagination(): void {
   onAdd(): void {
     this.router.navigate(['/add-labo']);
   }
+ navigateToInfo(laboratoireId: number): void {
+    const encodedId = btoa(laboratoireId.toString()); // Encodage en Base64
+    this.router.navigate(['/info-labo'], { queryParams: { id: encodedId } });
+  }
 }

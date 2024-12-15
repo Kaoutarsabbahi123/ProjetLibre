@@ -31,18 +31,13 @@ public class AddressService {
         return addressRepository.findById(id);
     }
 
-    // Mettre à jour une adresse
-    public Address updateAddress(Integer id, Address newAddress) {
-        return addressRepository.findById(id).map(address -> {
-            address.setNumVoie(newAddress.getNumVoie());
-            address.setNomVoie(newAddress.getNomVoie());
-            address.setCodePostal(newAddress.getCodePostal());
-            address.setVille(newAddress.getVille());
-            address.setCommune(newAddress.getCommune());
-            return addressRepository.save(address);
-        }).orElseThrow(() -> new RuntimeException("Adresse non trouvée avec l'ID : " + id));
+    public Address updateAddress(Address address) {
+        // Effectuer la mise à jour de l'adresse dans la base de données
+        return addressRepository.save(address); // Sauvegarde l'adresse mise à jour
     }
-
+    public Optional<Address> findById(Integer id) {
+        return addressRepository.findById(id); // Utilise la méthode de Spring Data JPA
+    }
     // Supprimer une adresse par ID
     public void deleteAddress(Integer id) {
         addressRepository.deleteById(id);

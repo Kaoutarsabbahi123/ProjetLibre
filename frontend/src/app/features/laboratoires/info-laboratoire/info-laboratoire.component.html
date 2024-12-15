@@ -1,0 +1,146 @@
+<div class="archive-button" *ngIf="laboratoire?.active">
+  <button class="btn">
+    <i class="fa fa-archive"></i> <!-- Icône d'archivage -->
+    Archiver
+  </button>
+</div>
+<div class="form-container">
+  <h2 class="form-title">Détails du Laboratoire</h2>
+
+  <div class="info-section">
+    <h4>Informations générales</h4>
+    <div class="row">
+      <div class="form-group">
+        <label for="nom">Nom :</label>
+        <input id="nom" [(ngModel)]="laboratoire.nom" placeholder="Nom du laboratoire">
+      </div>
+      <div class="form-group">
+        <label for="logo">Logo :</label>
+
+        <!-- Conteneur Flex pour le logo et le bouton d'upload -->
+        <div class="logo-container">
+          <div class="logo-display">
+            <!-- Affichage du logo actuel ou d'un message si absent -->
+            <img *ngIf="laboratoire.logo" [src]="'data:image/png;base64,' + laboratoire.logo" alt="Logo du laboratoire" width="40" height="40" />
+            <p *ngIf="!laboratoire.logo">Aucun logo disponible</p>
+          </div>
+
+          <!-- Bouton pour télécharger un nouveau logo -->
+          <button class="btn btn-upload" (click)="fileInput.click()">
+            <i class="fa fa-upload"></i>
+            Choisir un logo
+          </button>
+        </div>
+
+        <input #fileInput type="file" accept="image/*" style="display:none" (change)="onLogoChange($event)">
+      </div>
+    </div>
+    <div class="form-group full-width">
+      <label for="nrc">N° de Registre de Commerce :</label>
+      <input id="nrc" [(ngModel)]="laboratoire.nrc" placeholder="N° Registre de Commerce">
+    </div>
+  </div>
+
+  <!-- Section Contacts -->
+  <div class="contact-section">
+    <h4>Contacts</h4>
+    <button
+      type="button"
+      class="add-button small-button"
+      (click)="onAddContact()"
+    >
+      <i class="fas fa-plus"></i> Ajouter un contact
+    </button>
+    <div *ngIf="laboratoire?.contacts?.length > 0; else noContacts">
+      <div *ngFor="let contact of laboratoire.contacts; let i = index" class="contact-item">
+        <div class="contact-form">
+          <div class="form-group half-width">
+            <label>Numéro de Téléphone :</label>
+            <input [(ngModel)]="contact.numTel" placeholder="Numéro de téléphone">
+          </div>
+          <div class="form-group half-width">
+            <label>Fax :</label>
+            <input [(ngModel)]="contact.fax" placeholder="Fax">
+          </div>
+        </div>
+        <div class="form-group full-width">
+          <label>Email :</label>
+          <input [(ngModel)]="contact.email" placeholder="Email">
+        </div>
+
+        <!-- Section Adresses -->
+        <div class="address-section">
+          <h5>Adresses :</h5>
+          <button
+            type="button"
+            class="add-button small-button"
+            (click)="onAddAdresse(i)">
+            <i class="fas fa-plus"></i> Ajouter une adresse
+          </button>
+          <div *ngIf="contact.adresses?.length > 0; else noAddresses">
+            <div *ngFor="let adresse of contact.adresses; let j = index" class="address-item">
+              <div class="address-form">
+                <div class="form-group half-width">
+                  <label>Numéro de Voie :</label>
+                  <input [(ngModel)]="adresse.numVoie" placeholder="Numéro de voie">
+                </div>
+                <div class="form-group half-width">
+                  <label>Nom de Voie :</label>
+                  <input [(ngModel)]="adresse.nomVoie" placeholder="Nom de voie">
+                </div>
+              </div>
+              <div class="address-form">
+                <div class="form-group half-width">
+                  <label>Code Postal :</label>
+                  <input [(ngModel)]="adresse.codePostal" placeholder="Code Postal">
+                </div>
+                <div class="form-group half-width">
+                  <label>Ville :</label>
+                  <input [(ngModel)]="adresse.ville" placeholder="Ville">
+                </div>
+              </div>
+              <div class="form-group full-width">
+                <label>Commune :</label>
+                <input [(ngModel)]="adresse.commune" placeholder="Commune">
+              </div>
+            </div>
+          </div>
+          <ng-template #noAddresses>
+            <p>Aucune adresse disponible</p>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <ng-template #noContacts>
+      <p>Aucun contact disponible</p>
+    </ng-template>
+  </div>
+
+  <div class="form-buttons">
+    <button type="button" (click)="showModal()">Enregistrer</button>
+    <button type="button" (click)="closeModal()">Annuler</button>
+  </div>
+
+</div>
+<!-- Page modale -->
+<div class="modal" tabindex="-1" role="dialog" id="confirmationModal" #confirmationModal>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmer les modifications</h5>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Voulez-vous enregistrer les modifications apportées au laboratoire ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="confirmUpdate()">Confirmer</button>
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Annuler</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
