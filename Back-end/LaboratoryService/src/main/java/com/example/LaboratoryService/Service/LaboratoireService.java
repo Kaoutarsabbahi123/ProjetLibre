@@ -30,8 +30,8 @@ public class LaboratoireService {
     }
 
 
-    // Supprimer un laboratoire
-    public void deleteLaboratoire(Long id) {
-        laboratoireRepository.deleteById(id);
+    public List<Laboratoire> searchLaboratoiresByKeyword(String keyword) {
+        return laboratoireRepository.searchLaboratoiresByKeyword(keyword);
     }
+
 }

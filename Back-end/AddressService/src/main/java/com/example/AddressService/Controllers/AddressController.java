@@ -30,16 +30,36 @@ public class AddressController {
     public List<Address> getAddressesByLaboratoireId(@PathVariable Long contactId) {
         return addressService.findByFkIdcontact(contactId);
     }
-    // Mettre à jour une adresse
+    // Mettre à jour une adresse par ID
     @PutMapping("/{id}")
     public ResponseEntity<Address> updateAddress(@PathVariable Integer id, @RequestBody Address address) {
         try {
-            Address updatedAddress = addressService.updateAddress(id, address);
-            return ResponseEntity.ok(updatedAddress);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
+            // Vérification de l'existence de l'adresse avant la mise à jour
+            Optional<Address> existingAddress = addressService.findById(id);
+            if (!existingAddress.isPresent()) {
+                return ResponseEntity.notFound().build(); // Retourner Not Found si l'adresse n'existe pas
+            }
+
+            // Mise à jour de l'adresse
+            address.setId(id); // S'assurer que l'adresse a le bon ID pour la mise à jour
+            Address updatedAddress = addressService.updateAddress(address);
+
+            return ResponseEntity.ok(updatedAddress); // Retourner l'adresse mise à jour
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Address> getAddressById(@PathVariable Integer id) {
+        Optional<Address> address = addressService.findById(id); // Recherche de l'adresse par ID
+        if (address.isPresent()) {
+            return ResponseEntity.ok(address.get()); // Retourner l'adresse si elle existe
+        } else {
+            return ResponseEntity.notFound().build(); // Retourner Not Found si l'adresse n'existe pas
+        }
+    }
+
 
     // Supprimer une adresse par ID
     @DeleteMapping("/{id}")

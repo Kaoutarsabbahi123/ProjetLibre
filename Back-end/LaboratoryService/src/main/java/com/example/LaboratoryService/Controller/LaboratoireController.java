@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/laboratoires")
 public class LaboratoireController {
@@ -194,115 +195,172 @@ public class LaboratoireController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // Erreur interne
         }
     }
-
-
-
-}
-
-
-
-   /* @PutMapping("/{id}")
-    public ResponseEntity<LaboRequest> updateLaboratoire(@PathVariable Long id, @RequestBody LaboRequest laboRequest) {
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Laboratoire> updateLaboratoireWithContactsAndAddresses(
+            @PathVariable Long id,
+            @RequestParam(value = "nom", required = false) String nom,
+            @RequestParam(value = "logo", required = false) MultipartFile logo,
+            @RequestParam(value = "nrc", required = false) String nrc,
+            @RequestParam(value = "active", required = false) Boolean active,
+            @RequestParam(value = "dateActivation", required = false) LocalDate dateActivation,
+            @RequestParam(value = "contacts", required = false) String contactsJson // Recevoir le JSON des contacts
+    ) throws IOException {
         try {
-            // Récupérer le laboratoire depuis la base de données
-            Optional<Laboratoire> laboOptional = laboratoireService.getLaboratoireById(id);
+            System.out.println("Contacts reçus : " + contactsJson);
 
-            // Vérifier si le laboratoire est présent dans l'Optional
+            // Vérifier si le laboratoire existe
+            Optional<Laboratoire> laboOptional = laboratoireService.getLaboratoireById(id);
             if (!laboOptional.isPresent()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // Laboratoire non trouvé
             }
 
             Laboratoire labo = laboOptional.get(); // Extraire le laboratoire de l'Optional
 
-            // Mettre à jour les informations du laboratoire
-            labo.setNom(laboRequest.getNom());
-            labo.setLogo(laboRequest.getLogo());
-            labo.setNrc(laboRequest.getNrc());
-            labo.setActive(laboRequest.isActive());
-            labo.setDateActivation(laboRequest.getDateActivation());
+            // Modifier les propriétés du laboratoire si elles sont fournies
+            if (nom != null && !nom.isEmpty()) {
+                labo.setNom(nom);
+            }
+            if (nrc != null && !nrc.isEmpty()) {
+                labo.setNrc(nrc);
+            }
+            if (active != null) {
+                labo.setActive(active);
+            }
+            if (dateActivation != null) {
+                labo.setDateActivation(dateActivation);
+            }
+
+            // Si un nouveau logo est fourni, on le remplace
+            if (logo != null && !logo.isEmpty()) {
+                labo.setLogo(logo.getBytes());
+            }
 
             // Sauvegarder les modifications du laboratoire
-            laboratoireService.saveLaboratoire(labo);
+            Laboratoire updatedLaboratoire = laboratoireService.saveLaboratoire(labo);
 
-            // Récupérer les informations de contact via le service Contact
-            ResponseEntity<List<ContactRequest>> contactResponse = restTemplate.exchange(
-                    contactServiceUrl + "/api/contacts/laboratoire/" + id,
-                    HttpMethod.GET,
-                    null,
-                    new ParameterizedTypeReference<List<ContactRequest>>() {}
-            );
+            // Si des contacts sont fournis dans le JSON, on les met à jour
+            if (contactsJson != null && !contactsJson.isEmpty()) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                List<ContactRequest> contacts = objectMapper.readValue(contactsJson, new TypeReference<List<ContactRequest>>() {});
 
-            // Gérer le cas où aucun contact n'est trouvé
-            List<ContactRequest> contactList = contactResponse.getBody();
-            ContactRequest contact = (contactList != null && !contactList.isEmpty()) ? contactList.get(0) : null;
+                for (ContactRequest contactRequest : contacts) {
+                    if (contactRequest.getId() != null) {
+                        // Si l'ID du contact est présent, on effectue une mise à jour
+                        ResponseEntity<ContactRequest> contactResponse = restTemplate.exchange(
+                                contactServiceUrl + "/api/contacts/" + contactRequest.getId(),
+                                HttpMethod.GET,
+                                null,
+                                ContactRequest.class
+                        );
 
-            // Mettre à jour ou créer un nouveau contact si nécessaire
-            if (contact != null) {
-                contact.setEmail(laboRequest.getEmail());
-                contact.setNumTel(laboRequest.getNumTel());
-                contact.setFax(laboRequest.getFax());
+                        ContactRequest existingContact = contactResponse.getBody();
+                        if (existingContact != null) {
+                            // Mettre à jour le contact
+                            existingContact.setNumTel(contactRequest.getNumTel());
+                            existingContact.setEmail(contactRequest.getEmail());
+                            existingContact.setFax(contactRequest.getFax());
+                            restTemplate.put(contactServiceUrl + "/api/contacts/" + existingContact.getId(), existingContact);
+                        } else {
+                            // Si le contact n'existe pas, on le crée
+                            contactRequest.setFkIdLaboratoire(updatedLaboratoire.getId());
+                            ResponseEntity<ContactRequest> newContactResponse = restTemplate.postForEntity(contactServiceUrl + "/api/contacts", contactRequest, ContactRequest.class);
+                            contactRequest.setId(newContactResponse.getBody().getId()); // Récupérer l'ID du contact créé
+                        }
+                    } else {
+                        // Si l'ID est null, on crée un nouveau contact
+                        contactRequest.setFkIdLaboratoire(updatedLaboratoire.getId());
+                        ResponseEntity<ContactRequest> newContactResponse = restTemplate.postForEntity(contactServiceUrl + "/api/contacts", contactRequest, ContactRequest.class);
+                        contactRequest.setId(newContactResponse.getBody().getId()); // Récupérer l'ID du contact créé
+                    }
 
-                // Effectuer la mise à jour du contact via le service Contact
-                restTemplate.put(contactServiceUrl + "/api/contacts/" + contact.getId(), contact);
-            } else {
-                // Si aucun contact n'existe, créer un nouveau contact
-                ContactRequest newContact = new ContactRequest();
-                newContact.setFkIdLaboratoire(labo.getId());
-                newContact.setEmail(laboRequest.getEmail());
-                newContact.setNumTel(laboRequest.getNumTel());
-                newContact.setFax(laboRequest.getFax());
+                    // Traitez ensuite les adresses
+                    List<AdressRequest> addresses = contactRequest.getAdresses();
+                    if (addresses != null && !addresses.isEmpty()) {
+                        for (AdressRequest addressRequest : addresses) {
+                            if (addressRequest.getId() != null) {
+                                // Vérifier si l'adresse existe et la mettre à jour si nécessaire
+                                ResponseEntity<AdressRequest> addressResponse = restTemplate.exchange(
+                                        adresseServiceUrl + "/api/addresses/" + addressRequest.getId(),
+                                        HttpMethod.GET,
+                                        null,
+                                        AdressRequest.class
+                                );
 
-                restTemplate.postForEntity(contactServiceUrl + "/api/contacts", newContact, ContactRequest.class);
-            }
-
-            // Récupérer et mettre à jour les adresses associées au contact via le service Address
-            if (contact != null) {
-                ResponseEntity<List<AdressRequest>> addressResponse = restTemplate.exchange(
-                        adresseServiceUrl + "/api/addresses/contact/" + contact.getId(),
-                        HttpMethod.GET,
-                        null,
-                        new ParameterizedTypeReference<List<AdressRequest>>() {}
-                );
-
-                List<AdressRequest> addresses = addressResponse.getBody();
-
-                // Mettre à jour les adresses existantes ou ajouter des nouvelles adresses
-                if (addresses != null) {
-                    for (AdressRequest address : addresses) {
-                        // Vous pouvez mettre à jour les adresses ici selon la logique de votre application
-                        // Exemple : On garde les adresses reçues comme il faut ou on peut les remplacer.
+                                AdressRequest existingAddress = addressResponse.getBody();
+                                if (existingAddress != null) {
+                                    // Mettre à jour l'adresse
+                                    restTemplate.put(adresseServiceUrl + "/api/addresses/" + existingAddress.getId(), addressRequest);
+                                } else {
+                                    // Créer une nouvelle adresse
+                                    addressRequest.setFkIdcontact(contactRequest.getId());
+                                    restTemplate.postForEntity(adresseServiceUrl + "/api/addresses", addressRequest, AdressRequest.class);
+                                }
+                            } else {
+                                // Si l'adresse n'a pas d'ID, créer une nouvelle adresse
+                                addressRequest.setFkIdcontact(contactRequest.getId());
+                                restTemplate.postForEntity(adresseServiceUrl + "/api/addresses", addressRequest, AdressRequest.class);
+                            }
+                        }
                     }
                 }
-
-                // Ajouter des nouvelles adresses si elles existent dans la requête
-                if (laboRequest.getAdresses() != null && !laboRequest.getAdresses().isEmpty()) {
-                    for (AdressRequest addressRequest : laboRequest.getAdresses()) {
-                        addressRequest.setFkIdcontact(contact.getId());
-                        restTemplate.postForEntity(adresseServiceUrl + "/api/addresses", addressRequest, AdressRequest.class);
-                    }
-                }
             }
 
-            // Créer un DTO pour encapsuler les informations mises à jour du laboratoire, du contact et des adresses
-            LaboRequest updatedLaboratoireDTO = new LaboRequest(
-                    labo.getNom(),
-                    labo.getLogo(),
-                    labo.getNrc(),
-                    labo.isActive(),
-                    labo.getDateActivation(),
-                    laboRequest.getEmail(), // Email mis à jour
-                    laboRequest.getNumTel(), // Téléphone mis à jour
-                    laboRequest.getFax(), // Fax mis à jour
-                    laboRequest.getAdresses() // Liste des adresses mises à jour
-            );
+            return ResponseEntity.ok(updatedLaboratoire); // Retourner le laboratoire mis à jour
 
-            return ResponseEntity.ok(updatedLaboratoireDTO);
+        } catch (IOException e) {
+            System.err.println("Erreur lors du traitement du fichier logo ou du JSON : " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        } catch (Exception e) {
+            System.err.println("Erreur inattendue : " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @PutMapping("/archive/{id}")
+    public ResponseEntity<String> archiveLaboratoire(@PathVariable Long id) {
+        try {
+            // Vérifier si le laboratoire existe
+            Optional<Laboratoire> laboOptional = laboratoireService.getLaboratoireById(id);
+            if (!laboOptional.isPresent()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Laboratoire non trouvé");
+            }
+
+            // Archiver le laboratoire en mettant `active` à false
+            Laboratoire laboratoire = laboOptional.get();
+            laboratoire.setActive(false);
+            laboratoireService.saveLaboratoire(laboratoire);
+
+            return ResponseEntity.ok("Laboratoire archivé avec succès");
+
+        } catch (Exception e) {
+            System.err.println("Erreur lors de l'archivage du laboratoire : " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erreur lors de l'archivage du laboratoire");
+        }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Laboratoire>> searchLaboratoires(@RequestParam("keyword") String keyword) {
+        try {
+            // Rechercher les laboratoires par mot-clé
+            List<Laboratoire> foundLaboratoires = laboratoireService.searchLaboratoiresByKeyword(keyword);
+
+            if (foundLaboratoires.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null); // Aucun laboratoire trouvé
+            }
+
+            return ResponseEntity.ok(foundLaboratoires);
 
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // Erreur interne
         }
-    }*/
+    }
+
+
+
+}
+
 
 
 
