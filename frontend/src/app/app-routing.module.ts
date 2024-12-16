@@ -19,6 +19,12 @@ const routes: Routes = [
       { path: 'laboratoires', component: LaboratoiresComponent },
       { path: 'add-labo', component: AddLaboratoireComponent },
       { path: 'profile', component: ProfileComponent },
+      {
+                    path: 'info-labo',
+                    component: InfoLaboratoireComponent,
+                    // Optionnel : sécurisation avec des paramètres encodés
+                    canActivate: [AuthGuard]
+                  },
     ],
   },
 ];

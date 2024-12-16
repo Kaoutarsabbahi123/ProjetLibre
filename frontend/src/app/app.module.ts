@@ -13,7 +13,7 @@ import { AddLaboratoireComponent } from './features/laboratoires/add-laboratoire
 import { ProfileComponent } from './features/profile/profile.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-
+import { InfoLaboratoireComponent } from './features/laboratoires/info-laboratoire/info-laboratoire.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,8 @@ import { DatePipe } from '@angular/common';
     SidebarComponent,
     LaboratoiresComponent,
     AddLaboratoireComponent,
-    ProfileComponent
+    ProfileComponent,
+    InfoLaboratoireComponent
 
   ],
   imports: [
