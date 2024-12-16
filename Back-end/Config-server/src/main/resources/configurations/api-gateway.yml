@@ -66,6 +66,33 @@ spring:
             - DedupeResponseHeader=Access-Control-Allow-Credentials, RETAIN_FIRST
             - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_FIRST  # Ajout d'une nouvelle ligne avec la bonne syntaxe
 
+        - id: MicroTest-service
+          uri: http://localhost:8087
+          predicates:
+            - Path=/testanalyses/**
+          filters:
+            #- AuthenticationFilter
+            - DedupeResponseHeader=Access-Control-Allow-Credentials, RETAIN_FIRST
+            - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_FIRST  # Ajout d'une nouvelle ligne avec la bonne syntaxe
+
+        - id: epreuve-service
+          uri: http://localhost:8889
+          predicates:
+            - Path=/epreuves/**
+          filters:
+            #- AuthenticationFilter
+            - DedupeResponseHeader=Access-Control-Allow-Credentials, RETAIN_FIRST
+            - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_FIRST  # Ajout d'une nouvelle ligne avec la bonne syntaxe
+
+        - id: analyse-service
+          uri: http://localhost:8887
+          predicates:
+            - Path=/analyses/**
+          filters:
+            #- AuthenticationFilter
+            - DedupeResponseHeader=Access-Control-Allow-Credentials, RETAIN_FIRST
+            - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_FIRST
+
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Credentials, RETAIN_FIRST
         - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_FIRST
