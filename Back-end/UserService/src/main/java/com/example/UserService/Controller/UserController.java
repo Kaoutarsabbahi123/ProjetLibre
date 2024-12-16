@@ -71,6 +71,6 @@ public class UserController {
 
         userService.updatePassword(email, oldPassword, newPassword);
 
-        return ResponseEntity.ok("Password updated successfully");
+        return ResponseEntity.noContent().build();
     }
 }

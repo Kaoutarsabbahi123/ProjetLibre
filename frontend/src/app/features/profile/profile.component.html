@@ -1,0 +1,123 @@
+<div class="container my-5">
+  <!-- Formulaire des données utilisateur -->
+  <div class="card shadow-lg mb-4 mx-auto" style="max-width: 600px;">
+    <div
+      class="card-header text-center py-3"
+      style="background-color: white; color: var(--primary-color); border-bottom: 2px solid var(--primary-color);"
+    >
+      <h4>Informations de l'utilisateur</h4>
+    </div>
+    <div class="card-body p-4">
+      <form (ngSubmit)="updateProfile()">
+        <!-- Email field -->
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="text"
+            id="email"
+            class="form-control form-control-sm border-0 shadow-sm"
+            [(ngModel)]="email"
+            name="email"
+            disabled
+          />
+        </div>
+
+        <!-- Nom Complet field -->
+        <div class="form-group mt-3">
+          <label for="nomComplet">Nom Complet</label>
+          <input
+            type="text"
+            id="nomComplet"
+            class="form-control form-control-sm border-0 shadow-sm"
+            [(ngModel)]="nomComplet"
+            name="nomComplet"
+            required
+          />
+        </div>
+
+        <!-- Numéro de Téléphone field -->
+        <div class="form-group mt-3">
+          <label for="numTel">Numéro de Téléphone</label>
+          <input
+            type="text"
+            id="numTel"
+            class="form-control form-control-sm border-0 shadow-sm"
+            [(ngModel)]="numTel"
+            name="numTel"
+            required
+          />
+        </div>
+
+        <!-- Role field -->
+        <div class="form-group mt-3">
+          <label for="role">Rôle</label>
+          <input
+            type="text"
+            id="role"
+            class="form-control form-control-sm border-0 shadow-sm"
+            [(ngModel)]="role"
+            name="role"
+            disabled
+          />
+        </div>
+
+        <!-- Submit button -->
+        <button
+          type="submit"
+          class="btn text-white w-100 mt-4 py-2 font-weight-bold shadow-sm"
+          style="background-color: var(--primary-color); border-radius: 8px;"
+        >
+          Mettre à jour
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Formulaire de modification du mot de passe -->
+  <div class="card shadow-lg mx-auto" style="max-width: 600px;">
+    <div
+      class="card-header d-flex justify-content-between align-items-center py-3"
+      style="background-color: white; color: var(--primary-color); border-bottom: 2px solid var(--primary-color); cursor: pointer;"
+      (click)="togglePasswordForm()"
+    >
+      <h4 class="mb-0">Modification du mot de passe</h4>
+      <span>{{ passwordFormVisible ? '▲' : '▼' }}</span>
+    </div>
+    <div class="card-body p-4" *ngIf="passwordFormVisible">
+      <form (ngSubmit)="updatePassword()" #passwordForm="ngForm">
+        <div class="form-group">
+          <label for="oldPassword">Ancien mot de passe</label>
+          <input
+            type="password"
+            id="oldPassword"
+            class="form-control form-control-sm border-0 shadow-sm"
+            [(ngModel)]="passwordData.oldPassword"
+            name="oldPassword"
+            required
+          />
+        </div>
+
+        <div class="form-group mt-3">
+          <label for="newPassword">Nouveau mot de passe</label>
+          <input
+            type="password"
+            id="newPassword"
+            class="form-control form-control-sm border-0 shadow-sm"
+            [(ngModel)]="passwordData.newPassword"
+            name="newPassword"
+            required
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="btn text-white w-100 mt-4 py-2 font-weight-bold shadow-sm"
+          style="background-color: var(--primary-color); border-radius: 8px;"
+          [disabled]="!passwordForm.form.valid"
+        >
+          Modifier le mot de passe
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

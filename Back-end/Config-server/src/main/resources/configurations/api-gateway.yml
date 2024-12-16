@@ -14,7 +14,7 @@ spring:
         add-to-simple-url-handler-mapping: true
         corsConfigurations:
           '[/**]':
-            allowedOrigins: "*"
+            allowedOrigins: "http://localhost:4200"
             allowedHeaders:
               - "Origin"
               - "Content-Type"
@@ -24,7 +24,11 @@ spring:
             allowedMethods:
               - POST
               - GET
+              - PUT
+              - PATCH
+              - DELETE
               - OPTIONS
+            allowCredentials: true
 
       routes:
         - id: auth-service
@@ -48,6 +52,10 @@ spring:
           uri: http://localhost:8886
           predicates:
             - Path=/api/laboratoires/**
+          filters:
+            #- AuthenticationFilter
+            - DedupeResponseHeader=Access-Control-Allow-Credentials, RETAIN_FIRST
+            - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_FIRST
 
         - id: address-service
           uri: http://localhost:8084
@@ -66,5 +74,3 @@ management:
   tracing:
     sampling:
       probability: 1.0
-
-

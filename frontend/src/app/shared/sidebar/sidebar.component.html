@@ -20,12 +20,6 @@
             <span class="text">Laboratoires</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">
-            <span class="icon"><i class="fas fa-flask"></i></span>
-            <span class="text">Laboratoires</span>
-          </a>
-        </li>
       </ul>
     </div>
   </nav>
@@ -63,12 +57,12 @@
               class="dropdown-menu"
             >
               <li>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" routerLink="/profile">
                   <i class="fas fa-user-circle"></i> Mon Profil
                 </a>
               </li>
               <li>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" (click)="logout()">
                   <i class="fas fa-sign-out-alt"></i> Déconnexion
                 </a>
               </li>

@@ -10,6 +10,10 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LaboratoiresComponent } from './features/laboratoires/laboratoires.component';
 import { AddLaboratoireComponent } from './features/laboratoires/add-laboratoire/add-laboratoire.component';
+import { ProfileComponent } from './features/profile/profile.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
+
 
 @NgModule({
   declarations: [
@@ -18,16 +22,20 @@ import { AddLaboratoireComponent } from './features/laboratoires/add-laboratoire
     SidebarComponent,
     LaboratoiresComponent,
     AddLaboratoireComponent,
+    ProfileComponent
+
   ],
   imports: [
+     ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
     RouterModule,
-    NgbModule
+    NgbModule,
+
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

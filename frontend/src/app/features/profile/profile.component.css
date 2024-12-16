@@ -1,0 +1,64 @@
+
+.success {
+  color: green;
+}
+
+.error {
+  color: red;
+}
+:root {
+  --primary-color: #104b60;
+  --secondary-color: #2cbce4;
+  --font-family: 'Roboto', sans-serif;
+  --text-color: #343a40;
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-dark: rgba(0, 0, 0, 0.2);
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--text-color);
+  background-color: #f8f9fa;
+}
+
+.card {
+  border: none;
+  border-radius: 0.8rem;
+  box-shadow: 0 4px 6px var(--shadow-light);
+}
+
+.card-header {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+.form-control {
+  border-radius: 0.5rem;
+  font-size: 0.9rem;
+}
+
+button {
+  border-radius: 0.5rem;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.container {
+  max-width: 700px;
+}
+
+.arrow {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.arrow.collapsed {
+  transform: rotate(-90deg);
+}
