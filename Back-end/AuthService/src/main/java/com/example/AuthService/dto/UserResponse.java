@@ -9,7 +9,6 @@ public class UserResponse {
     private String password;
     private String email;
     private String nomComplet;
-    private String profession;
     private String numTel;
     private String role;
     private Integer fkIdLaboratoire;
