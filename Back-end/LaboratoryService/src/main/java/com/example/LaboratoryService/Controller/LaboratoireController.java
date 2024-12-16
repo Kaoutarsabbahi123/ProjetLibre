@@ -263,15 +263,17 @@ public class LaboratoireController {
                         } else {
                             // Si le contact n'existe pas, on le crée
                             contactRequest.setFkIdLaboratoire(updatedLaboratoire.getId());
-                            restTemplate.postForEntity(contactServiceUrl + "/api/contacts", contactRequest, ContactRequest.class);
+                            ResponseEntity<ContactRequest> newContactResponse = restTemplate.postForEntity(contactServiceUrl + "/api/contacts", contactRequest, ContactRequest.class);
+                            contactRequest.setId(newContactResponse.getBody().getId()); // Récupérer l'ID du contact créé
                         }
                     } else {
                         // Si l'ID est null, on crée un nouveau contact
                         contactRequest.setFkIdLaboratoire(updatedLaboratoire.getId());
-                        restTemplate.postForEntity(contactServiceUrl + "/api/contacts", contactRequest, ContactRequest.class);
+                        ResponseEntity<ContactRequest> newContactResponse = restTemplate.postForEntity(contactServiceUrl + "/api/contacts", contactRequest, ContactRequest.class);
+                        contactRequest.setId(newContactResponse.getBody().getId()); // Récupérer l'ID du contact créé
                     }
 
-                    // Traitez ensuite les adresses comme dans votre code actuel
+                    // Traitez ensuite les adresses
                     List<AdressRequest> addresses = contactRequest.getAdresses();
                     if (addresses != null && !addresses.isEmpty()) {
                         for (AdressRequest addressRequest : addresses) {
@@ -334,6 +336,24 @@ public class LaboratoireController {
             System.err.println("Erreur lors de l'archivage du laboratoire : " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Erreur lors de l'archivage du laboratoire");
+        }
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<Laboratoire>> searchLaboratoires(@RequestParam("keyword") String keyword) {
+        try {
+            // Rechercher les laboratoires par mot-clé
+            List<Laboratoire> foundLaboratoires = laboratoireService.searchLaboratoiresByKeyword(keyword);
+
+            if (foundLaboratoires.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null); // Aucun laboratoire trouvé
+            }
+
+            return ResponseEntity.ok(foundLaboratoires);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // Erreur interne
         }
     }
 

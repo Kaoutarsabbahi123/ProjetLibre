@@ -311,5 +311,9 @@ body {
    box-shadow: none;
    outline: none;
  }
+.highlight {
+  background-color: yellow;
+  font-weight: bold;
+}
 
 

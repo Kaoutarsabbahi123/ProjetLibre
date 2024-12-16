@@ -7,6 +7,7 @@
         type="text"
         placeholder="Rechercher un laboratoire..."
         [(ngModel)]="searchText"
+        (input)="onSearch()"
       />
     </div>
 
@@ -26,9 +27,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let lab of paginatedData"
-        (click)="navigateToInfo(lab.id)"
-        class="clickable-row">
+    <tr *ngFor="let lab of paginatedData" (click)="navigateToInfo(lab.id)" class="clickable-row">
       <td>{{ lab.nom }}</td>
       <td>
         <img *ngIf="lab.logo" [src]="'data:image/png;base64,' + lab.logo" alt="Logo" width="40" height="40" />
@@ -40,7 +39,7 @@
             {{ lab.active ? 'Actif' : 'Inactif' }}
           </span>
       </td>
-      <td>{{ lab.dateActivation | date: 'dd/MM/yyyy' }}</td>
+      <td>{{ lab.dateActivation ? (lab.dateActivation | date: 'dd/MM/yyyy') : '' }}</td>
     </tr>
     </tbody>
   </table>
@@ -58,5 +57,4 @@
       ...
     </button>
   </div>
-
 </div>

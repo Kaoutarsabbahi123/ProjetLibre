@@ -31,5 +31,12 @@ export class LaboratoireService {
          withCredentials: true // if you are dealing with authentication tokens or cookies
      });
  }
+  archiveLaboratoire(id: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/archive/${id}`, null, {
+      responseType: 'text' // Force Angular à ne pas parser en JSON
+    });
+  }
+
+
 
 }

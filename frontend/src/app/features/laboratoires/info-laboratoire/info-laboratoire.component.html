@@ -1,8 +1,14 @@
 <div class="archive-button" *ngIf="laboratoire?.active">
-  <button class="btn">
+  <button class="btn" (click)="showArchiveModal()">
     <i class="fa fa-archive"></i> <!-- Icône d'archivage -->
     Archiver
   </button>
+</div>
+<div *ngIf="successMessageVisible" class="success-message">
+  Laboratoire mis à jour avec succès.
+</div>
+<div *ngIf="successMessageSuppressionVisible" class="success-message">
+  Laboratoire est supprimé avec succès.
 </div>
 <div class="form-container">
   <h2 class="form-title">Détails du Laboratoire</h2>
@@ -117,7 +123,7 @@
   </div>
 
   <div class="form-buttons">
-    <button type="button" (click)="showModal()">Enregistrer</button>
+    <button type="submit" [disabled]="!isFormModified()" (click)="showModal()">Enregistrer</button>
     <button type="button" (click)="closeModal()">Annuler</button>
   </div>
 
@@ -136,11 +142,31 @@
         <p>Voulez-vous enregistrer les modifications apportées au laboratoire ?</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="confirmUpdate()">Confirmer</button>
-        <button type="button" class="btn btn-secondary" (click)="closeModal()">Annuler</button>
+        <button type="submit" class="button-primary" (click)="confirmUpdate()">Confirmer</button>
+        <button type="button"  (click)="closeModal()">Annuler</button>
       </div>
     </div>
   </div>
 </div>
 
+<!-- Modale de confirmation pour l'archivage -->
+<div class="modal" tabindex="-1" role="dialog" id="confirmationModalSupp" #confirmationModalSupp>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmer l'archivage</h5>
+        <button type="button" class="close" aria-label="Close" (click)="closeModalArchiver()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Êtes-vous sûr de vouloir archiver ce laboratoire ? Cette action est irréversible.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" (click)="confirmArchive()">Confirmer</button>
+        <button type="button"  (click)="closeModalArchiver()">Annuler</button>
+      </div>
+    </div>
+  </div>
+</div>
 
