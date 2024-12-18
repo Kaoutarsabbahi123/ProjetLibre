@@ -20,6 +20,10 @@ public class User {
     private String numTel;
     private String role;
     private Integer fkIdLaboratoire;
+    private boolean active;
+    public boolean getActive() {
+        return active;
+    }
 
     public User(String email, String password) {
         this.email = email;

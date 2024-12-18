@@ -10,6 +10,10 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
+   createUser(userData: any): Observable<any> {
+      return this.http.post<any>(`${this.apiUrl}/create`, userData);
+   }
+
   getUserProfile(email: string): Observable<any> {
     const url = `${this.apiUrl}/profile?email=${email}`;
     return this.http.get(url);
@@ -23,4 +27,8 @@ export class UserService {
     const url = `${this.apiUrl}/password?email=${email}`;
     return this.http.put(url, { oldPassword, newPassword });
   }
+ getAllUsers(): Observable<any[]> {
+   return this.http.get<any[]>(`${this.apiUrl}/list`);
+ }
+
 }

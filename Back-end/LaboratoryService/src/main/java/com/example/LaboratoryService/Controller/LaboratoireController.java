@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -339,23 +340,49 @@ public class LaboratoireController {
         }
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<List<Laboratoire>> searchLaboratoires(@RequestParam("keyword") String keyword) {
+    @GetMapping("/nom/{id}")
+    public ResponseEntity<String> getLaboratoireNomById(@PathVariable Long id) {
         try {
-            // Rechercher les laboratoires par mot-clé
-            List<Laboratoire> foundLaboratoires = laboratoireService.searchLaboratoiresByKeyword(keyword);
+            // Récupérer le laboratoire par ID
+            Optional<Laboratoire> laboOptional = laboratoireService.getLaboratoireById(id);
 
-            if (foundLaboratoires.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null); // Aucun laboratoire trouvé
+            // Vérifier si le laboratoire est présent dans l'Optional
+            if (!laboOptional.isPresent()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Laboratoire non trouvé");
             }
 
-            return ResponseEntity.ok(foundLaboratoires);
+            // Récupérer le nom du laboratoire
+            Laboratoire labo = laboOptional.get();
+            String nomLaboratoire = labo.getNom();
+
+            // Retourner le nom du laboratoire
+            return ResponseEntity.ok(nomLaboratoire);
 
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // Erreur interne
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur interne");
         }
     }
+    @GetMapping("/noms")
+    public ResponseEntity<List<Object[]>> getAllLaboratoiresNom() {
+        try {
+            // Récupérer tous les laboratoires
+            List<Laboratoire> laboratoires = laboratoireService.getAllLaboratoires();
+
+            // Créer une liste de tableaux contenant l'ID et le nom des laboratoires
+            List<Object[]> laboratoiresInfo = laboratoires.stream()
+                    .map(labo -> new Object[]{labo.getId(), labo.getNom()})
+                    .collect(Collectors.toList());
+
+            // Retourner la liste des laboratoires avec ID et nom
+            return ResponseEntity.ok(laboratoiresInfo);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.emptyList());
+        }
+    }
+
 
 
 

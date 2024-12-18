@@ -34,20 +34,32 @@ export class LaboratoiresComponent implements OnInit {
     );
   }
 
-  onSearch(): void {
-    if (this.searchText.trim()) {
-      // Filtrage en fonction de searchText
-      this.laboratoires = this.laboratoires.filter(lab =>
-        lab.nom.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        lab.nrc.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        (lab.active ? 'Actif' : 'Inactif').toLowerCase().includes(this.searchText.toLowerCase())
-      );
-    } else {
-      // Réinitialiser la liste des laboratoires si searchText est vide
-      this.fetchLaboratoires();
-    }
-    this.updatePagination();
-  }
+ onSearch(): void {
+   if (this.searchText.trim()) {
+     const searchTextLower = this.searchText.toLowerCase();
+
+     this.laboratoires = this.laboratoires.filter(lab => {
+       const nom = lab.nom ? lab.nom.toLowerCase() : '';
+       const nrc = lab.nrc ? lab.nrc.toLowerCase() : '';
+       const statut = lab.active ? 'actif' : 'inactif';
+       const dateActivation = lab.dateActivation
+         ? new Date(lab.dateActivation).toLocaleDateString().toLowerCase()
+         : ''; // Conversion de la date en chaîne lisible
+
+       return (
+         nom.includes(searchTextLower) ||
+         nrc.includes(searchTextLower) ||
+         statut.includes(searchTextLower) ||
+         dateActivation.includes(searchTextLower)
+       );
+     });
+   } else {
+     // Réinitialiser la liste des laboratoires si searchText est vide
+     this.fetchLaboratoires();
+   }
+   this.updatePagination();
+ }
+
 
   updatePagination(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;

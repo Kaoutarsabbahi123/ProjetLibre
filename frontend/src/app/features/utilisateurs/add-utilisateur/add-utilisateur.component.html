@@ -1,0 +1,124 @@
+<div *ngIf="successMessageVisible" class="success-message">
+  {{ messageContent }}
+</div>
+
+<div *ngIf="errorMessageVisible" class="error-messageAdd">
+  {{ messageContent }}
+</div>
+
+<div class="form-container">
+  <h2 class="form-title">Ajouter un Utilisateur</h2>
+  <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+    <div class="info-section">
+      <div class="row">
+        <!-- Nom Complet -->
+        <div class="form-group half-width">
+          <label for="nomComplet">Nom Complet : <span class="required">*</span></label>
+          <input
+            type="text"
+            id="nomComplet"
+            placeholder="Nom complet"
+            name="nomComplet"
+            [(ngModel)]="nomComplet"
+            required
+            #nomCompletField="ngModel" />
+          <div *ngIf="nomCompletField.invalid && nomCompletField.touched" class="error-message">
+            Le nom complet est requis.
+          </div>
+        </div>
+
+        <!-- Numéro de Téléphone -->
+        <div class="form-group half-width">
+          <label for="numTel">Numéro de Téléphone : <span class="required">*</span></label>
+          <input
+            type="text"
+            id="numTel"
+            placeholder="Numéro de téléphone"
+            name="numTel"
+            [(ngModel)]="numTel"
+            required
+            #numTelField="ngModel" />
+          <div *ngIf="numTelField.invalid && numTelField.touched" class="error-message">
+            Le numéro de téléphone est requis.
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- Email -->
+        <div class="form-group half-width">
+          <label for="email">Email : <span class="required">*</span></label>
+          <input
+            type="email"
+            id="email"
+            placeholder="Email"
+            name="email"
+            [(ngModel)]="email"
+            required
+            #emailField="ngModel" />
+          <div *ngIf="emailField.invalid && emailField.touched" class="error-message">
+            L'email est requis.
+          </div>
+        </div>
+        <!-- Liste déroulante Laboratoire -->
+        <div class="form-group half-width">
+          <label for="laboratoire">Laboratoire : <span class="required">*</span></label>
+          <select
+            id="laboratoire"
+            name="laboratoire"
+            [(ngModel)]="laboratoire"
+            required
+            #laboratoireField="ngModel">
+            <option value="" disabled selected>Choisir un laboratoire</option>
+            <option *ngFor="let labo of laboratoires" [value]="labo.id">{{ labo.nom }}</option>
+          </select>
+          <div *ngIf="laboratoireField.invalid && laboratoireField.touched" class="error-message">
+            Le laboratoire est requis.
+          </div>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="form-group half-width">
+          <label for="password">Mot de passe : <span class="required">*</span></label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Mot de passe"
+            name="password"
+            [(ngModel)]="password"
+            required
+            #passwordField="ngModel" />
+          <div *ngIf="passwordField.invalid && passwordField.touched" class="error-message">
+            Le mot de passe est requis.
+          </div>
+        </div>
+
+        <div class="form-group half-width">
+          <label for="confirmPassword">Confirmer le Mot de passe : <span class="required">*</span></label>
+          <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Confirmer le mot de passe"
+            name="confirmPassword"
+            [(ngModel)]="confirmPassword"
+            required
+            #confirmPasswordField="ngModel" />
+          <div *ngIf="confirmPasswordField.invalid && confirmPasswordField.touched" class="error-message">
+            La confirmation du mot de passe est requise.
+          </div>
+          <div *ngIf="!passwordsMatch && confirmPasswordField.touched" class="error-message">
+            Les mots de passe ne correspondent pas.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="form-buttons">
+      <button type="submit" [disabled]="userForm.invalid">Enregistrer</button>
+      <button type="button" (click)="onCancel()">Annuler</button>
+    </div>
+  </form>
+</div>

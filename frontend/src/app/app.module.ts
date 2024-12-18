@@ -14,6 +14,9 @@ import { ProfileComponent } from './features/profile/profile.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DatePipe } from '@angular/common';
 import { InfoLaboratoireComponent } from './features/laboratoires/info-laboratoire/info-laboratoire.component';
+import { UtilisateursComponent } from './features/utilisateurs/utilisateurs.component';
+import { AddUtilisateurComponent } from './features/Utilisateurs/add-utilisateur/add-utilisateur.component';
+import { InfoUtilisateurComponent } from './features/Utilisateurs/info-utilisateur/info-utilisateur.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,10 @@ import { InfoLaboratoireComponent } from './features/laboratoires/info-laboratoi
     LaboratoiresComponent,
     AddLaboratoireComponent,
     ProfileComponent,
-    InfoLaboratoireComponent
+    InfoLaboratoireComponent,
+    UtilisateursComponent,
+    AddUtilisateurComponent,
+    InfoUtilisateurComponent
 
   ],
   imports: [
