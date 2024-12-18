@@ -33,5 +33,9 @@ public class LaboratoireService {
     public List<Laboratoire> searchLaboratoiresByKeyword(String keyword) {
         return laboratoireRepository.searchLaboratoiresByKeyword(keyword);
     }
-
+    public String getNomLaboratoireById(Long id) {
+        return laboratoireRepository.findById(id)
+                .map(Laboratoire::getNom) // Récupère le nom si le laboratoire existe
+                .orElseThrow(() -> new RuntimeException("Laboratoire non trouvé avec l'id : " + id));
+    }
 }

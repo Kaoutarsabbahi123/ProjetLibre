@@ -340,27 +340,21 @@ public class LaboratoireController {
         }
     }
 
-    @GetMapping("/nom/{id}")
-    public ResponseEntity<String> getLaboratoireNomById(@PathVariable Long id) {
+    @GetMapping("/search")
+    public ResponseEntity<List<Laboratoire>> searchLaboratoires(@RequestParam("keyword") String keyword) {
         try {
-            // Récupérer le laboratoire par ID
-            Optional<Laboratoire> laboOptional = laboratoireService.getLaboratoireById(id);
+            // Rechercher les laboratoires par mot-clé
+            List<Laboratoire> foundLaboratoires = laboratoireService.searchLaboratoiresByKeyword(keyword);
 
-            // Vérifier si le laboratoire est présent dans l'Optional
-            if (!laboOptional.isPresent()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Laboratoire non trouvé");
+            if (foundLaboratoires.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null); // Aucun laboratoire trouvé
             }
 
-            // Récupérer le nom du laboratoire
-            Laboratoire labo = laboOptional.get();
-            String nomLaboratoire = labo.getNom();
-
-            // Retourner le nom du laboratoire
-            return ResponseEntity.ok(nomLaboratoire);
+            return ResponseEntity.ok(foundLaboratoires);
 
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erreur interne");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // Erreur interne
         }
     }
     @GetMapping("/noms")
@@ -383,8 +377,11 @@ public class LaboratoireController {
         }
     }
 
-
-
+    @GetMapping("/nom/{id}")
+    public ResponseEntity<String> getNomLaboratoire(@PathVariable Long id) {
+        String nom = laboratoireService.getNomLaboratoireById(id);
+        return ResponseEntity.ok(nom);
+    }
 
 }
 
