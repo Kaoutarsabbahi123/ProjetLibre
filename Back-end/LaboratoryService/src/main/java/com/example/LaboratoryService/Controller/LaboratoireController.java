@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -356,8 +357,31 @@ public class LaboratoireController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null); // Erreur interne
         }
     }
+    @GetMapping("/noms")
+    public ResponseEntity<List<Object[]>> getAllLaboratoiresNom() {
+        try {
+            // Récupérer tous les laboratoires
+            List<Laboratoire> laboratoires = laboratoireService.getAllLaboratoires();
 
+            // Créer une liste de tableaux contenant l'ID et le nom des laboratoires
+            List<Object[]> laboratoiresInfo = laboratoires.stream()
+                    .map(labo -> new Object[]{labo.getId(), labo.getNom()})
+                    .collect(Collectors.toList());
 
+            // Retourner la liste des laboratoires avec ID et nom
+            return ResponseEntity.ok(laboratoiresInfo);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.emptyList());
+        }
+    }
+
+    @GetMapping("/nom/{id}")
+    public ResponseEntity<String> getNomLaboratoire(@PathVariable Long id) {
+        String nom = laboratoireService.getNomLaboratoireById(id);
+        return ResponseEntity.ok(nom);
+    }
 
 }
 

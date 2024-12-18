@@ -4,6 +4,9 @@ import com.example.AnalysisService.Entity.Analyse;
 import com.example.AnalysisService.Repository.AnalyseRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class AnalyseService {
     private final AnalyseRepository analyseRepository;
@@ -13,5 +16,12 @@ public class AnalyseService {
     public Analyse saveAnalyse(Analyse analyse) {
 
         return analyseRepository.save(analyse);
+    }
+
+    public List<Analyse> getAllAnalyses() {
+        return analyseRepository.findAll();
+    }
+    public Optional<Analyse> getAnalyseById(Integer id){
+        return analyseRepository.findById(id);
     }
 }
