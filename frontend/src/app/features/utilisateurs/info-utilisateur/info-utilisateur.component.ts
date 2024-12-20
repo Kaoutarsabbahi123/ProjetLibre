@@ -120,6 +120,7 @@ export class InfoUtilisateurComponent implements OnInit {
          this.messageContent = 'Utilisateur non trouvé.';  // Message en français
          setTimeout(() => {
            this.errorMessageVisible = false;
+           window.location.reload();
          }, 3000);
          console.error('Erreur lors de l\'activation', error);  // Message d'erreur en français
        }
@@ -133,6 +134,7 @@ export class InfoUtilisateurComponent implements OnInit {
          this.messageContent = "Utilisateur archivé avec succès.";  // Message en français
          setTimeout(() => {
            this.successMessageVisible = false;
+            window.location.reload();
          }, 3000);
          this.closeModalArchiver(); // Fermer la modale d'archivage
        },
