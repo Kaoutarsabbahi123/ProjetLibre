@@ -5,6 +5,7 @@ import com.example.MicroTestService.Repository.TestAnalyseRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TestAnalyseService {
@@ -17,5 +18,12 @@ public class TestAnalyseService {
     }
     public List<TestAnalyse> getTestsByIdEpreuve(Integer idEpreuve) {
         return testAnalyseRepository.findByIdEpreuve(idEpreuve);
+    }
+    public Optional<TestAnalyse> getTestsById(Integer id) {
+        return testAnalyseRepository.findById(id);
+    }
+    public TestAnalyse updateTestAnalyse(TestAnalyse testAnalyse) {
+        // Effectuer la mise à jour de l'adresse dans la base de données
+        return testAnalyseRepository.save(testAnalyse); // Sauvegarde l'adresse mise à jour
     }
 }

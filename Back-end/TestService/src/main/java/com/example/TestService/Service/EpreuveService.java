@@ -5,6 +5,7 @@ import com.example.TestService.Repository.EpreuveRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EpreuveService {
@@ -18,5 +19,12 @@ public class EpreuveService {
     }
     public List<Epreuve> getEpreuvesByFkIdAnalyse(Integer fkIdAnalyse) {
         return epreuveRepository.findByFkIdAnalyse(fkIdAnalyse);
+    }
+    public Optional<Epreuve> getEpreuveById(Integer id) {
+        return epreuveRepository.findById(id);
+    }
+    public Epreuve updateEpreuve(Epreuve epreuve) {
+        // Effectuer la mise à jour de l'adresse dans la base de données
+        return epreuveRepository.save(epreuve); // Sauvegarde l'adresse mise à jour
     }
 }

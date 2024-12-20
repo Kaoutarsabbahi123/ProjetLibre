@@ -184,6 +184,181 @@ public class AnalyseController {
         }
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Analyse> updateAnalyseWithEpreuvesAndTestAnalyses(
+            @PathVariable Integer id,
+            @RequestParam(value = "nom", required = false) String nom,
+            @RequestParam(value = "description", required = false) String description,
+            @RequestParam(value = "cout", required = false) Long cout,
+            @RequestParam(value = "idLaboratoire", required = false) Long idLaboratoire,
+            @RequestParam(value = "epreuves", required = false) String epreuvesJson // JSON des Epreuves avec TestAnalyses
+    ) {
+        try {
+            // Vérifier si l'Analyse existe
+            Optional<Analyse> analyseOptional = analyseService.getAnalyseById(id);
+            if (!analyseOptional.isPresent()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            }
+
+            Analyse analyse = analyseOptional.get();
+
+            // Mettre à jour les champs d'Analyse
+            if (nom != null && !nom.isEmpty()) {
+                analyse.setNom(nom);
+            }
+            if (description != null && !description.isEmpty()) {
+                analyse.setDescription(description);
+            }
+            if (cout != null) {
+                analyse.setCout(cout);
+            }
+            if (idLaboratoire != null) {
+                analyse.setFkIdLaboratoire(idLaboratoire);
+            }
+            // Sauvegarder les modifications d'Analyse
+            Analyse updatedAnalyse = analyseService.saveAnalyse(analyse);
+
+            // Traiter les Epreuves et TestAnalyses
+            if (epreuvesJson != null && !epreuvesJson.isEmpty()) {
+                ObjectMapper objectMapper = new ObjectMapper();
+                List<EpreuveRequest> epreuves = objectMapper.readValue(epreuvesJson, new TypeReference<List<EpreuveRequest>>() {});
+
+                for (EpreuveRequest epreuve : epreuves) {
+                    if (epreuve.getId() != null) {
+                        // Mettre à jour une Epreuve existante
+                        ResponseEntity<EpreuveRequest> epreuveResponse = restTemplate.exchange(
+                                EpreuveServiceUrl+"/"+ epreuve.getId(),
+                                HttpMethod.GET,
+                                null,
+                                EpreuveRequest.class
+                        );
+
+                        EpreuveRequest existingEpreuve = epreuveResponse.getBody();
+                        if (existingEpreuve != null) {
+                            existingEpreuve.setNom(epreuve.getNom());
+                            existingEpreuve.setArchive(updatedAnalyse.isArchive());
+                            restTemplate.put(EpreuveServiceUrl+"/"+ existingEpreuve.getId(), existingEpreuve);
+                        } else {
+                            // Créer une nouvelle Epreuve
+                            epreuve.setFkIdAnalyse(updatedAnalyse.getId());
+                            restTemplate.postForEntity(EpreuveServiceUrl+"/create", epreuve, EpreuveRequest.class);
+                        }
+                    } else {
+                        // Créer une nouvelle Epreuve
+                        epreuve.setFkIdAnalyse(updatedAnalyse.getId());
+                        restTemplate.postForEntity(EpreuveServiceUrl+"/create", epreuve, EpreuveRequest.class);
+                    }
+
+                    // Traiter les TestAnalyses associés
+                    List<TestAnalyseRequest> testAnalyses = epreuve.getTestAnalyses();
+                    if (testAnalyses != null) {
+                        System.out.println(testAnalyses);
+                        for (TestAnalyseRequest testAnalyse : testAnalyses) {
+                            if (testAnalyse.getId() != null) {
+                                // Mettre à jour un TestAnalyse existant
+                                ResponseEntity<TestAnalyseRequest> testAnalyseResponse = restTemplate.exchange(
+                                        testAnalyseServiceUrl+"/"+ testAnalyse.getId(),
+                                        HttpMethod.GET,
+                                        null,
+                                        TestAnalyseRequest.class
+                                );
+
+                                TestAnalyseRequest existingTestAnalyse = testAnalyseResponse.getBody();
+                                System.out.println(existingTestAnalyse.getId());
+                                if (existingTestAnalyse != null) {
+                                    existingTestAnalyse.setNom(testAnalyse.getNom());
+                                    existingTestAnalyse.setDescription(testAnalyse.getDescription());
+                                    existingTestAnalyse.setValeursDeReference(testAnalyse.getValeursDeReference());
+                                    existingTestAnalyse.setArchive(epreuve.isArchive());
+                                    restTemplate.put(testAnalyseServiceUrl+"/"+ existingTestAnalyse.getId(), existingTestAnalyse);
+                                } else {
+                                    // Créer un nouveau TestAnalyse
+                                    testAnalyse.setIdEpreuve(epreuve.getId());
+                                    restTemplate.postForEntity(testAnalyseServiceUrl+"/create", testAnalyse, TestAnalyseRequest.class);
+                                }
+                            } else {
+                                // Créer un nouveau TestAnalyse
+                                testAnalyse.setIdEpreuve(epreuve.getId());
+                                restTemplate.postForEntity(testAnalyseServiceUrl+"/create", testAnalyse, TestAnalyseRequest.class);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return ResponseEntity.ok(updatedAnalyse);
+
+        } catch (Exception e) {
+            System.err.println("Erreur lors de la mise à jour de l'Analyse : " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+    @PutMapping("/archive/{id}")
+    public ResponseEntity<String> archiveAnalyse(@PathVariable Integer id) {
+        try {
+            // Étape 1 : Vérifier si l'analyse existe
+            Optional<Analyse> analyseOptional = analyseService.getAnalyseById(id);
+            if (!analyseOptional.isPresent()) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Analyse non trouvée");
+            }
+
+            // Étape 2 : Archiver l'analyse
+            Analyse analyse = analyseOptional.get();
+            analyse.setArchive(true);
+            analyseService.saveAnalyse(analyse);
+
+
+            String epreuvesarchiveUrl = EpreuveServiceUrl+"/archive/by-analyse/" + id;
+            ResponseEntity<String> epreuvearchiveResponse = restTemplate.exchange(
+                    epreuvesarchiveUrl,
+                    HttpMethod.PUT,
+                    null,
+                    String.class
+            );
+
+            if (!epreuvearchiveResponse.getStatusCode().is2xxSuccessful()) {
+                throw new RuntimeException("Erreur lors de l'archivage des épreuves");
+            }
+
+// Étape 3 : Récupérer les épreuves associées via le microservice
+            String epreuvesUrl = EpreuveServiceUrl + "/analyse/" + id; // Endpoint pour récupérer les épreuves
+            ResponseEntity<List<EpreuveRequest>> epreuveResponse = restTemplate.exchange(
+                    epreuvesUrl,
+                    HttpMethod.GET,
+                    null,
+                    new ParameterizedTypeReference<List<EpreuveRequest>>() {}
+            );
+
+            if (!epreuveResponse.getStatusCode().is2xxSuccessful() || epreuveResponse.getBody() == null) {
+                throw new RuntimeException("Erreur lors de la récupération des épreuves associées");
+            }
+            List<EpreuveRequest> epreuves = epreuveResponse.getBody(); // Liste des épreuves associées
+
+            // Étape 4 : Archiver chaque épreuve et ses tests analyses
+            for (EpreuveRequest epreuve : epreuves) {
+                // Récupérer les tests analyses associés à l'épreuve
+                String testsUrl = testAnalyseServiceUrl+"/archive/by-epreuve/"+ epreuve.getId();
+                ResponseEntity<String> testsResponse = restTemplate.exchange(
+                        testsUrl,
+                        HttpMethod.PUT,
+                        null,
+                        String.class
+                );
+
+                if (!testsResponse.getStatusCode().is2xxSuccessful()) {
+                    throw new RuntimeException("Erreur lors de l'archivage des tests analyses");
+                }
+
+            }
+
+            return ResponseEntity.ok("Analyse, épreuves associées et tests analyses archivés avec succès");
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Erreur lors de l'archivage : " + e.getMessage());
+        }
+    }
+
 
 
 
