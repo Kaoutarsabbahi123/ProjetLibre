@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UserService } from '../../../core/user.service';
 import { LaboratoireService } from '../../../core/laboratoire.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-utilisateur',
@@ -19,14 +20,14 @@ export class AddUtilisateurComponent {
   laboratoires: any[] = [];
   role: string = 'technicien'; // Valeur par défaut
   active: boolean = true; // État par défaut : Actif
-  successMessageVisible: boolean = false;
   errorMessageVisible: boolean = false;
   messageContent: string = ''; // Contenu du message
 
 
   constructor(
     private userService: UserService,
-    private laboratoireService: LaboratoireService
+    private laboratoireService: LaboratoireService,
+    private router: Router
   ) {
     this.loadLaboratoires();
   }
@@ -40,7 +41,6 @@ export class AddUtilisateurComponent {
     });
   }
 
-  // Méthode pour vérifier si les mots de passe correspondent
   get passwordsMatch(): boolean {
     return this.password === this.confirmPassword;
   }
@@ -54,34 +54,33 @@ onSubmit(): void {
       password: this.password,
       role: 'technicien',
       active: true,
-      fkIdLaboratoire: this.laboratoire
+      fkIdLaboratoire: this.laboratoire,
     };
 
     this.userService.createUser(utilisateur).subscribe(
       (response) => {
-        // Message de succès
-        this.messageContent = 'Utilisateur créé avec succès.';
-        this.successMessageVisible = true;
-
-        // Masquer après 2 secondes
-        setTimeout(() => {
-          this.successMessageVisible = false;
-        }, 3000);
-
-        // Réinitialiser le formulaire et cacher les erreurs
-        this.onCancel();
-        this.clearFormErrors();  // Effacer les erreurs après la soumission
+        // Redirige avec un message de succès
+        this.router.navigate(['/utilisateurs'], {
+          queryParams: { success: 'Utilisateur créé avec succès.' },
+        });
       },
       (error) => {
-        // Message d'échec
-        this.messageContent = 'Erreur lors de la création de l\'utilisateur.';
-        this.errorMessageVisible = true;
+        if (
+          error.error &&
+          typeof error.error === 'string' &&
+          error.error.includes('Un utilisateur avec cet email existe déjà')
+        ) {
+          // Affiche un message d'erreur spécifique pour l'email existant
+          this.messageContent = 'Cet email est déjà utilisé.';
+        } else {
+          // Message générique pour d'autres erreurs
+          this.messageContent = 'Erreur lors de la création de l\'utilisateur.';
+        }
 
-        // Masquer après 2 secondes
+        this.errorMessageVisible = true;
         setTimeout(() => {
           this.errorMessageVisible = false;
-        }, 2000);
-
+        }, 3000);
         console.error('Erreur :', error);
       }
     );
@@ -90,26 +89,16 @@ onSubmit(): void {
   }
 }
 
+
+
 clearFormErrors(): void {
     if (this.userForm) {
       this.userForm.resetForm();  // Réinitialise le formulaire et efface les erreurs
     }
   }
 
-
-
- // Réinitialiser le formulaire
  onCancel(): void {
-   this.nomComplet = '';
-   this.numTel = '';
-   this.email = '';
-   this.laboratoire = null;
-   this.password = '';
-   this.confirmPassword = '';
-   this.role = 'technicien'; // réinitialiser à la valeur par défaut
-   this.active = true; // réinitialiser à la valeur par défaut
-   // Si vous souhaitez également cacher les erreurs après la réinitialisation, vous pouvez mettre errorMessageVisible à false
-   this.errorMessageVisible = false;
+   this.router.navigate(['/utilisateurs']);
  }
 
 }

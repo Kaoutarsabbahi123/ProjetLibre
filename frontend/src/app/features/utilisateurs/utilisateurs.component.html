@@ -1,3 +1,7 @@
+<div *ngIf="successMessageVisible" class="success-message">
+  {{ messageContent }}
+</div>
+
 <div class="users-container">
   <div class="header">
     <div class="search-bar">
@@ -26,7 +30,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let user of paginatedData" class="clickable-row">
+    <tr *ngFor="let user of paginatedData" (click)="navigateToInfo(user.email)" class="clickable-row">
       <td>{{ user.nomComplet }}</td>
       <td>{{ user.email }}</td>
       <td>{{ user.numTel }}</td>

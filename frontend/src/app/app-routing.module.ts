@@ -9,6 +9,7 @@ import { AuthGuard } from './core/auth.guard';
 import { InfoLaboratoireComponent } from './features/laboratoires/info-laboratoire/info-laboratoire.component';
 import { UtilisateursComponent } from './features/utilisateurs/utilisateurs.component';
 import { AddUtilisateurComponent } from './features/Utilisateurs/add-utilisateur/add-utilisateur.component';
+import { InfoUtilisateurComponent } from './features/Utilisateurs/info-utilisateur/info-utilisateur.component';
 
 
 const routes: Routes = [
@@ -25,12 +26,8 @@ const routes: Routes = [
       { path: 'profile', component: ProfileComponent },
       { path: 'utilisateurs', component: UtilisateursComponent },
       { path: 'add-user', component: AddUtilisateurComponent },
-      {
-                    path: 'info-labo',
-                    component: InfoLaboratoireComponent,
-                    // Optionnel : sécurisation avec des paramètres encodés
-                    canActivate: [AuthGuard]
-                  },
+      { path: 'info-labo', component: InfoLaboratoireComponent, canActivate: [AuthGuard]},
+      { path: 'info-user', component: InfoUtilisateurComponent, canActivate: [AuthGuard]}
     ],
   },
 ];

@@ -1,11 +1,6 @@
-<div *ngIf="successMessageVisible" class="success-message">
-  {{ messageContent }}
-</div>
-
 <div *ngIf="errorMessageVisible" class="error-messageAdd">
   {{ messageContent }}
 </div>
-
 <div class="form-container">
   <h2 class="form-title">Ajouter un Utilisateur</h2>
   <form (ngSubmit)="onSubmit()" #userForm="ngForm">

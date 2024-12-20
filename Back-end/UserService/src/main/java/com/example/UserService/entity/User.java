@@ -14,13 +14,16 @@ import lombok.NoArgsConstructor;
 @Table(name = "app_user")
 public class User {
     @Id
+    @Column(unique = true, nullable = false) // Email doit être unique
     private String email;
+
     private String password;
     private String nomComplet;
     private String numTel;
     private String role;
     private Integer fkIdLaboratoire;
     private boolean active;
+
     public boolean getActive() {
         return active;
     }

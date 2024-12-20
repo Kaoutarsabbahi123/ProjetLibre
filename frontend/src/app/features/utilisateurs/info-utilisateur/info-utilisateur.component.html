@@ -1,1 +1,172 @@
-<p>info-utilisateur works!</p>
+<div class="form-header-buttons">
+  <!-- Bouton Archiver -->
+  <div class="archive-button" *ngIf="user.active">
+    <button class="btn" (click)="onArchive()" >
+      <i class="fa fa-archive"></i> Archiver
+    </button>
+  </div>
+
+  <!-- Bouton Activer -->
+  <div class="archive-button" *ngIf="!user.active">
+    <button class="btn btn-success" (click)="onActivate()">
+      <i class="fa fa-check-circle"></i> Activer
+    </button>
+  </div>
+</div>
+
+<div *ngIf="successMessageVisible" class="success-message">
+  {{ messageContent }}
+</div>
+
+<div *ngIf="errorMessageVisible" class="error-message">
+  {{ messageContent }}
+</div>
+
+<div class="form-container">
+  <h2 class="form-title">Détails de l'Utilisateur</h2>
+  <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+    <div class="info-section">
+      <div class="row">
+        <div class="form-group half-width">
+          <label for="email">Email :</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="Email"
+            name="email"
+            [(ngModel)]="user.email"
+            disabled/>
+        </div>
+        <div class="form-group half-width">
+          <label for="nomComplet">Nom Complet :</label>
+          <input
+            type="text"
+            id="nomComplet"
+            placeholder="Nom complet"
+            name="nomComplet"
+            [(ngModel)]="user.nomComplet" />
+        </div>
+
+
+      </div>
+
+      <div class="row">
+        <!-- Numéro de Téléphone -->
+        <div class="form-group half-width">
+          <label for="numTel">Numéro de Téléphone :</label>
+          <input
+            type="text"
+            id="numTel"
+            placeholder="Numéro de téléphone"
+            name="numTel"
+            [(ngModel)]="user.numTel" />
+        </div>
+
+        <!-- Laboratoire -->
+        <div class="form-group half-width">
+          <label for="laboratoire">Laboratoire :</label>
+          <select id="laboratoire" name="laboratoire" [(ngModel)]="user.laboratoire" (ngModelChange)="onLaboratoireChange($event)">
+            <option *ngFor="let labo of laboratoires" [value]="labo.id">{{ labo.nom }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- Nouveau Mot de Passe -->
+        <div class="form-group half-width">
+          <label for="password">Nouveau Mot de passe :</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Mot de passe"
+            name="password"
+            [(ngModel)]="user.password"
+            (ngModelChange)="checkPasswordsMatch()" />
+        </div>
+
+        <!-- Confirmer le Mot de Passe -->
+        <div class="form-group half-width">
+          <label for="confirmPassword">Confirmer le Mot de passe :</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Confirmer le mot de passe"
+            name="confirmPassword"
+            [(ngModel)]="user.confirmPassword"
+            (ngModelChange)="checkPasswordsMatch()" />
+          <div *ngIf="!passwordsMatch" class="error-message">
+            Les mots de passe ne correspondent pas.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-buttons">
+      <button type="submit">Enregistrer</button>
+      <button type="button" (click)="onCancel()">Annuler</button>
+    </div>
+  </form>
+</div>
+
+<!-- Page modale pour confirmation des modifications -->
+<div class="modal" tabindex="-1" role="dialog" id="confirmationModal" #confirmationModal>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmer les modifications</h5>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Voulez-vous enregistrer les modifications apportées à l'utilisateur ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" (click)="confirmUpdate()">Confirmer</button>
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Annuler</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de confirmation pour l'archivage -->
+<div class="modal" tabindex="-1" role="dialog" id="confirmationModalArchiver" #confirmationModalArchiver>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmer l'archivage</h5>
+        <button type="button" class="close" aria-label="Close" (click)="closeModalArchiver()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Êtes-vous sûr de vouloir archiver cet utilisateur ? Cette action est irréversible.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" (click)="confirmArchive()">Confirmer</button>
+        <button type="button" class="btn btn-secondary" (click)="closeModalArchiver()">Annuler</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de confirmation pour l'activation -->
+<div class="modal" tabindex="-1" role="dialog" id="confirmationModalActiver" #confirmationModalActiver>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmer l'activation</h5>
+        <button type="button" class="close" aria-label="Close" (click)="closeModalActiver()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Êtes-vous sûr de vouloir activer cet utilisateur ? Cette action est irréversible.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" (click)="confirmActivate()">Confirmer</button>
+        <button type="button" class="btn btn-secondary" (click)="closeModalActiver()">Annuler</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../core/user.service';  // Import du UserService
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-utilisateurs',
@@ -9,24 +10,45 @@ import { Router } from '@angular/router';
 })
 export class UtilisateursComponent implements OnInit {
   users: any[] = []; // Tableau pour stocker les utilisateurs
+  allUsers: any[] = []; // Copie complète des utilisateurs
   searchText: string = ''; // Texte de recherche
   paginatedData: any[] = []; // Données paginées
   currentPage: number = 1; // Page actuelle
   itemsPerPage: number = 4; // Nombre d'éléments par page
   pages: number[] = []; // Liste des pages
   showEllipsis: boolean = false; // Indicateur pour afficher "..."
+  successMessageVisible: boolean = false;
+  messageContent: string = '';
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private userService: UserService,
+              private router: Router,
+              private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.fetchUsers();
+    this.fetchUsers(); // Charger les utilisateurs dès le début
+    this.route.queryParams.subscribe((params) => {
+      if (params['success']) {
+        this.messageContent = params['success'];
+        this.successMessageVisible = true;
+
+        setTimeout(() => {
+          this.successMessageVisible = false;
+        }, 3000);
+
+        const currentUrl = this.router.url.split('?')[0];
+        this.router.navigate([], {
+          replaceUrl: true,
+          queryParams: {},
+        });
+      }
+    });
   }
 
   fetchUsers(): void {
     this.userService.getAllUsers().subscribe(
       (usersData: any[]) => {
-        this.users = usersData;  // Les utilisateurs sont déjà complétés avec leur nom de laboratoire
-
+        this.allUsers = usersData;  // Conserver la copie complète
+        this.users = [...this.allUsers]; // Initialiser la liste affichée
         this.updatePagination();
       },
       (error: any) => {
@@ -39,29 +61,30 @@ export class UtilisateursComponent implements OnInit {
     if (this.searchText.trim()) {
       const searchTextLower = this.searchText.toLowerCase();
 
-      this.users = this.users.filter(user => {
+      // Filtrer la liste des utilisateurs
+      this.users = this.allUsers.filter(user => {
         const nomComplet = user.nomComplet ? user.nomComplet.toLowerCase() : '';
         const email = user.email ? user.email.toLowerCase() : '';
         const role = user.role ? user.role.toLowerCase() : '';
-        const statut = user.active ? 'actif' : 'inactif';
+        const statut = user.active ? 'actif' : 'inactif';  // Convertir l'état en texte
         const numTel = user.numTel ? user.numTel.toString().toLowerCase() : '';
-        const nomLaboratoire = user.nomLaboratoire ? user.nomLaboratoire.toLowerCase() : ''; // Ajout du nom du labo
+        const nomLaboratoire = user.nomLaboratoire ? user.nomLaboratoire.toLowerCase() : '';
 
         return (
           nomComplet.includes(searchTextLower) ||
           email.includes(searchTextLower) ||
           role.includes(searchTextLower) ||
-          statut.includes(searchTextLower) ||
+          statut.includes(searchTextLower) ||  // Recherche sur l'état actif/inactif
           numTel.includes(searchTextLower) ||
-          nomLaboratoire.includes(searchTextLower) // Filtrage par nom du labo
+          nomLaboratoire.includes(searchTextLower)
         );
       });
     } else {
-      this.fetchUsers(); // Réinitialiser la liste des utilisateurs si searchText est vide
+      this.users = [...this.allUsers]; // Réinitialiser la liste des utilisateurs si la recherche est vide
     }
-    this.updatePagination();
-  }
 
+    this.updatePagination(); // Mettre à jour la pagination après filtrage
+  }
 
   updatePagination(): void {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
@@ -94,8 +117,18 @@ export class UtilisateursComponent implements OnInit {
     this.currentPage = page;
     this.updatePagination();
   }
-onAdd(): void {
+
+  onAdd(): void {
     this.router.navigate(['/add-user']);
   }
 
+  navigateToInfo(email: string): void {
+    if (email) {  // Vérifier si l'email est valide
+      const encodedEmail = btoa(email); // Encodage en Base64
+      this.router.navigate(['/info-user'], { queryParams: { id: encodedEmail } });
+    } else {
+      console.error('Email utilisateur invalide:', email);
+    }
+  }
 }
+
