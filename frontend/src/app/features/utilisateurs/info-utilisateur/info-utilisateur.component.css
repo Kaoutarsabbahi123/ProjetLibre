@@ -1,0 +1,360 @@
+.form-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px var(--shadow-light);
+  width: 90%;
+  margin: 20px auto;
+}
+
+.form-title {
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #201e1e;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  padding-bottom: 8px; /* Espacement en bas */
+  font-family: 'Arial', sans-serif;
+}
+
+.form-title::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 3px;
+  background: var(--primary-color);;
+  margin-top: 5px;
+  border-radius: 2px;
+  animation: lineExpand 1s ease forwards; /* Animation de la ligne */
+}
+
+
+@keyframes lineExpand {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    width: 70px; /* Longueur finale de la ligne */
+    opacity: 1;
+  }
+}
+
+.info-section,
+.form-group {
+  margin-bottom: 20px;
+}
+
+.info-section h4 {
+  font-size: 18px;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.row {
+  display: flex;
+  gap: 20px; /* This gap will space out the inputs on the same row */
+  flex-wrap: wrap;
+}
+
+.form-group.half-width {
+  flex: 1 1 45%; /* This will ensure two inputs per line */
+}
+
+form label {
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+form input,
+form select {
+  padding: 10px;
+  border: 1px solid var(--shadow-light);
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+form input:focus,
+form select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 4px var(--primary-color);
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.form-buttons button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.form-buttons button[type="submit"] {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+.form-buttons button[type="submit"]:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+.form-buttons button[type="button"] {
+  background-color: #ccc;
+  color: #333;
+}
+
+.form-buttons button[type="button"]:hover {
+  background-color: #bbb;
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .form-group {
+    flex: 1 1 100%;
+  }
+
+  .row {
+    flex-direction: column; /* Stack inputs vertically on small screens */
+  }
+}
+
+
+.error-message {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+
+.required {
+  color: red;
+  font-weight: bold;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9em;
+}
+
+.form-group input.ng-invalid.ng-touched {
+  border-color: red;
+}
+
+/* Message de succès */
+.success-message {
+  width: 90%;
+  background-color: #d4edda; /* Vert clair */
+  color: #155724; /* Texte vert foncé */
+  border: 1px solid #c3e6cb;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-weight: bold;
+  animation: fadeIn 0.5s ease-in-out;
+  margin: 20px auto;
+}
+
+/* Message d'erreur */
+.error-messageAdd {
+  width: 90%;
+  background-color: #f8d7da; /* Rouge clair */
+  color: #721c24; /* Texte rouge foncé */
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-weight: bold;
+  animation: fadeIn 0.5s ease-in-out;
+  margin: 20px auto;
+}
+
+/* Animation d'apparition */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* Style global des boutons Activer/Archiver */
+.archive-button .btn {
+  padding: 9px 10px;
+  background: linear-gradient(135deg, #ff4d4d, #b30000); /* Dégradé rouge pour Archiver */
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-position 0.4s ease;
+  background-size: 200%;
+  background-position: left;
+}
+
+/* Alignement des boutons à droite */
+.form-header-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px; /* Espacement entre les boutons */
+  margin-bottom: 10px;
+  margin-right: 60px;
+}
+
+/* Animation de survol pour Archiver */
+.archive-button .btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 14px rgba(255, 0, 0, 0.5);
+  background-position: right;
+}
+
+/* Style spécial pour le bouton Activer */
+.archive-button .btn-success {
+  background: linear-gradient(135deg, #4CAF50, #2E7D32); /* Dégradé vert pour Activer */
+  color: white;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-position 0.4s ease;
+}
+
+.archive-button .btn-success:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 14px rgba(0, 255, 0, 0.5);
+  background-position: right;
+}
+
+/* Taille de l'icône */
+.archive-button .btn i {
+  font-size: 18px;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+}
+
+/* Centrer la modale */
+.modal.show {
+  display: flex !important; /* Priorité au display flex */
+  justify-content: center !important; /* Centrage horizontal */
+  align-items: center !important;
+  background-color: rgba(0, 0, 0, 0.6); /* Overlay sombre */
+  position: fixed; /* Assurez-vous qu'il couvre toute la page */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; /* Aucune marge */
+  padding: 0; /* Aucun padding */
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Annule les marges par défaut pour .modal-dialog */
+.modal-dialog {
+  margin: 0 !important;  /* Supprime les marges verticales par défaut */
+  max-width: 600px; /* Largeur maximale */
+  width: 100%;
+}
+
+/* Animation facultative */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Style pour le bouton "close" */
+.modal-header .close {
+  font-size: 1.5rem; /* Taille de l'icône */
+  color: #000; /* Couleur par défaut */
+  background-color: #f8f9fa; /* Fond gris clair */
+  border: none; /* Supprime les bordures */
+  border-radius: 50%; /* Rend le bouton rond */
+  width: 30px; /* Taille fixe */
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.modal-header .close:hover {
+  background-color: #e2e6ea; /* Fond légèrement plus sombre au survol */
+  color: black; /* Couleur rouge au survol */
+}
+.modal-footer button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+.modal-footer button[type="submit"] {
+  background-color: var(--primary-color); /* Couleur de fond inchangée */
+  color: #fff; /* Couleur du texte */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animation pour le relief et l'ombre */
+}
+
+.modal-footer button[type="submit"]:hover {
+  transform: scale(1.05); /* Légère mise en relief */
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2); /* Ajout d'une ombre douce */
+}
+
+
+.modal-footer button[type="button"] {
+  background-color: #ccc;
+  color: #333;
+}
+
+.modal-footer button[type="button"]:hover {
+  background-color: #bbb; /* Couleur plus foncée au survol */
+  transform: scale(1.05);
+}
+/* Titre de la modal */
+.modal-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-top: 10px;
+}
+
+
+
+

@@ -1,0 +1,59 @@
+<div *ngIf="successMessageVisible" class="success-message">
+  {{ messageContent }}
+</div>
+
+<div class="users-container">
+  <div class="header">
+    <div class="search-bar">
+      <i class="fas fa-search"></i>
+      <input
+        type="text"
+        placeholder="Rechercher un laboratoire..."
+        [(ngModel)]="searchText"
+        (input)="onSearch()"
+      />
+    </div>
+
+    <button class="add-button" (click)="onAdd()">
+      <i class="fas fa-plus" style="font-size:20px;"></i>
+    </button>
+  </div>
+
+  <table class="users-table">
+    <thead>
+    <tr>
+      <th>Nom complet</th>
+      <th>Email</th>
+      <th>Téléphone</th>
+      <th>Nom du laboratoire</th>
+      <th>Statut</th><!-- Nouvelle colonne pour le nom du labo -->
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let user of paginatedData" (click)="navigateToInfo(user.email)" class="clickable-row">
+      <td>{{ user.nomComplet }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.numTel }}</td>
+      <td>{{ user.nomLaboratoire }}</td>
+      <td>
+          <span [ngClass]="{ 'status-active': user.active, 'status-archive': !user.active }">
+            {{ user.active ? 'Actif' : 'Inactif' }}
+          </span>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <button
+      *ngFor="let page of pages"
+      [class.active]="page === currentPage"
+      (click)="goToPage(page)">
+      {{ page }}
+    </button>
+
+    <button *ngIf="showEllipsis" (click)="goToPage(pages[pages.length - 1])">
+      ...
+    </button>
+  </div>
+</div>

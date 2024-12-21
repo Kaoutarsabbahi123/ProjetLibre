@@ -36,7 +36,10 @@ export class LaboratoireService {
       responseType: 'text' // Force Angular à ne pas parser en JSON
     });
   }
-
+ // Récupérer les noms et IDs des laboratoires
+  getLaboratoiresNoms(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/noms`);
+  }
 
 
 }

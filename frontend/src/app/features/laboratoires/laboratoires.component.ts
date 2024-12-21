@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./laboratoires.component.css'],
 })
 export class LaboratoiresComponent implements OnInit {
-  laboratoires: any[] = []; // Tableau pour stocker les laboratoires
+  laboratoires: any[] = []; // Tableau pour stocker les laboratoires filtrés
+  allLaboratoires: any[] = []; // Tableau pour stocker tous les laboratoires (non filtrés)
   searchText: string = ''; // Texte de recherche
   paginatedData: any[] = []; // Données paginées
   currentPage: number = 1; // Page actuelle
@@ -25,7 +26,8 @@ export class LaboratoiresComponent implements OnInit {
   fetchLaboratoires(): void {
     this.laboratoireService.getLaboratoires().subscribe(
       (data: any[]) => {
-        this.laboratoires = data;
+        this.allLaboratoires = data; // Stocke tous les laboratoires dans allLaboratoires
+        this.laboratoires = [...this.allLaboratoires]; // Initialise laboratoires avec tous les laboratoires
         this.updatePagination();
       },
       (error: any) => {
@@ -36,17 +38,29 @@ export class LaboratoiresComponent implements OnInit {
 
   onSearch(): void {
     if (this.searchText.trim()) {
-      // Filtrage en fonction de searchText
-      this.laboratoires = this.laboratoires.filter(lab =>
-        lab.nom.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        lab.nrc.toLowerCase().includes(this.searchText.toLowerCase()) ||
-        (lab.active ? 'Actif' : 'Inactif').toLowerCase().includes(this.searchText.toLowerCase())
-      );
+      const searchTextLower = this.searchText.toLowerCase();
+
+      // Filtrer la liste des laboratoires (sans affecter allLaboratoires)
+      this.laboratoires = this.allLaboratoires.filter(lab => {
+        const nom = lab.nom ? lab.nom.toLowerCase() : '';
+        const nrc = lab.nrc ? lab.nrc.toLowerCase() : '';
+        const statut = lab.active ? 'actif' : 'inactif';
+        const dateActivation = lab.dateActivation
+          ? new Date(lab.dateActivation).toLocaleDateString().toLowerCase()
+          : ''; // Conversion de la date en chaîne lisible
+
+        return (
+          nom.includes(searchTextLower) ||
+          nrc.includes(searchTextLower) ||
+          statut.includes(searchTextLower) ||
+          dateActivation.includes(searchTextLower)
+        );
+      });
     } else {
       // Réinitialiser la liste des laboratoires si searchText est vide
-      this.fetchLaboratoires();
+      this.laboratoires = [...this.allLaboratoires];
     }
-    this.updatePagination();
+    this.updatePagination(); // Mettre à jour la pagination après le filtrage
   }
 
   updatePagination(): void {
@@ -86,7 +100,7 @@ export class LaboratoiresComponent implements OnInit {
   }
 
   navigateToInfo(laboratoireId: number): void {
-    const encodedId = btoa(laboratoireId.toString()); // Encodage en Base64
+    const encodedId = btoa(laboratoireId.toString());
     this.router.navigate(['/info-labo'], { queryParams: { id: encodedId } });
   }
 }

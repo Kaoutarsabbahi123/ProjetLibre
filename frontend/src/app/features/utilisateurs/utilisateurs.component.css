@@ -1,0 +1,223 @@
+:root {
+  --primary-color: #104b60;
+  --secondary-color: #2cbce4;
+  --accent-color: #f4a261;
+  --font-family: 'Roboto', sans-serif;
+  --text-color: #343a40;
+  --bg-color: #f9f9f9;
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-dark: rgba(0, 0, 0, 0.2);
+  --hover-color: rgba(16, 75, 96, 0.1);
+}
+
+body {
+  background-color: var(--bg-color);
+  font-family: var(--font-family);
+  margin: 20px;
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+/* Conteneur principal */
+.users-container {
+  background: linear-gradient(135deg, white, #fefefe);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 6px 18px var(--shadow-light);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.users-container:hover {
+  box-shadow: 0 8px 20px var(--shadow-dark);
+  transform: translateY(-2px);
+}
+
+/* Conteneur principal */
+.users-container {
+  background: linear-gradient(135deg, white, #fefefe);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 6px 18px var(--shadow-light);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.users-container:hover {
+  box-shadow: 0 8px 20px var(--shadow-dark);
+  transform: translateY(-2px);
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: flex-end; /* Espacement entre la barre de recherche et les filtres */
+  align-items: center;
+  gap: 15px;
+}
+
+.search-bar {
+  width:auto;
+  width: 300px; /* Limiter la taille de la barre de recherche */
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  font-size: 15px;
+  box-shadow: 0 2px 6px var(--shadow-light);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.search-bar input {
+  border: none;
+  outline: none;
+  flex-grow: 1;
+}
+
+.search-bar i {
+  margin-right: 10px;
+}
+
+/* Ajouter une icône à la barre de recherche */
+.search-bar:focus {
+  border-color: var(--accent-color);
+  outline: none;
+  box-shadow: 0 0 10px var(--accent-color);
+}
+
+/* Bouton Ajouter */
+.add-button {
+  padding: 4px 10px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  font-weight: bold;
+  font-size:25px;
+  border: none;
+  border-radius: 12px;
+  padding-top:1px;
+  cursor: pointer;
+  transition: box-shadow 0.3s, transform 0.3s, background-position 0.4s ease;
+  background-size: 200%;
+  background-position: left;
+}
+
+.add-button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 14px var(--shadow-dark);
+  background-position: right;
+}
+
+
+/* Table */
+.users-table{
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px var(--shadow-light);
+}
+
+.users-table thead {
+  background: linear-gradient(135deg, #e9ecef, #f8f9fa);
+  color: var(--text-color);
+  font-size: 15px;
+}
+
+.users-table th,
+.users-table td {
+  padding: 14px 16px;
+  text-align: center;
+  border-bottom: none;
+}
+
+.users-table th {
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.users-table tbody tr {
+  background: white;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.users-table tbody tr:nth-child(even) {
+  background: #fdfdfd;
+}
+
+.users-table tbody tr:hover {
+  background-color: var(--hover-color);
+  transform: scale(1.02);
+  cursor: pointer;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  gap: 8px;
+}
+
+.pagination button {
+  border: 1px solid #ddd;
+  background: white;
+  color: var(--primary-color);
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: transform 0.2s, box-shadow 0.2s ease-in-out;
+}
+
+.pagination button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--shadow-light);
+}
+
+
+.pagination button.active {
+  background: var(--primary-color);
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 4px 8px var(--shadow-dark);
+}
+
+ .status-archive {
+    background-color: #f8d7da;  /* Lighter red */
+    color: #721c24;             /* Darker red text */
+    border-radius: 12px;
+    padding: 5px 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+ }
+
+ .status-active {
+    background-color: #c3e6cb;  /* Lighter green */
+    color: #155724;             /* Darker green text */
+    border-radius: 12px;
+    padding: 5px 10px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+ }
+
+.success-message {
+  width: 100%;
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-weight: bold;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+
+
