@@ -13,7 +13,7 @@ spring:
     name: address-service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/Folders
+    url: jdbc:mysql://localhost:3306/Exams
     username: root
     password: ""
 
