@@ -1,10 +1,10 @@
 package com.example.AuthService.dto;
 
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data @NoArgsConstructor
+@Data
+@NoArgsConstructor
 public class UserResponse {
     private String password;
     private String email;
@@ -12,8 +12,9 @@ public class UserResponse {
     private String numTel;
     private String role;
     private Integer fkIdLaboratoire;
+    private boolean isActive; // Add the isActive field
 
-    // Ajout d'un constructeur pour email et nomComplet
+    // Constructor for email and nomComplet
     public UserResponse(String email, String nomComplet) {
         this.email = email;
         this.nomComplet = nomComplet;

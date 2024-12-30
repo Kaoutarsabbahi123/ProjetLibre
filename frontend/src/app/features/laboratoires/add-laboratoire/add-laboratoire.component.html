@@ -1,3 +1,9 @@
+
+<div class="alert alert-danger" *ngIf="errorMessage">
+  {{ errorMessage }}
+</div>
+
+
 <div class="form-container">
   <h2 class="form-title">Ajouter un Laboratoire</h2>
   <form (ngSubmit)="onSubmit()" #laboForm="ngForm">
@@ -172,26 +178,3 @@
   </form>
 </div>
 
-
-<!-- Modal -->
-<div class="modal" [class.show]="isModalVisible" *ngIf="isModalVisible">
-  <div class="modal-content">
-
-    <!-- Bouton de fermeture -->
-    <button class="close-button" (click)="onModalOk()">×</button>
-
-    <div class="modal-body">
-      <!-- Icône et message en fonction de l'état (succès ou échec) -->
-      <img
-        [src]="isError ? 'assets/cancel.png' : 'assets/check (1).png'"
-        alt="Icône de statut"
-        class="modal-icon"
-      />
-      <h2 class="modal-title" [ngClass]="{'error-text': isError}">{{ isError ? 'Erreur' : 'Succès' }}</h2>
-      <p>{{ isError ? 'Une erreur est survenue lors de la création du laboratoire.' : 'Le laboratoire a été créé avec succès.' }}</p>
-    </div>
-
-    <!-- Bouton OK -->
-    <button class="ok-button" [ngClass]="{'error-button': isError}" (click)="onModalOk()">OK</button>
-  </div>
-</div>

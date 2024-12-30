@@ -48,8 +48,7 @@ public class ContactController {
                 return ResponseEntity.notFound().build(); // Retourner Not Found si le contact n'existe pas
             }
 
-            // Mettre à jour le contact avec les nouvelles informations
-            contact.setId(id); // S'assurer que l'ID est le bon
+            contact.setId(id);
             Contact updatedContact = contactService.saveContact(contact);
 
             return ResponseEntity.ok(updatedContact); // Retourner le contact mis à jour
@@ -58,10 +57,4 @@ public class ContactController {
         }
     }
 
-    // Supprimer un contact
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteContact(@PathVariable Long id) {
-        contactService.deleteContact(id);
-        return ResponseEntity.noContent().build();
-    }
 }

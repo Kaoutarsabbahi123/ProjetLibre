@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LaboratoireService } from '../../core/laboratoire.service';
 import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-laboratoires',
@@ -16,11 +17,29 @@ export class LaboratoiresComponent implements OnInit {
   itemsPerPage: number = 4; // Nombre d'éléments par page
   pages: number[] = []; // Liste des pages
   showEllipsis: boolean = false; // Indicateur pour afficher "..."
-
-  constructor(private laboratoireService: LaboratoireService, private router: Router) {}
+  successMessage: string = '';
+  successMessageVisible=false;
+  constructor(private laboratoireService: LaboratoireService, private router: Router
+    ,private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.fetchLaboratoires();
+    this.route.queryParams.subscribe((params) => {
+          if (params['success']) {
+            this.successMessage = params['success'];
+            this.successMessageVisible = true;
+
+            setTimeout(() => {
+              this.successMessageVisible = false;
+            }, 3000);
+
+            const currentUrl = this.router.url.split('?')[0];
+            this.router.navigate([], {
+              replaceUrl: true,
+              queryParams: {},
+            });
+          }
+        });
   }
 
   fetchLaboratoires(): void {

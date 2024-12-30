@@ -38,8 +38,4 @@ public class AddressService {
     public Optional<Address> findById(Integer id) {
         return addressRepository.findById(id); // Utilise la méthode de Spring Data JPA
     }
-    // Supprimer une adresse par ID
-    public void deleteAddress(Integer id) {
-        addressRepository.deleteById(id);
-    }
 }

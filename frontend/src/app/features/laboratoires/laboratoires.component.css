@@ -254,66 +254,16 @@ body {
  }
 
 
- /* Actions */
- .actions {
-   display: flex;
-   gap: 10px;
- }
 
- .actions .btn {
-   padding: 6px;
-   margin: 0 5px;
-   border-radius: 5px;
-   display: inline-flex;
-   align-items: center;
-   justify-content: center;
-   cursor: pointer;
-   transition: color 0.3s, box-shadow 0.3s, transform 0.3s;
- }
-
- .actions .btn:first-child {
-   margin-left: 56px;
- }
-
-
- /* Couleurs spécifiques aux actions */
- .actions .btn-view {
-   background-color: #dff4ff;
-   border: none;
-   color: #5bc0de;
- }
-
- .actions .btn-edit {
-   background-color: #fff3cd;
-   border: none;
-   color:  #856404;
- }
-
- .actions .btn-archive {
-   background-color:  #f8d7da;
-   border: none;
-   color: #dc3545;
- }
-
- /* Effet au survol */
- .actions .btn:hover {
-   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-   transform: translateY(-2px);
- }
- .actions .btn-edit:hover {
-   background-color: #fff0a5; /* Hover jaune doux */
- }
- .actions .btn-archive:hover {
-   background-color: #f5c6cb; /* Hover rouge clair */
- }
-
- .actions .btn:focus {
-   box-shadow: none;
-   outline: none;
- }
-.highlight {
-  background-color: yellow;
+.success-message {
+  width: 100%;
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  margin:20px auto;
   font-weight: bold;
+  animation: fadeIn 0.5s ease-in-out;
 }
-
-

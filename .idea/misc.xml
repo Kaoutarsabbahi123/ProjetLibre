@@ -29,6 +29,8 @@
         <option value="$PROJECT_DIR$/Back-end/AnalysisService/pom.xml" />
         <option value="$PROJECT_DIR$/Back-end/TestService/pom.xml" />
         <option value="$PROJECT_DIR$/Back-end/MicroTestService/pom.xml" />
+        <option value="$PROJECT_DIR$/Back-end/ExamService/pom.xml" />
+        <option value="$PROJECT_DIR$/Back-end/FolderService/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

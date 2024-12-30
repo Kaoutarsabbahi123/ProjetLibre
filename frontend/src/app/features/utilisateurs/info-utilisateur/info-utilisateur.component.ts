@@ -112,6 +112,7 @@ export class InfoUtilisateurComponent implements OnInit {
          this.messageContent = "Utilisateur activé avec succès.";  // Message en français
          setTimeout(() => {
            this.successMessageVisible = false;
+           window.location.reload();
          }, 3000);
          this.closeModalActiver(); // Fermer la modale d'activation
        },
@@ -120,7 +121,6 @@ export class InfoUtilisateurComponent implements OnInit {
          this.messageContent = 'Utilisateur non trouvé.';  // Message en français
          setTimeout(() => {
            this.errorMessageVisible = false;
-           window.location.reload();
          }, 3000);
          console.error('Erreur lors de l\'activation', error);  // Message d'erreur en français
        }

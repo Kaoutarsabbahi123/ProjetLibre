@@ -45,11 +45,16 @@
                         >
                             Se connecter
                         </button>
+                      <!-- Message d'erreur -->
+                      <div *ngIf="errorMessage" class="error-message">
+                        {{ errorMessage }}
+                      </div>
                         <!-- Forgot password link -->
                         <div class="text-center mt-3">
                             <a href="#" class="text-muted small">Mot de passe oublié ?</a>
                         </div>
                     </form>
+
                 </div>
             </div>
         </div>

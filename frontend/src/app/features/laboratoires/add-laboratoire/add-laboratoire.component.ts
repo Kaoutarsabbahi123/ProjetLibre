@@ -16,10 +16,8 @@ export class AddLaboratoireComponent implements OnInit {
   active: boolean = true;
   dateActivation: string = new Date().toISOString().split('T')[0];
 
-
-  isModalVisible: boolean = false; // Contrôle de la visibilité de la modale
-  isError: boolean = false;
-  logoError: boolean = false; // Contrôle si c'est un message d'erreur
+  successMessage: string = '';
+  errorMessage: string = '';
 
   constructor(
     private laboratoireService: LaboratoireService,
@@ -32,21 +30,19 @@ export class AddLaboratoireComponent implements OnInit {
   onAddContact(): void {
     const nouveauContact = {
       numTel: '',
-      fax:'',
+      fax: '',
       email: '',
-      adresses: [] // Liste d'adresses pour chaque contact
+      adresses: []
     };
     this.contacts.push(nouveauContact);
   }
 
-  // Supprimer un contact
   onRemoveContact(index: number): void {
     if (index >= 0 && index < this.contacts.length) {
       this.contacts.splice(index, 1);
     }
   }
 
-  // Ajouter une adresse à un contact
   onAddAdresse(contactIndex: number): void {
     const nouvelleAdresse = {
       numVoie: '',
@@ -58,7 +54,6 @@ export class AddLaboratoireComponent implements OnInit {
     this.contacts[contactIndex].adresses.push(nouvelleAdresse);
   }
 
-  // Supprimer une adresse d'un contact
   onRemoveAdresse(contactIndex: number, adresseIndex: number): void {
     if (contactIndex >= 0 && contactIndex < this.contacts.length) {
       const contact = this.contacts[contactIndex];
@@ -73,7 +68,7 @@ export class AddLaboratoireComponent implements OnInit {
   }
 
   onCancel(): void {
-    this.router.navigate(['/laboratoires']); // Redirection directe
+    this.router.navigate(['/laboratoires']);
   }
 
   onSubmit(): void {
@@ -83,7 +78,6 @@ export class AddLaboratoireComponent implements OnInit {
     formData.append('active', String(this.active));
     formData.append('dateActivation', this.dateActivation);
 
-
     if (this.logo) {
       formData.append('logo', this.logo, this.logo.name);
     }
@@ -92,22 +86,13 @@ export class AddLaboratoireComponent implements OnInit {
 
     this.laboratoireService.addLaboratoire(formData).subscribe(
       (response: any) => {
-        console.log('Laboratoire créé avec succès:', response);
-        this.isModalVisible = true; // Afficher la modale de succès
-        this.isError = false; // Pas d'erreur
+         this.router.navigate(['/laboratoires'], {
+                  queryParams: { success: 'Laboratoire créé avec succès.' },
+                });
       },
       (error: any) => {
-        console.error('Erreur lors de la création du laboratoire:', error);
-        this.isModalVisible = true; // Afficher la modale en cas d'échec
-        this.isError = true; // Afficher le message d'erreur
+        this.errorMessage = 'Erreur lors de la création du laboratoire.';
       }
     );
-  }
-
-  onModalOk(): void {
-    this.isModalVisible = false; // Fermer la modale
-    if (!this.isError) {
-      this.router.navigate(['/laboratoires']); // Rediriger après succès
-    }
   }
 }

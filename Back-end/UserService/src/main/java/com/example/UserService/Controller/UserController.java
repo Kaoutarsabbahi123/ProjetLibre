@@ -13,7 +13,9 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
@@ -98,28 +100,36 @@ public class UserController {
         List<User> users = userService.findAllUsers();
 
         List<UserResponse> userResponses = users.stream().map(user -> {
-            UserResponse response = new UserResponse();
-            response.setEmail(user.getEmail());
-            response.setNomComplet(user.getNomComplet());
-            response.setNumTel(user.getNumTel());
-            response.setRole(user.getRole());
-            response.setFkIdLaboratoire(user.getFkIdLaboratoire());
-            response.setActive(user.getActive());
+            // Check if role is not null and equals "technicien"
+            if (user.getRole() != null && user.getRole().equals("technicien")) {
+                UserResponse response = new UserResponse();
+                response.setEmail(user.getEmail());
+                response.setNomComplet(user.getNomComplet());
+                response.setNumTel(user.getNumTel());
+                response.setRole(user.getRole());
+                response.setFkIdLaboratoire(user.getFkIdLaboratoire());
+                response.setActive(user.getActive());
 
-            // Dynamique : ajout de /nom/{id} à l'URL pour récupérer le nom du laboratoire
-            try {
-                String laboratoireUrl = laboServiceUrl + "/nom/" + user.getFkIdLaboratoire(); // Construction de l'URL complète
-                String laboratoireNom = restTemplate.getForObject(laboratoireUrl, String.class); // Appel au service labo
-                response.setNomLaboratoire(laboratoireNom);  // Ajoutez le nom du labo au UserResponse
-            } catch (Exception e) {
-                response.setNomLaboratoire("Laboratoire non trouvé");  // Gestion des erreurs si le labo n'est pas trouvé
+                // Dynamique : ajout de /nom/{id} à l'URL pour récupérer le nom du laboratoire
+                try {
+                    String laboratoireUrl = laboServiceUrl + "/nom/" + user.getFkIdLaboratoire(); // Construction de l'URL complète
+                    String laboratoireNom = restTemplate.getForObject(laboratoireUrl, String.class); // Appel au service labo
+                    response.setNomLaboratoire(laboratoireNom);  // Ajoutez le nom du labo au UserResponse
+                } catch (Exception e) {
+                    response.setNomLaboratoire("Laboratoire non trouvé");  // Gestion des erreurs si le labo n'est pas trouvé
+                }
+
+                return response;
+            } else {
+                // Optionally, return null or skip users with a null or non-matching role
+                return null;
             }
-
-            return response;
-        }).toList();
+        }).filter(Objects::nonNull).collect(Collectors.toList()); // Filter out null values
 
         return ResponseEntity.ok(userResponses);
     }
+
+
     @GetMapping("/details/email/{email}")
     public ResponseEntity<UserResponse> getUserDetailsByEmail(@PathVariable String email) {
         Optional<User> userOpt = userService.findByEmail(email);

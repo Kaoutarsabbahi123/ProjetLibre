@@ -61,14 +61,4 @@ public class AddressController {
     }
 
 
-    // Supprimer une adresse par ID
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAddress(@PathVariable Integer id) {
-        try {
-            addressService.deleteAddress(id);
-            return ResponseEntity.noContent().build();
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
 }

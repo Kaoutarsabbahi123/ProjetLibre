@@ -1,25 +1,22 @@
 package com.example.AddressService;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.example.AddressService.Entities.Address;
-import com.example.AddressService.Repository.AddressRepository;
 import com.example.AddressService.Services.AddressService;
+import com.example.AddressService.Repository.AddressRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
-public class AddressServiceTest {
+import java.util.Optional;
+import java.util.List;
+import java.util.ArrayList;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+class AddressServiceTest {
 
     @Mock
     private AddressRepository addressRepository;
@@ -27,74 +24,123 @@ public class AddressServiceTest {
     @InjectMocks
     private AddressService addressService;
 
-    private Address address;
-
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
-        address = Address.builder()
-                .numVoie("12B")
-                .nomVoie("Rue de la Paix")
-                .codePostal("75002")
-                .ville("Paris")
-                .commune("Montmartre")
-                .country("France")
-                .build();
     }
 
-    // Test de la création d'une adresse
     @Test
-    public void testCreateAddress() {
-        when(addressRepository.save(any(Address.class))).thenReturn(address);
-        Address savedAddress = addressService.createAddress(address);
-        assertNotNull(savedAddress);
-        assertEquals("Paris", savedAddress.getVille());
+    void testCreateAddress() {
+        Address address = Address.builder()
+                .id(1)
+                .numVoie("123")
+                .nomVoie("Main St")
+                .codePostal("75001")
+                .ville("Paris")
+                .commune("Paris Commune")
+                .fkIdcontact(101L)
+                .build();
+
+        when(addressRepository.save(address)).thenReturn(address);
+
+        Address createdAddress = addressService.createAddress(address);
+
+        assertNotNull(createdAddress);
+        assertEquals(1, createdAddress.getId());
+        assertEquals("123", createdAddress.getNumVoie());
+        assertEquals("Paris", createdAddress.getVille());
         verify(addressRepository, times(1)).save(address);
     }
 
-    // Test de la récupération des adresses avec pagination
     @Test
-    public void testGetAllAddresses() {
-        List<Address> addressList = new ArrayList<>();
-        addressList.add(address);
-        Page<Address> addressPage = new PageImpl<>(addressList);
+    void testFindByFkIdcontact() {
+        Long contactId = 101L;
+        List<Address> addresses = new ArrayList<>();
+        Address address = Address.builder()
+                .id(1)
+                .numVoie("123")
+                .nomVoie("Main St")
+                .codePostal("75001")
+                .ville("Paris")
+                .commune("Paris Commune")
+                .fkIdcontact(contactId)
+                .build();
+        addresses.add(address);
 
-        when(addressRepository.findAll(any(PageRequest.class))).thenReturn(addressPage);
-        Page<Address> result = addressService.getAllAddresses(0, 10);
+        when(addressRepository.findByFkIdcontact(contactId)).thenReturn(addresses);
 
-        assertEquals(1, result.getTotalElements());
-        verify(addressRepository, times(1)).findAll(any(PageRequest.class));
+        List<Address> result = addressService.findByFkIdcontact(contactId);
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals("123", result.get(0).getNumVoie());
+        assertEquals("Paris", result.get(0).getVille());
+        verify(addressRepository, times(1)).findByFkIdcontact(contactId);
     }
 
-    // Test de la récupération d'une adresse par ID
     @Test
-    public void testGetAddressById() {
-        when(addressRepository.findById(anyInt())).thenReturn(Optional.of(address));
-        Optional<Address> foundAddress = addressService.getAddressById(1);
+    void testGetAddressById() {
+        Integer id = 1;
+        Address address = Address.builder()
+                .id(id)
+                .numVoie("123")
+                .nomVoie("Main St")
+                .codePostal("75001")
+                .ville("Paris")
+                .commune("Paris Commune")
+                .fkIdcontact(101L)
+                .build();
 
-        assertTrue(foundAddress.isPresent());
-        assertEquals("Paris", foundAddress.get().getVille());
+        when(addressRepository.findById(id)).thenReturn(Optional.of(address));
+
+        Optional<Address> result = addressService.getAddressById(id);
+
+        assertTrue(result.isPresent());
+        assertEquals("Paris", result.get().getVille());
+        verify(addressRepository, times(1)).findById(id);
     }
 
-    // Test de la mise à jour d'une adresse
     @Test
-    public void testUpdateAddress() {
-        when(addressRepository.findById(anyInt())).thenReturn(Optional.of(address));
-        when(addressRepository.save(any(Address.class))).thenReturn(address);
+    void testUpdateAddress() {
+        Address address = Address.builder()
+                .id(1)
+                .numVoie("123")
+                .nomVoie("Main St Updated")
+                .codePostal("75002")
+                .ville("Lyon")
+                .commune("Lyon Commune")
+                .fkIdcontact(101L)
+                .build();
 
-        address.setVille("Lyon");
-        Address updatedAddress = addressService.updateAddress(1, address);
+        when(addressRepository.save(address)).thenReturn(address);
 
+        Address updatedAddress = addressService.updateAddress(address);
+
+        assertNotNull(updatedAddress);
+        assertEquals("Main St Updated", updatedAddress.getNomVoie());
         assertEquals("Lyon", updatedAddress.getVille());
+        verify(addressRepository, times(1)).save(address);
     }
 
-    // Test de la suppression d'une adresse
     @Test
-    public void testDeleteAddress() {
-        when(addressRepository.findById(anyInt())).thenReturn(Optional.of(address));
-        doNothing().when(addressRepository).deleteById(anyInt());
+    void testFindById() {
+        Integer id = 1;
+        Address address = Address.builder()
+                .id(id)
+                .numVoie("123")
+                .nomVoie("Main St")
+                .codePostal("75001")
+                .ville("Paris")
+                .commune("Paris Commune")
+                .fkIdcontact(101L)
+                .build();
 
-        addressService.deleteAddress(1);
-        verify(addressRepository, times(1)).deleteById(1);
+        when(addressRepository.findById(id)).thenReturn(Optional.of(address));
+
+        Optional<Address> result = addressService.findById(id);
+
+        assertTrue(result.isPresent());
+        assertEquals("Paris", result.get().getVille());
+        verify(addressRepository, times(1)).findById(id);
     }
 }

@@ -17,12 +17,17 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        //String userServiceUrl = "http://gateway-service:8222/users/email/" + email;
+        // URL to fetch user details from the User service
         String userServiceUrl = "http://localhost:8222/users/email/" + email;
         UserResponse userResponse = restTemplate.getForObject(userServiceUrl, UserResponse.class);
 
         if (userResponse == null) {
             throw new UsernameNotFoundException("Utilisateur non trouvé avec l'email : " + email);
+        }
+
+        // Check if the user is active
+        if (!userResponse.isActive()) {
+            throw new UsernameNotFoundException("L'utilisateur n'est pas actif");
         }
 
         // Conversion en CustomUserDetails

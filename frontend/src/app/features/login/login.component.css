@@ -14,3 +14,15 @@
 .login-button:hover {
   background-color: #1ca8d1; /* Couleur légèrement plus foncée au survol */
 }
+.error-message {
+   width: 100%;
+   background-color: #f8d7da; /* Rouge clair */
+   color: #721c24; /* Texte rouge foncé */
+   border: 1px solid #f5c6cb;
+   padding: 10px;
+   border-radius: 5px;
+   margin-bottom: 15px;
+   font-weight: bold;
+   animation: fadeIn 0.5s ease-in-out;
+   margin: 20px auto;
+}

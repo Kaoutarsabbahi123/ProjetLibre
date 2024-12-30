@@ -30,8 +30,4 @@ public class ContactService {
         return contactRepository.findById(id).orElse(null);
     }
 
-    // Supprimer un contact
-    public void deleteContact(Long id) {
-        contactRepository.deleteById(id);
-    }
 }

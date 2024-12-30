@@ -11,6 +11,8 @@
     <file url="file://$PROJECT_DIR$/Back-end/Config-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Back-end/ContactService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Back-end/Discovery/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Back-end/ExamService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Back-end/FolderService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Back-end/LaboratoryService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Back-end/MicroTestService/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Back-end/TestService/src/main/java" charset="UTF-8" />

@@ -93,6 +93,24 @@ spring:
             - DedupeResponseHeader=Access-Control-Allow-Credentials, RETAIN_FIRST
             - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_FIRST
 
+        - id: folder-service
+          uri: http://localhost:8898
+          predicates:
+            - Path=/api/folders/**
+          filters:
+            #- AuthenticationFilter
+            - DedupeResponseHeader=Access-Control-Allow-Credentials, RETAIN_FIRST
+            - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_FIRST
+
+        - id: exam-service
+          uri: http://localhost:8899
+          predicates:
+            - Path=/api/exams/**
+          filters:
+            #- AuthenticationFilter
+            - DedupeResponseHeader=Access-Control-Allow-Credentials, RETAIN_FIRST
+            - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_FIRST
+
       default-filters:
         - DedupeResponseHeader=Access-Control-Allow-Credentials, RETAIN_FIRST
         - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_FIRST

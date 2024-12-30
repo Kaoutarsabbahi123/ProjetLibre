@@ -12,6 +12,7 @@ export class InfoLaboratoireComponent implements OnInit {
   laboratoire: any = {
     contacts: [] // Assurez-vous que contacts est initialisé
   };
+  isModified = false;
   private initialLaboratoire: any = {}; // Pour stocker les données initiales
   logo: File | null = null;
   successMessageVisible: boolean = false;
@@ -47,12 +48,31 @@ export class InfoLaboratoireComponent implements OnInit {
     });
   }
 
-  onLogoChange(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      this.logo = file;
+  onLogoChange(event: Event): void {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput && fileInput.files && fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          // Met à jour l'aperçu du logo en Base64
+          this.laboratoire.logo = reader.result?.toString().split(',')[1]; // Stock Base64
+        };
+        reader.readAsDataURL(file);
+
+        // Stocke le fichier pour l'envoi au backend
+        this.logo = file;
+      } else {
+        alert('Veuillez sélectionner une image valide.');
+      }
+    } else {
+      alert('Aucun fichier sélectionné. Veuillez réessayer.');
     }
   }
+
+
+
 
   // Ajouter un contact
   onAddContact(): void {
@@ -87,11 +107,6 @@ export class InfoLaboratoireComponent implements OnInit {
     this.laboratoire.contacts[contactIndex].adresses.splice(adresseIndex, 1);
   }
 
-  // Comparaison des données
-  isFormModified(): boolean {
-    return JSON.stringify(this.laboratoire) !== JSON.stringify(this.initialLaboratoire);
-  }
-
   // Afficher la modale
   showModal(): void {
     const modalElement = this.confirmationModal.nativeElement;
@@ -119,9 +134,9 @@ export class InfoLaboratoireComponent implements OnInit {
     formData.append('active', String(this.laboratoire.active));
     formData.append('dateActivation', this.laboratoire.dateActivation);
 
-    if (this.logo) {
-      formData.append('logo', this.logo, this.logo.name);
-    }
+   if (this.logo) {
+       formData.append('logo', this.logo);
+     }
 
     formData.append('contacts', JSON.stringify(this.laboratoire.contacts));
 
@@ -135,7 +150,10 @@ export class InfoLaboratoireComponent implements OnInit {
 
         // Afficher le message de succès
         this.successMessageVisible = true;
-        setTimeout(() => (this.successMessageVisible = false), 2000);
+        setTimeout(() => {
+                  this.successMessageVisible = false;
+                  window.location.reload();
+                }, 3000);
       },
       (error: any) => {
         console.error('Erreur lors de la mise à jour du laboratoire:', error);
@@ -160,8 +178,8 @@ confirmArchive(): void {
         this.successMessageSuppressionVisible = true;
         setTimeout(() => {
           this.successMessageSuppressionVisible = false;
-          // Rediriger ou faire d'autres actions après l'archivage
-        }, 2000);
+          window.location.reload();
+        }, 3000);
       }
     },
     error: (err) => {
@@ -169,6 +187,15 @@ confirmArchive(): void {
     },
   });
 }
+onInputChange(): void {
+    this.isModified = this.isFormModified(); // Vérifier si le formulaire est modifié
+  }
+
+  isFormModified(): boolean {
+    const laboratoireUnchanged = JSON.stringify(this.laboratoire) === JSON.stringify(this.initialLaboratoire);
+    const logoChanged = this.logo !== null;
+    return !laboratoireUnchanged || logoChanged;
+  }
 
 
 
