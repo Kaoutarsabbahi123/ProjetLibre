@@ -1,0 +1,55 @@
+<div class="header">
+  <div class="search-bar">
+    <i class="fas fa-search"></i>
+    <input
+      type="text"
+      placeholder="Rechercher un dossier..."
+      [(ngModel)]="searchText"
+      (input)="onSearch()"
+    />
+  </div>
+
+  <!-- Bouton pour ajouter -->
+  <button class="add-button" (click)="onAdd()">
+    <i class="fas fa-plus" style="font-size: 20px;"></i>
+  </button>
+</div>
+
+<div class="folder-container">
+  <div *ngFor="let folder of paginatedData" class="folder-card">
+    <div class="folder-header">
+      <img src="assets/contract.png" alt="Folder Logo" class="folder-logo" />
+    </div>
+    <div class="folder-body">
+      <h3 class="folder-name">{{ folder.nomComplet }}</h3>
+      <p class="folder-date">Créé le : {{ folder.dateCreation | date: 'dd MMM yyyy' }}</p>
+
+      <ng-container *ngIf="!folder.active">
+        <p class="folder-status inactive-status">
+          <span>Inactif</span>
+        </p>
+      </ng-container>
+
+      <ng-container *ngIf="folder.active">
+        <p class="folder-statut" [ngClass]="{
+          'status-green': folder.statut,
+          'status-yellow': !folder.statut
+        }">
+          <span>{{ folder.statut ? 'Complet' : 'En cours' }}</span>
+        </p>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<div class="pagination">
+  <button
+    *ngFor="let page of pages"
+    [class.active]="page === currentPage"
+    (click)="goToPage(page)">
+    {{ page }}
+  </button>
+  <button *ngIf="showEllipsis" (click)="goToPage(pages[pages.length - 1])">
+    ...
+  </button>
+</div>

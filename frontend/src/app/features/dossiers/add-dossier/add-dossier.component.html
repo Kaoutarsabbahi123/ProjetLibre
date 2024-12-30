@@ -1,0 +1,127 @@
+<div class="add-folder-form">
+  <h2>Ajouter un Dossier</h2>
+  <form (ngSubmit)="onSubmit()" #folderForm="ngForm">
+    <!-- Nom Complet -->
+    <div class="form-group">
+      <label for="nomComplet">Nom Complet</label>
+      <input
+        type="text"
+        id="nomComplet"
+        name="nomComplet"
+        [(ngModel)]="folder.nomComplet"
+        required
+      />
+    </div>
+
+    <!-- Date de Naissance -->
+    <div class="form-group">
+      <label for="dateNaissance">Date de Naissance</label>
+      <input
+        type="date"
+        id="dateNaissance"
+        name="dateNaissance"
+        [(ngModel)]="folder.dateNaissance"
+        required
+      />
+    </div>
+
+    <!-- Lieu de Naissance -->
+    <div class="form-group">
+      <label for="lieuDeNaissance">Lieu de Naissance</label>
+      <input
+        type="text"
+        id="lieuDeNaissance"
+        name="lieuDeNaissance"
+        [(ngModel)]="folder.lieuDeNaissance"
+        required
+      />
+    </div>
+
+    <!-- Sexe -->
+    <div class="form-group">
+      <label for="sexe">Sexe</label>
+      <select id="sexe" name="sexe" [(ngModel)]="folder.sexe" required>
+        <option value="femme">Femme</option>
+        <option value="homme">Homme</option>
+      </select>
+    </div>
+
+    <!-- Type de Pièce d'Identité -->
+    <div class="form-group">
+      <label for="typePieceIdentite">Type de Pièce d'Identité</label>
+      <input
+        type="text"
+        id="typePieceIdentite"
+        name="typePieceIdentite"
+        [(ngModel)]="folder.typePieceIdentite"
+        required
+      />
+    </div>
+
+    <!-- Numéro de Pièce d'Identité -->
+    <div class="form-group">
+      <label for="numPieceIdentite">Numéro de Pièce d'Identité</label>
+      <input
+        type="text"
+        id="numPieceIdentite"
+        name="numPieceIdentite"
+        [(ngModel)]="folder.numPieceIdentite"
+        required
+      />
+    </div>
+
+    <!-- Adresse -->
+    <div class="form-group">
+      <label for="adresse">Adresse</label>
+      <input
+        type="text"
+        id="adresse"
+        name="adresse"
+        [(ngModel)]="folder.adresse"
+        required
+      />
+    </div>
+
+    <!-- Numéro de Téléphone -->
+    <div class="form-group">
+      <label for="numTel">Numéro de Téléphone</label>
+      <input
+        type="text"
+        id="numTel"
+        name="numTel"
+        [(ngModel)]="folder.numTel"
+        required
+      />
+    </div>
+
+    <!-- Email -->
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        [(ngModel)]="folder.email"
+        required
+      />
+    </div>
+
+    <!-- Liste déroulante pour Analyses -->
+    <div class="form-group">
+      <label for="analyse">Analyse</label>
+      <select
+        id="analyse"
+        name="analyse"
+        [(ngModel)]="folder.selectedAnalyse"
+        required
+      >
+        <option *ngFor="let analyse of analyses" [value]="analyse.id">
+          {{ analyse.nom }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Bouton de soumission -->
+    <button type="submit" [disabled]="!folderForm.valid">Ajouter</button>
+  </form>
+</div>

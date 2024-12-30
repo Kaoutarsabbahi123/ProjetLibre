@@ -13,6 +13,9 @@ import { InfoUtilisateurComponent } from './features/Utilisateurs/info-utilisate
 import { AnalysesComponent } from './features/analyses/analyses.component';
 import { InfoAnalyseComponent } from './features/analyses/info-analyse/info-analyse.component';
 import { AddAnalyseComponent } from './features/analyses/add-analyse/add-analyse.component';
+import { DossiersComponent } from './features/dossiers/dossiers.component';
+import { AddDossierComponent } from './features/dossiers/add-dossier/add-dossier.component';
+import { InfoDossierComponent } from './features/dossiers/info-dossier/info-dossier.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -32,7 +35,11 @@ const routes: Routes = [
       { path: 'info-user', component: InfoUtilisateurComponent, canActivate: [AuthGuard]},
       { path: 'analyses', component: AnalysesComponent },
       { path: 'add-analysis', component: AddAnalyseComponent },
-      { path: 'info-analysis', component: InfoAnalyseComponent }
+      { path: 'info-analysis', component: InfoAnalyseComponent },
+      { path: 'dossiers', component: DossiersComponent },
+      { path: 'add-dossier', component: AddDossierComponent },
+      { path: 'info-dossier', component: InfoDossierComponent }
+
     ],
   },
 ];

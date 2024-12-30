@@ -1,0 +1,183 @@
+.folder-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.folder-card {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.folder-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+
+  .folder-logo {
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
+  }
+
+  .folder-number {
+    font-size: 16px;
+    font-weight: bold;
+    color: #6c757d;
+  }
+}
+
+.folder-body {
+  text-align: center;
+
+  .folder-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #343a40;
+    margin: 5px 0;
+  }
+
+  .folder-date {
+    font-size: 14px;
+    color: #6c757d;
+  }
+}
+.folder-status, .folder-statut {
+  font-weight: bold;
+  padding: 5px 15px;
+  border-radius: 12px; /* Bords arrondis */
+  display: inline-block;
+  margin: 5px 0; /* Espace vertical entre les statuts */
+}
+
+.active-status {
+  background-color: #c8e6c9; /* Vert clair pour "Actif" */
+  color: #388e3c; /* Vert foncé pour le texte */
+}
+
+.inactive-status {
+  background-color: #ffcdd2; /* Rouge clair pour "Inactif" */
+  color: #d32f2f; /* Rouge foncé pour le texte */
+}
+
+.status-green {
+  background-color: #c5e1a5; /* Vert pastel pour "Complet" */
+  color: #2e7d32; /* Vert foncé pour le texte */
+}
+
+.status-yellow {
+  background-color: #fff9c4; /* Jaune pastel pour "En cours" */
+  color: #f9a825; /* Jaune foncé/orangé pour le texte */
+}
+
+/* Ajout d'espacement entre les deux sections */
+.folder-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Espace entre les sections */
+}
+/* Header */
+.header {
+  display: flex;
+  justify-content: flex-end; /* Espacement entre la barre de recherche et les filtres */
+  align-items: center;
+  gap: 15px;
+}
+
+.search-bar {
+  width:auto;
+  width: 300px; /* Limiter la taille de la barre de recherche */
+  padding: 10px 14px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  font-size: 15px;
+  box-shadow: 0 2px 6px var(--shadow-light);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  background:white;
+}
+
+.search-bar input {
+  border: none;
+  outline: none;
+  flex-grow: 1;
+}
+
+.search-bar i {
+  margin-right: 10px;
+}
+
+/* Ajouter une icône à la barre de recherche */
+.search-bar:focus {
+  border-color: var(--accent-color);
+  outline: none;
+  box-shadow: 0 0 10px var(--accent-color);
+}
+
+/* Bouton Ajouter */
+.add-button {
+  padding: 4px 10px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  font-weight: bold;
+  font-size:25px;
+  border: none;
+  border-radius: 12px;
+  padding-top:1px;
+  cursor: pointer;
+  transition: box-shadow 0.3s, transform 0.3s, background-position 0.4s ease;
+  background-size: 200%;
+  background-position: left;
+}
+
+.add-button:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 14px var(--shadow-dark);
+  background-position: right;
+}
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+  gap: 8px;
+}
+
+.pagination button {
+  border: 1px solid #ddd;
+  background: white;
+  color: var(--primary-color);
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: transform 0.2s, box-shadow 0.2s ease-in-out;
+}
+
+.pagination button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px var(--shadow-light);
+}
+
+
+.pagination button.active {
+  background: var(--primary-color);
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 4px 8px var(--shadow-dark);
+}

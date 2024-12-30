@@ -32,45 +32,7 @@ body {
   transform: translateY(-2px);
 }
 
-/* Styles pour les filtres */
-.filter-button {
-  border-radius: 20px;
-  font-weight: bold;
-  border: 1px solid #ced4da;
-  color: #6c757d;
-  background-color: #f8f9fa;
-  transition: all 0.3s ease;
-  align-items: center;
-  padding: 8px 16px;
-  margin-top: 30px;
-  margin-right: 8px;
-}
 
-.filter-button:last-child {
-  margin-right: 0;
-}
-
-.filter-button:first-child {
-  margin-left: 7px;
-}
-
-.filter-button i {
-  margin-right: 8px;
-}
-
-.filter-button.active,
-.filter-button:hover {
-  background-color: var(--primary-color);
-  color: #fff;
-  transform: scale(1.05);
-}
-
-.filter-button:focus, .filter-button:active {
-  outline: none;
-  box-shadow: none;
-}
-
-/* Conteneur principal */
 .laboratoires-container {
   background: linear-gradient(135deg, white, #fefefe);
   border-radius: 12px;

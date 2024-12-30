@@ -20,6 +20,9 @@ import { InfoUtilisateurComponent } from './features/Utilisateurs/info-utilisate
 import { AnalysesComponent } from './features/analyses/analyses.component';
 import { InfoAnalyseComponent } from './features/analyses/info-analyse/info-analyse.component';
 import { AddAnalyseComponent } from './features/analyses/add-analyse/add-analyse.component';
+import { DossiersComponent } from './features/dossiers/dossiers.component';
+import { AddDossierComponent } from './features/dossiers/add-dossier/add-dossier.component';
+import { InfoDossierComponent } from './features/dossiers/info-dossier/info-dossier.component';
 
 @NgModule({
   declarations: [
@@ -35,8 +38,10 @@ import { AddAnalyseComponent } from './features/analyses/add-analyse/add-analyse
     InfoUtilisateurComponent,
     AnalysesComponent,
     InfoAnalyseComponent,
-    AddAnalyseComponent
-
+    AddAnalyseComponent,
+    DossiersComponent,
+    AddDossierComponent,
+    InfoDossierComponent
   ],
   imports: [
      ReactiveFormsModule,
