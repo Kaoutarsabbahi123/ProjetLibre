@@ -1,0 +1,127 @@
+<div class="archive-button" *ngIf="analyse?.archive === false">
+  <button class="btn" (click)="showArchiveModal()">
+    <i class="fa fa-archive"></i> <!-- Icône d'archivage -->
+    Archiver
+  </button>
+</div>
+<div *ngIf="successMessageVisible==true" class="success-message">
+  Analyse mise à jour avec succès.
+</div>
+<div *ngIf="successMessageSuppressionVisible" class="success-message">
+  L'analyse a été supprimée avec succès.
+</div>
+<div class="form-container">
+  <h2>Détails de l'Analyse</h2>
+  <div class="info-section">
+    <div class="form-group">
+      <label>Nom :</label>
+      <input [(ngModel)]="analyse.nom" placeholder="Nom de l'analyse" />
+    </div>
+    <div class="form-group">
+      <label>Description :</label>
+      <textarea [(ngModel)]="analyse.description" placeholder="Description"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Coût :</label>
+      <input [(ngModel)]="analyse.cout" placeholder="Coût de l'analyse" type="number" />
+    </div>
+    <div class="form-group">
+      <label for="idLaboratoire">Nom du laboratoire :</label>
+      <select id="idLaboratoire" name="idLaboratoire" [(ngModel)]="analyse.idLaboratoire" (ngModelChange)="onLaboratoireChange($event)">
+        <option *ngFor="let labo of laboratoires" [value]="labo.id">{{ labo.nom }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="epreuve-section">
+    <h4>Epreuves</h4>
+    <button class="add-button small-button" (click)="onAddEpreuve()">
+      <i class="fas fa-plus"></i>Ajouter une épreuve
+    </button>
+    <div *ngIf="analyse.epreuves?.length > 0; else noEpreuves">
+    <div *ngFor="let epreuve of analyse.epreuves; let i = index" class="epreuve-item">
+      <div class="epreuve-form">
+        <div>
+          <label>Nom :</label>
+          <input [(ngModel)]="epreuve.nom" placeholder="Nom de l'épreuve" />
+        </div>
+        <div class="TestAnalyse-section">
+          <h4>Tests Analyses</h4>
+          <button class="add-button small-button" (click)="onAddTestAnalyse(i)">
+            <i class="fas fa-plus"></i>Ajouter un test
+          </button>
+          <div *ngIf="epreuve.testAnalyses?.length > 0; else noTestAnalyses">
+          <div *ngFor="let test of epreuve.testAnalyses; let j = index" class="testAnalyse-item">
+            <div class="TestAnalyse-form">
+              <div class="form-group half-width">
+                <label>Nom :</label>
+                <input [(ngModel)]="test.nom" placeholder="Nom du test" />
+              </div>
+              <div class="form-group half-width">
+                <label>Description :</label>
+                <textarea [(ngModel)]="test.description" placeholder="Description du test"></textarea>
+              </div>
+              <div class="form-group half-width">
+                <label>Valeurs de référence :</label>
+                <input [(ngModel)]="test.valeursDeReference" placeholder="Valeurs de référence" />
+              </div>
+            </div>
+            </div>
+          </div>
+        </div>
+        <ng-template #noTestAnalyses>
+          <p>Aucun test disponible pour cette épreuve.</p>
+        </ng-template>
+      </div>
+    </div>
+    </div>
+    <ng-template #noEpreuves>
+      <p>Aucune épreuve disponible pour cette analyse.</p>
+    </ng-template>
+  </div>
+
+  <div class="form-buttons">
+    <button type="submit" [disabled]="!isFormModified()" (click)="showModal()">Enregistrer</button>
+    <button type="button" (click)="closeModal()">Annuler</button>
+  </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="confirmationModal" #confirmationModal>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmer les modifications</h5>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Voulez-vous enregistrer les modifications apportées à l'analyse ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="button-primary" (click)="confirmUpdate()">Confirmer</button>
+        <button type="button" (click)="closeModal()">Annuler</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="confirmationModalSupp" #confirmationModalSupp>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmer l'archivage</h5>
+        <button type="button" class="close" aria-label="Close" (click)="closeModalArchive()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Êtes-vous sûr de vouloir archiver cette analyse ? Cette action est irréversible.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" (click)="confirmArchive()">Confirmer</button>
+        <button type="button" (click)="closeModalArchive()">Annuler</button>
+      </div>
+    </div>
+  </div>
+</div>

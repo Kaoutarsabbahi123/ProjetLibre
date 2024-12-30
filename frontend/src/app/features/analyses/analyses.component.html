@@ -1,0 +1,54 @@
+<div class="analyses-container">
+  <div class="header">
+    <div class="search-bar">
+      <i class="fas fa-search"></i>
+      <input
+        type="text"
+        placeholder="Rechercher une analyse..."
+        [(ngModel)]="searchText"
+        (input)="onSearch()"
+      />
+    </div>
+
+    <button class="add-button" (click)="onAdd()">
+      <i class="fas fa-plus" style="font-size:20px;"></i>
+    </button>
+  </div>
+
+  <table class="analyses-table">
+    <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Description</th>
+      <th>Coût</th>
+      <th>État</th>
+      <th>Laboratoire</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let analysis of paginatedData" (click)="navigateToInfo(analysis.id)" class="clickable-row">
+      <td>{{ analysis.nom }}</td>
+      <td>{{ analysis.description }}</td>
+      <td>{{ analysis.cout }}</td>
+      <td>
+          <span [ngClass]="{ 'status-active': !analysis.archive, 'status-archive': analysis.archive }">
+            {{ analysis.archive ? 'Archivé' : 'Actif' }}
+          </span>
+      </td>
+      <td>{{ analysis.nomLaboratoire }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <button
+      *ngFor="let page of pages"
+      [class.active]="page === currentPage"
+      (click)="goToPage(page)">
+      {{ page }}
+    </button>
+
+    <button *ngIf="showEllipsis" (click)="goToPage(pages[pages.length - 1])">...</button>
+  </div>
+</div>
+
