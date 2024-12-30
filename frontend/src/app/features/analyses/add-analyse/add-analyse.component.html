@@ -1,1 +1,126 @@
-<p>add-analyse works!</p>
+<div class="form-container">
+  <h2 class="form-title">Ajouter une Analyse</h2>
+  <form (ngSubmit)="onSubmit()" #analyseForm="ngForm">
+    <!-- Informations générales -->
+    <div class="info-section">
+      <h4>Informations générales</h4>
+      <div class="form-group">
+        <label for="nom">Nom de l'analyse :</label>
+        <input type="text" id="nom" name="nom" [(ngModel)]="nom" required />
+      </div>
+      <div class="form-group">
+        <label for="description">Description :</label>
+        <textarea id="description" name="description" [(ngModel)]="description" required></textarea>
+      </div>
+      <div class="form-group">
+        <label for="cout">Coût :</label>
+        <input type="number" id="cout" name="cout" [(ngModel)]="cout" required />
+      </div>
+      <div class="form-group">
+        <label for="laboratoire">Laboratoire :</label>
+        <select id="laboratoire" name="laboratoire" [(ngModel)]="selectedLaboratoire" (ngModelChange)="onLaboratoireChange($event)" required>
+          <option *ngFor="let labo of laboratoires" [value]="labo.id">{{ labo.nom }}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Section Epreuves -->
+    <div>
+      <h4>Epreuves</h4>
+      <button type="button" class="add-button small-button" (click)="addEpreuve()">
+        <i class="fas fa-plus"></i> Ajouter une épreuve
+      </button>
+      <div *ngFor="let epreuve of epreuves; let eIndex = index" class="epreuve-section">
+        <div class="epreuve-item">
+          <div class="epreuve-form">
+            <div class="form-group">
+              <label for="epreuve-nom-{{ eIndex }}">Nom de l'épreuve :</label>
+              <input
+                type="text"
+                id="epreuve-nom-{{ eIndex }}"
+                [(ngModel)]="epreuve.nom"
+                name="epreuve-nom-{{ eIndex }}"
+                required
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- Section Tests -->
+        <div class="testanalyse-section">
+          <h4>Tests</h4>
+          <button type="button" class="add-button small-button" (click)="addTestToEpreuve(eIndex)">
+            <i class="fas fa-plus"></i> Ajouter un test
+          </button>
+          <div *ngFor="let test of epreuve.testAnalyses; let tIndex = index" class="test-item">
+            <div class="test-form">
+              <div class="form-group half-width">
+                <label for="test-nom-{{ eIndex }}-{{ tIndex }}">Nom du test :</label>
+                <input
+                  type="text"
+                  id="test-nom-{{ eIndex }}-{{ tIndex }}"
+                  [(ngModel)]="test.nom"
+                  name="test-nom-{{ eIndex }}-{{ tIndex }}"
+                  required
+                />
+              </div>
+              <div class="form-group half-width">
+                <label for="test-description-{{ eIndex }}-{{ tIndex }}">Description :</label>
+                <textarea
+                  id="test-description-{{ eIndex }}-{{ tIndex }}"
+                  [(ngModel)]="test.description"
+                  name="test-description-{{ eIndex }}-{{ tIndex }}"
+                  required
+                ></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="test-valeurs-{{ eIndex }}-{{ tIndex }}">Valeurs de Référence :</label>
+              <input
+                type="text"
+                id="test-valeurs-{{ eIndex }}-{{ tIndex }}"
+                [(ngModel)]="test.valeursDeReference"
+                name="test-valeurs-{{ eIndex }}-{{ tIndex }}"
+                required
+              />
+            </div>
+            <button type="button" class="remove-button small-button" (click)="removeTestFromEpreuve(eIndex, tIndex)">
+              Supprimer ce test
+            </button>
+          </div>
+        </div>
+        <button type="button" class="remove-button small-button" (click)="removeEpreuve(eIndex)">
+          Supprimer cette épreuve
+        </button>
+      </div>
+    </div>
+
+    <!-- Boutons d'action -->
+    <div class="form-buttons">
+      <button type="submit" [disabled]="analyseForm.invalid">Enregistrer</button>
+      <button type="button" (click)="onCancel()">Annuler</button>
+    </div>
+  </form>
+</div>
+
+<!-- Modal -->
+<div class="modal" [class.show]="isModalVisible" *ngIf="isModalVisible">
+  <div class="modal-content">
+    <!-- Bouton de fermeture -->
+    <button class="close-button" (click)="onModalOk()">×</button>
+    <div class="modal-body">
+      <img
+        [src]="isError ? 'assets/cancel.png' : 'assets/check (1).png'"
+        alt="Icône de statut"
+        class="modal-icon"
+      />
+      <h2 class="modal-title" [ngClass]="{ 'error-text': isError }">
+        {{ isError ? 'Erreur' : 'Succès' }}
+      </h2>
+      <p>
+        {{ isError ? 'Une erreur est survenue lors de la création de l\'analyse.' : 'L\'analyse a été créée avec succès.' }}
+      </p>
+    </div>
+    <button class="ok-button" [ngClass]="{ 'error-button': isError }" (click)="onModalOk()">OK</button>
+  </div>
+</div>
