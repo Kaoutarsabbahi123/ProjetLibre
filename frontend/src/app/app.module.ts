@@ -17,6 +17,9 @@ import { InfoLaboratoireComponent } from './features/laboratoires/info-laboratoi
 import { UtilisateursComponent } from './features/utilisateurs/utilisateurs.component';
 import { AddUtilisateurComponent } from './features/Utilisateurs/add-utilisateur/add-utilisateur.component';
 import { InfoUtilisateurComponent } from './features/Utilisateurs/info-utilisateur/info-utilisateur.component';
+import { AnalysesComponent } from './features/analyses/analyses.component';
+import { InfoAnalyseComponent } from './features/analyses/info-analyse/info-analyse.component';
+import { AddAnalyseComponent } from './features/analyses/add-analyse/add-analyse.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +32,10 @@ import { InfoUtilisateurComponent } from './features/Utilisateurs/info-utilisate
     InfoLaboratoireComponent,
     UtilisateursComponent,
     AddUtilisateurComponent,
-    InfoUtilisateurComponent
+    InfoUtilisateurComponent,
+    AnalysesComponent,
+    InfoAnalyseComponent,
+    AddAnalyseComponent
 
   ],
   imports: [

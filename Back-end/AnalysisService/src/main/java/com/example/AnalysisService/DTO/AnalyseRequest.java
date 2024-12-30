@@ -15,6 +15,6 @@ public class AnalyseRequest {
     private String description;
     private Long cout;
     private boolean archive;
-    private String nomLaboratoire; // Nom du laboratoire
+    private Long idLaboratoire;
     private List<EpreuveRequest> epreuves; // Liste des épreuves associées
 }
