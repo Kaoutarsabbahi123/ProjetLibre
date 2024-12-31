@@ -349,7 +349,11 @@ public class AnalyseController {
         }
     }
 
-
+    @GetMapping("/non-archived/laboratoire/{idLaboratoire}")
+    public ResponseEntity<List<Analyse>> getNonArchivedAnalyses(@PathVariable Long idLaboratoire) {
+        List<Analyse> analyses = analyseService.getNonArchivedAnalysesByLaboratoireId(idLaboratoire);
+        return ResponseEntity.ok(analyses);
+    }
 }
 
 
