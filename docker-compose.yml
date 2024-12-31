@@ -289,10 +289,10 @@ services:
       analyse-service:
         condition: service_healthy
 
-  front-end-angular:
-    build: ./frontend
-    container_name: front-end-angular
-    ports:
-      - '82:80'
-    expose:
-      - '82'
+    #front-end-angular:
+    # build: ./frontend
+    # container_name: front-end-angular
+        #ports:
+      # - '82:80'
+        #  expose:
+    #   - '82'
