@@ -64,8 +64,8 @@ services:
     depends_on:
       gateway-service:
         condition: service_healthy
-    volumes:
-      - c:/docker/mysql_data:/var/lib/mysql
+        #volumes:
+      #- c:/docker/mysql_data:/var/lib/mysql
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       interval: 10s
