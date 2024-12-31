@@ -95,7 +95,7 @@ services:
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8088/actuator/health" ]
       interval: 10s
-      retries: 4
+      retries: 8
   auth-service:
     build: ./Back-end/AuthService
     container_name: auth-service
@@ -116,7 +116,7 @@ services:
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
       interval: 10s
-      retries: 4
+      retries: 8
     depends_on:
       user-service:
         condition: service_healthy
@@ -140,7 +140,7 @@ services:
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
       interval: 10s
-      retries: 4
+      retries: 8
     depends_on:
       auth-service:
         condition: service_healthy
@@ -164,7 +164,7 @@ services:
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
       interval: 10s
-      retries: 4
+      retries: 8
     depends_on:
       address-service:
         condition: service_healthy
@@ -188,7 +188,7 @@ services:
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
       interval: 10s
-      retries: 4
+      retries: 8
     depends_on:
       contact-service:
         condition: service_healthy
@@ -212,7 +212,7 @@ services:
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
       interval: 10s
-      retries: 4
+      retries: 8
     depends_on:
       labo-service:
         condition: service_healthy
@@ -236,7 +236,7 @@ services:
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
       interval: 10s
-      retries: 4
+      retries: 8
     depends_on:
       microtest-service:
         condition: service_healthy
@@ -260,7 +260,7 @@ services:
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
       interval: 10s
-      retries: 4
+      retries: 8
     depends_on:
       epreuve-service:
         condition: service_healthy
@@ -284,7 +284,7 @@ services:
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
       interval: 10s
-      retries: 4
+      retries: 8
     depends_on:
       analyse-service:
         condition: service_healthy
