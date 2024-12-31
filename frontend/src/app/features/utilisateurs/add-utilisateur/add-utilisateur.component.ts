@@ -33,7 +33,7 @@ export class AddUtilisateurComponent {
   }
 
   loadLaboratoires(): void {
-    this.laboratoireService.getLaboratoiresNoms().subscribe((data) => {
+    this.laboratoireService.getLaboratoiresNomsNonArchive().subscribe((data) => {
       this.laboratoires = data.map((item: any) => ({
         id: item[0], // Premier élément du tableau
         nom: item[1], // Deuxième élément du tableau

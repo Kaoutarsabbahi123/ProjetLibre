@@ -29,7 +29,7 @@ export class AddAnalyseComponent implements OnInit {
 
   // Récupérer la liste des laboratoires pour la liste déroulante
  fetchLaboratoires(): void {
-     this.analysisService.getLaboratoiresNoms().subscribe((data: any[]) => {
+     this.analysisService.getLaboratoiresNomsNonArchive().subscribe((data: any[]) => {
        this.laboratoires = data.map((item: any) => ({
          id: item[0], // Premier élément du tableau
          nom: item[1], // Deuxième élément du tableau

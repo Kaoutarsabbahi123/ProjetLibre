@@ -40,4 +40,12 @@ export class AnalysisService {
   getLaboratoiresNoms(): Observable<any[]> {
     return this.http.get<any[]>(`${this.lienlabo}/noms`);
   }
+  // Récupérer les noms et IDs des laboratoires
+    getLaboratoiresNomsNonArchive(): Observable<any[]> {
+      return this.http.get<any[]>(`${this.lienlabo}/nomsNonArchive`);
+    }
+    getAnalysesNames(): Observable<any[]> {
+      return this.http.get<any[]>(`${this.apiUrl}/names`); // Utiliser l'endpoint des analyses non archivées
+    }
+
 }

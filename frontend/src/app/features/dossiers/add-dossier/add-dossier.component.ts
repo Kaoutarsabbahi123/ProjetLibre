@@ -1,38 +1,45 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { LaboratoireService } from '../../../core/laboratoire.service';
 
 @Component({
   selector: 'app-add-dossier',
   templateUrl: './add-dossier.component.html',
-  styleUrl: './add-dossier.component.css'
+  styleUrls: ['./add-dossier.component.css']
 })
-export class AddDossierComponent {
-    folder = {
-        nomComplet: '',
-        dateNaissance: '',
-        lieuDeNaissance: '',
-        sexe: 'femme',
-        typePieceIdentite: '',
-        numPieceIdentite: '',
-        adresse: '',
-        numTel: '',
-        email: '',
-        selectedAnalyse: ''
-      };
+export class AddDossierComponent implements OnInit {
+  folder = {
+    nomComplet: '',
+    dateNaissance: '',
+    lieuDeNaissance: '',
+    sexe: 'femme',
+    typePieceIdentite: '',
+    numPieceIdentite: '',
+    adresse: '',
+    numTel: '',
+    email: '',
+    laboratoire: null // Pour stocker l'ID du laboratoire sélectionné
+  };
 
-      analyses = [
-        { id: 1, nom: 'Analyse 1' },
-        { id: 2, nom: 'Analyse 2' },
-        { id: 3, nom: 'Analyse 3' }
-      ];
+  laboratoires: { id: number; nom: string }[] = []; // Liste des laboratoires
 
-  constructor() {}
+  constructor(private laboratoireService: LaboratoireService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadLaboratoires();
+  }
+
+  loadLaboratoires(): void {
+      this.laboratoireService.getLaboratoiresNomsNonArchive().subscribe((data) => {
+        this.laboratoires = data.map((item: any) => ({
+          id: item[0], // Premier élément du tableau
+          nom: item[1], // Deuxième élément du tableau
+        }));
+      });
+    }
+
 
   onSubmit(): void {
     console.log('Dossier soumis :', this.folder);
-
-    // Ajouter la logique pour enregistrer le dossier ici
-    // Par exemple, appeler un service pour envoyer les données au backend
+    // Logique pour soumettre le dossier
   }
 }

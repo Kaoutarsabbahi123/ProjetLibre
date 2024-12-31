@@ -40,6 +40,10 @@ export class LaboratoireService {
   getLaboratoiresNoms(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/noms`);
   }
+// Récupérer les noms et IDs des laboratoires
+  getLaboratoiresNomsNonArchive(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/nomsNonArchive`);
+  }
 
 
 }

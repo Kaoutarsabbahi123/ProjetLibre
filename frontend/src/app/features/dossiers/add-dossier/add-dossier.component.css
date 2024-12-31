@@ -1,0 +1,206 @@
+
+
+.add-folder-form {
+  width: 90%;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px var(--shadow-light);
+}
+
+.add-folder-form h2 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #201e1e;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  padding-bottom: 8px;
+  font-family: 'Arial', sans-serif;
+}
+
+.add-folder-form h2::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 3px;
+  background: var(--primary-color);
+  margin-top: 5px;
+  border-radius: 2px;
+  animation: lineExpand 1s ease forwards;
+}
+
+@keyframes lineExpand {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    width: 70px;
+    opacity: 1;
+  }
+}
+
+.add-folder-form .form-group-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.add-folder-form .form-group {
+  flex: 1 1 calc(50% - 10px); /* Deux colonnes, espace ajusté */
+  display: flex;
+  flex-direction: column;
+}
+
+.add-folder-form label {
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+.add-folder-form input,
+.add-folder-form select {
+  padding: 10px;
+  border: 1px solid var(--shadow-light);
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.add-folder-form input:focus,
+.add-folder-form select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 4px var(--primary-color);
+}
+
+
+h3 {
+  font-size: 20px;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.info-section,
+.contact-section,
+.address-section {
+  margin-bottom: 30px; /* Espacement entre les sections */
+  padding: 20px;
+  border: 1px solid var(--shadow-light);
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px var(--shadow-light);
+  display: flex;
+  flex-direction: column; /* Alignement vertical des éléments dans chaque section */
+}
+
+form .form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 calc(50% - 20px); /* 2 inputs par ligne */
+}
+
+form .form-group.full-width {
+  flex: 1 1 100%; /* Prend toute la largeur */
+}
+
+form label {
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+form input,
+form select {
+  padding: 10px;
+  border: 1px solid var(--shadow-light);
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+form input:focus,
+form select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 4px var(--primary-color);
+}
+
+.contact-section .form-group,
+.address-section .form-group {
+  margin-bottom: 20px; /* Espacement des groupes de champs */
+}
+
+.contact-section h4,
+.address-section h4,
+ .info-section h4{
+  font-size: 18px;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.address-section .address-container {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px dashed var(--shadow-dark);
+  border-radius: 6px;
+  background-color: var(--hover-color);
+}
+
+
+
+.contact-section .form-actions,
+.address-section .form-actions {
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .contact-section .form-group,
+  .address-section .form-group {
+    flex: 1 1 100%; /* Prend toute la largeur en mode responsive */
+  }
+}
+.form-buttons {
+  display: flex;
+  justify-content: flex-end; /* Aligner les boutons à droite */
+  gap: 10px; /* Espace entre les boutons */
+  margin-top: 20px; /* Ajouter un espace au-dessus */
+}
+
+.form-buttons button {
+  flex: 0 0 150px; /* Fixe la largeur des boutons à 150px */
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center; /* Centrer le texte */
+}
+
+.form-buttons button[type="submit"] {
+  background-color: var(--primary-color); /* Couleur principale */
+  color: white; /* Couleur du texte */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animation au survol */
+}
+
+.form-buttons button[type="submit"]:hover {
+  transform: scale(1.05); /* Légère mise en relief au survol */
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2); /* Ombre douce */
+}
+
+.form-buttons button[type="button"] {
+  background-color: #ccc; /* Couleur de fond gris clair */
+  color: #333; /* Couleur du texte */
+}
+
+.form-buttons button[type="button"]:hover {
+  background-color: #bbb; /* Couleur plus foncée au survol */
+  transform: scale(1.05); /* Mise en relief */
+}
+
+
