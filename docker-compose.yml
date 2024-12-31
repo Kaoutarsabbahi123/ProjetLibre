@@ -85,7 +85,7 @@ services:
       SPRING_DATASOURCE_PASSWORD:
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "true"
-      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
       CONFIG_SERVER_URL: http://config-server:8888
       DISCOVERY_SERVICE_URL: http://discovery-service:8761/eureka
       GATEWAY_SERVICE_URL: http://gateway-service:8222
@@ -112,7 +112,7 @@ services:
       SPRING_DATASOURCE_PASSWORD:
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "true"
-      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
       interval: 10s
@@ -136,7 +136,7 @@ services:
       SPRING_DATASOURCE_PASSWORD:
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "true"
-      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
       interval: 10s
@@ -160,7 +160,7 @@ services:
       SPRING_DATASOURCE_PASSWORD:
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "true"
-      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
       interval: 10s
@@ -184,7 +184,7 @@ services:
       SPRING_DATASOURCE_PASSWORD:
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "true"
-      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
       interval: 10s
@@ -208,7 +208,7 @@ services:
       SPRING_DATASOURCE_PASSWORD:
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "true"
-      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
       interval: 10s
@@ -232,7 +232,7 @@ services:
       SPRING_DATASOURCE_PASSWORD:
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "true"
-      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
       interval: 10s
@@ -256,7 +256,7 @@ services:
       SPRING_DATASOURCE_PASSWORD:
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "true"
-      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
       interval: 10s
@@ -280,7 +280,7 @@ services:
       SPRING_DATASOURCE_PASSWORD:
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "true"
-      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
       interval: 10s
