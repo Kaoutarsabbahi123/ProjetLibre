@@ -27,6 +27,6 @@ public class Folder {
     private String adresse;
     private String numTel;
     private String email;
-    private Boolean statut;
     private Boolean active;
+    private Long fkIdLaboratoire;
 }
