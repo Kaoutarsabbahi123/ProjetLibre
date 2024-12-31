@@ -69,7 +69,7 @@ spring:
             - DedupeResponseHeader=Access-Control-Allow-Credentials, RETAIN_FIRST
             - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_FIRST  # Ajout d'une nouvelle ligne avec la bonne syntaxe
 
-        - id: MicroTest-service
+        - id: microtest-service
           uri: http://MicroTest-service:8087
           #uri: http://localhost:8087
           predicates:

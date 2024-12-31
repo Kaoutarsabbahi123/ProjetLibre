@@ -192,9 +192,9 @@ services:
     depends_on:
       contact-service:
         condition: service_healthy
-  MicroTest-service:
+  microtest-service:
     build: ./Back-end/MicroTestService
-    container_name: MicroTest-service
+    container_name: microtest-service
     ports:
       - '8087:8087'
     expose:
@@ -238,7 +238,7 @@ services:
       interval: 10s
       retries: 4
     depends_on:
-      MicroTest-service:
+      microtest-service:
         condition: service_healthy
   analyse-service:
     build: ./Back-end/AnalysisService
