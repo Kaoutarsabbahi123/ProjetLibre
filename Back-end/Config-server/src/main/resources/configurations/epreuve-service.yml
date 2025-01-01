@@ -1,9 +1,7 @@
 eureka:
-  instance:
-    hostname: localhost
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: ${DISCOVERY_SERVICE_URL:http://localhost:8761/eureka}
 
 server:
   port: 8889
@@ -13,7 +11,7 @@ spring:
     name: epreuve-service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/epreuve
+    url: jdbc:mysql://${SPRING_DATASOURCE_URL:localhost:3306}/epreuve
     username: root
     password: ""
 
