@@ -54,20 +54,14 @@ spring:
           #uri: http://localhost:8886
           predicates:
             - Path=/api/laboratoires/**
-          filters:
-            #- AuthenticationFilter
-            - DedupeResponseHeader=Access-Control-Allow-Credentials, RETAIN_FIRST
-            - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_FIRST
+
 
         - id: address-service
           uri: http://address-service:8084
           #uri: http://localhost:8084
           predicates:
             - Path=/api/addresses/**
-          filters:
-            #- AuthenticationFilter
-            - DedupeResponseHeader=Access-Control-Allow-Credentials, RETAIN_FIRST
-            - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_FIRST  # Ajout d'une nouvelle ligne avec la bonne syntaxe
+
 
         - id: microtest-service
           uri: http://microtest-service:8087

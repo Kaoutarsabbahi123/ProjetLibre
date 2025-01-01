@@ -7,10 +7,10 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Repository
 public interface AnalyseRepository extends JpaRepository<Analyse, Integer> {
-    @Query("SELECT a FROM Analyse a WHERE a.fkIdLaboratoire = :laboratoireId AND a.archive = false")
-    List<Analyse> findNonArchivedByLaboratoireId(@Param("idLaboratoire") Long laboratoireId);
+    @Query("SELECT a FROM Analyse a WHERE a.fkIdLaboratoire = :idLaboratoire AND a.archive = false")
+    List<Analyse> findNonArchivedByLaboratoireId(@Param("idLaboratoire") Long idLaboratoire);
 }

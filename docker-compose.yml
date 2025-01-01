@@ -51,6 +51,7 @@ services:
         condition: service_healthy
   mysql-server:
     image: mysql:8.0
+    command: --init-file=/docker-entrypoint-initdb.d/init.sql
     container_name: mysql-server
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
@@ -64,12 +65,12 @@ services:
     depends_on:
       gateway-service:
         condition: service_healthy
-        #volumes:
-      #- c:/docker/mysql_data:/var/lib/mysql
+    volumes:
+      - c:/docker/mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       interval: 10s
-      timeout: 5s
       retries: 3
   user-service:
     container_name: user-service
@@ -97,26 +98,27 @@ services:
       interval: 50s
       retries: 8
   auth-service:
-    build: ./Back-end/AuthService
+    build:
+      context: ./Back-end/AuthService
     container_name: auth-service
     ports:
       - '8085:8085'
     expose:
       - '8085'
     environment:
-      CONFIG_SERVER_URL: http://config-server:8888
-      DISCOVERY_SERVICE_URL: http://discovery-service:8761/eureka
-      GATEWAY_SERVICE_URL: http://gateway-service:8222
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql-server:3306/usermanagement
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD:
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "true"
       SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
+      CONFIG_SERVER_URL: http://config-server:8888
+      DISCOVERY_SERVICE_URL: http://discovery-service:8761/eureka
+      GATEWAY_SERVICE_URL: http://gateway-service:8222
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
-      interval: 30s
-      retries: 8
+      interval: 50s
+      retries: 4
     depends_on:
       user-service:
         condition: service_healthy
@@ -138,11 +140,11 @@ services:
       SPRING_JPA_SHOW_SQL: "true"
       SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8084/actuator/health" ]
       interval: 10s
       retries: 8
     depends_on:
-      auth-service:
+      user-service:
         condition: service_healthy
   contact-service:
     build: ./Back-end/ContactService
@@ -162,7 +164,7 @@ services:
       SPRING_JPA_SHOW_SQL: "true"
       SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8885/actuator/health" ]
       interval: 10s
       retries: 8
     depends_on:
@@ -174,7 +176,7 @@ services:
     ports:
       - '8886:8886'
     expose:
-      - '8084'
+      - '8886'
     environment:
       CONFIG_SERVER_URL: http://config-server:8888
       DISCOVERY_SERVICE_URL: http://discovery-service:8761/eureka
@@ -186,7 +188,7 @@ services:
       SPRING_JPA_SHOW_SQL: "true"
       SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8886/actuator/health" ]
       interval: 10s
       retries: 8
     depends_on:
@@ -210,7 +212,7 @@ services:
       SPRING_JPA_SHOW_SQL: "true"
       SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8087/actuator/health" ]
       interval: 10s
       retries: 8
     depends_on:
@@ -234,7 +236,7 @@ services:
       SPRING_JPA_SHOW_SQL: "true"
       SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8889/actuator/health" ]
       interval: 10s
       retries: 8
     depends_on:
@@ -258,7 +260,7 @@ services:
       SPRING_JPA_SHOW_SQL: "true"
       SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8887/actuator/health" ]
       interval: 10s
       retries: 8
     depends_on:
@@ -282,17 +284,9 @@ services:
       SPRING_JPA_SHOW_SQL: "true"
       SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8085/actuator/health" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8898/actuator/health" ]
       interval: 10s
       retries: 8
     depends_on:
       analyse-service:
         condition: service_healthy
-
-    #front-end-angular:
-    # build: ./frontend
-    # container_name: front-end-angular
-        #ports:
-      # - '82:80'
-        #  expose:
-    #   - '82'
