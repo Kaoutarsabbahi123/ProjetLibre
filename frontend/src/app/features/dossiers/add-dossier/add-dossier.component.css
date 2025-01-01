@@ -203,4 +203,25 @@ form select:focus {
   transform: scale(1.05); /* Mise en relief */
 }
 
+.error-messageAdd {
+  width: 90%;
+  background-color: #f8d7da; /* Rouge clair */
+  color: #721c24; /* Texte rouge foncé */
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-weight: bold;
+  animation: fadeIn 0.5s ease-in-out;
+  margin: 20px auto;
+}
 
+/* Animation d'apparition */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

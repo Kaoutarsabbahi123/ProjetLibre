@@ -348,7 +348,24 @@ public class AnalyseController {
                     .body("Erreur lors de l'archivage : " + e.getMessage());
         }
     }
+    @GetMapping("/names")
+    public ResponseEntity<List<AnalyseDTO>> getNonArchivedAnalysesNames() {
+        List<Analyse> analyses = analyseService.getAllAnalyses();
 
+        // Filtrer les analyses non archivées et mapper en DTO
+        List<AnalyseDTO> nonArchivedAnalyses = analyses.stream()
+                .filter(analyse -> !analyse.isArchive()) // Filtrer uniquement les analyses non archivées
+                .map(analyse -> new AnalyseDTO(analyse.getId(), analyse.getNom(), null, null, analyse.isArchive(), null)) // Mapper uniquement l'ID et le nom
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(nonArchivedAnalyses);
+    }
+
+    @GetMapping("/non-archived/laboratoire/{idLaboratoire}")
+    public ResponseEntity<List<Analyse>> getNonArchivedAnalyses(@PathVariable Long idLaboratoire) {
+        List<Analyse> analyses = analyseService.getNonArchivedAnalysesByLaboratoireId(idLaboratoire);
+        return ResponseEntity.ok(analyses);
+    }
 
 }
 

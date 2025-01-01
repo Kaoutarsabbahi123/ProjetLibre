@@ -1,3 +1,6 @@
+<div *ngIf="errorMessageVisible" class="error-messageAdd">
+  {{ messageContent }}
+</div>
 <div class="add-folder-form">
   <h2>Ajouter un Dossier</h2>
   <form (ngSubmit)="onSubmit()" #folderForm="ngForm">
@@ -124,7 +127,7 @@
     <!-- Form Buttons -->
     <div class="form-buttons">
       <button type="submit" [disabled]="!folderForm.valid">Enregistrer</button>
-      <button type="button">Annuler</button>
+      <button type="button" (click)="onCancel()">Annuler</button>
     </div>
   </form>
 </div>

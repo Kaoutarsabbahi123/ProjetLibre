@@ -376,6 +376,27 @@ public class LaboratoireController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.emptyList());
         }
     }
+    @GetMapping("/nomsNonArchive")
+    public ResponseEntity<List<Object[]>> getAllLaboratoiresNomNonArchive() {
+        try {
+            // Récupérer tous les laboratoires
+            List<Laboratoire> laboratoires = laboratoireService.getAllLaboratoires();
+
+            // Filtrer les laboratoires non archivés et extraire l'ID et le nom
+            List<Object[]> laboratoiresInfo = laboratoires.stream()
+                    .filter(labo -> !labo.isActive()) // Filtrer les laboratoires non archivés
+                    .map(labo -> new Object[]{labo.getId(), labo.getNom()})
+                    .collect(Collectors.toList());
+
+            // Retourner la liste des laboratoires avec ID et nom
+            return ResponseEntity.ok(laboratoiresInfo);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.emptyList());
+        }
+    }
+
 
     @GetMapping("/nom/{id}")
     public ResponseEntity<String> getNomLaboratoire(@PathVariable Long id) {

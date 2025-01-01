@@ -60,5 +60,10 @@ public class FolderService {
         // Sauvegarder les modifications
         folderRepository.save(folder);
     }
+    public Folder getFolderByNumDossier(Integer numDossier) {
+        return folderRepository.findById(numDossier)
+                .orElseThrow(() -> new IllegalArgumentException("Folder not found with numDossier: " + numDossier));
+    }
+
 
 }

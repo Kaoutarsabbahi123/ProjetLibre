@@ -28,7 +28,7 @@ export class AnalysisService {
          headers: new HttpHeaders({
              'Accept': 'application/json'
          }),
-         withCredentials: true // if you are dealing with authentication tokens or cookies
+         withCredentials: true
      });
  }
   archiveAnalyse(id: number): Observable<any> {
@@ -46,6 +46,9 @@ export class AnalysisService {
     }
     getAnalysesNames(): Observable<any[]> {
       return this.http.get<any[]>(`${this.apiUrl}/names`); // Utiliser l'endpoint des analyses non archivées
+    }
+    getNonArchivedAnalysesByLaboratoire(idLaboratoire: number): Observable<any[]> {
+      return this.http.get<any[]>(`${this.apiUrl}/non-archived/laboratoire/${idLaboratoire}`);
     }
 
 }

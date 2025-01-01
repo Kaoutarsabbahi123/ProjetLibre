@@ -1,3 +1,6 @@
+<div *ngIf="successMessageVisible" class="success-message">
+  {{ messageContent }}
+</div>
 <div class="header">
   <div class="search-bar">
     <i class="fas fa-search"></i>
@@ -16,7 +19,8 @@
 </div>
 
 <div class="folder-container">
-  <div *ngFor="let folder of paginatedData" class="folder-card">
+  <div *ngFor="let folder of paginatedData" class="folder-card"
+       (click)="onFolderClick(folder)">
     <div class="folder-header">
       <img src="assets/contract.png" alt="Folder Logo" class="folder-logo" />
     </div>
@@ -31,11 +35,8 @@
       </ng-container>
 
       <ng-container *ngIf="folder.active">
-        <p class="folder-statut" [ngClass]="{
-          'status-green': folder.statut,
-          'status-yellow': !folder.statut
-        }">
-          <span>{{ folder.statut ? 'Complet' : 'En cours' }}</span>
+        <p class="folder-status active-status">
+          <span>Actif</span>
         </p>
       </ng-container>
     </div>

@@ -40,5 +40,14 @@ public class FolderController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @GetMapping("/{numDossier}")
+    public ResponseEntity<Folder> getFolderByNumDossier(@PathVariable Integer numDossier) {
+        try {
+            Folder folder = folderService.getFolderByNumDossier(numDossier);
+            return ResponseEntity.ok(folder);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
 
 }

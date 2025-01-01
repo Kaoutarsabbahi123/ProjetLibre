@@ -24,4 +24,7 @@ public class AnalyseService {
     public Optional<Analyse> getAnalyseById(Integer id){
         return analyseRepository.findById(id);
     }
+    public List<Analyse> getNonArchivedAnalysesByLaboratoireId(Long laboratoireId) {
+        return analyseRepository.findNonArchivedByLaboratoireId(laboratoireId);
+    }
 }

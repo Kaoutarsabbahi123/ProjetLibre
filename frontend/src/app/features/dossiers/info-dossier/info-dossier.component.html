@@ -1,0 +1,303 @@
+<div class="form-header-buttons">
+  <!-- Bouton Générer Analyse -->
+  <div class="archive-button">
+    <button class="btn btn-success" (click)="toggleDropdown()">
+      <i class="fa fa-check-circle"></i> Générer Analyse
+    </button>
+  </div>
+  <!-- Bouton Archiver -->
+  <div class="archive-button" *ngIf="folder.active">
+    <button class="btn" (click)="onArchive()">
+      <i class="fa fa-archive"></i> Archiver
+    </button>
+  </div>
+</div>
+
+<!-- Message de succès et d'erreur -->
+<div *ngIf="successMessageVisible" class="success-message">
+  {{ messageContent }}
+</div>
+<div *ngIf="errorMessageVisible" class="error-message">
+  {{ messageContent }}
+</div>
+
+<!-- Formulaire Ajouter Dossier -->
+<div class="add-folder-form">
+  <h2>Détails du Dossier</h2>
+  <form (ngSubmit)="onSubmit()" #folderForm="ngForm">
+    <div class="form-group-container">
+      <!-- Nom Complet -->
+      <div class="form-group">
+        <label for="nomComplet">Nom Complet</label>
+        <input
+          type="text"
+          id="nomComplet"
+          name="nomComplet"
+          [(ngModel)]="folder.nomComplet"
+
+          required
+        />
+      </div>
+
+      <!-- Date de Naissance -->
+      <div class="form-group">
+        <label for="dateNaissance">Date de Naissance</label>
+        <input
+          type="date"
+          id="dateNaissance"
+          name="dateNaissance"
+          [(ngModel)]="folder.dateNaissance"
+          required
+        />
+      </div>
+
+      <!-- Lieu de Naissance -->
+      <div class="form-group">
+        <label for="lieuDeNaissance">Lieu de Naissance</label>
+        <input
+          type="text"
+          id="lieuDeNaissance"
+          name="lieuDeNaissance"
+          [(ngModel)]="folder.lieuDeNaissance"
+          [readonly]="true"
+          required
+        />
+      </div>
+
+      <!-- Sexe -->
+      <div class="form-group">
+        <label for="sexe">Sexe</label>
+        <select
+          id="sexe"
+          name="sexe"
+          [(ngModel)]="folder.sexe"
+          required>
+          <option value="femme">Femme</option>
+          <option value="homme">Homme</option>
+        </select>
+      </div>
+
+      <!-- Type de Pièce d'Identité -->
+      <div class="form-group">
+        <label for="typePieceIdentite">Type de Pièce d'Identité</label>
+        <input
+          type="text"
+          id="typePieceIdentite"
+          name="typePieceIdentite"
+          [(ngModel)]="folder.typePieceIdentite"
+          [readonly]="true"
+          required
+        />
+      </div>
+
+      <!-- Numéro de Pièce d'Identité -->
+      <div class="form-group">
+        <label for="numPieceIdentite">Numéro de Pièce d'Identité</label>
+        <input
+          type="text"
+          id="numPieceIdentite"
+          name="numPieceIdentite"
+          [(ngModel)]="folder.numPieceIdentite"
+          [readonly]="true"
+          required
+        />
+      </div>
+
+      <!-- Adresse -->
+      <div class="form-group">
+        <label for="adresse">Adresse</label>
+        <input
+          type="text"
+          id="adresse"
+          name="adresse"
+          [(ngModel)]="folder.adresse"
+          [readonly]="true"
+          required
+        />
+      </div>
+
+      <!-- Numéro de Téléphone -->
+      <div class="form-group">
+        <label for="numTel">Numéro de Téléphone</label>
+        <input
+          type="text"
+          id="numTel"
+          name="numTel"
+          [(ngModel)]="folder.numTel"
+          [readonly]="true"
+          required
+        />
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          [(ngModel)]="folder.email"
+          [readonly]="true"
+          required
+        />
+      </div>
+
+      <!-- Laboratoire -->
+      <div class="form-group">
+        <label for="laboratoire">Laboratoire</label>
+        <select id="laboratoire" name="laboratoire" [(ngModel)]="folder.laboratoire" (ngModelChange)="onLaboratoireChange($event)">
+          <option *ngFor="let labo of laboratoires" [value]="labo.id">{{ labo.nom }}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Dropdown Analyse -->
+    <div class="form-group" *ngIf="showAnalysesDropdown" style="margin-top:10px;">
+      <label for="analyse">Analyse :</label>
+      <select id="analyse" name="analyse" [(ngModel)]="folder.selectedAnalyse" (change)="onAnalyseChange($event)">
+        <option *ngFor="let analyse of analyses" [value]="analyse.id">{{ analyse.nom }}</option>
+      </select>
+    </div>
+
+    <!-- Détails de l'Analyse -->
+    <div *ngIf="analyse" class="analyse-details" style="margin-top:40px;">
+      <h2>Détails de l'Analyse</h2>
+      <div class="info-section">
+        <div class="form-group">
+          <label>Nom :</label>
+          <input [(ngModel)]="analyse.nom" [ngModelOptions]="{standalone: true}"
+                 placeholder="Nom de l'analyse" disabled />
+        </div>
+        <div class="form-group">
+          <label>Description :</label>
+          <textarea [(ngModel)]="analyse.description" [ngModelOptions]="{standalone: true}"
+                    placeholder="Description" disabled></textarea>
+        </div>
+        <div class="form-group">
+          <label>Coût :</label>
+          <input [(ngModel)]="analyse.cout" [ngModelOptions]="{standalone: true}" placeholder="Coût de l'analyse" type="number" disabled />
+        </div>
+      </div>
+      <div class="epreuve-section">
+        <h4>Epreuves</h4>
+        <div *ngIf="analyse.epreuves?.length > 0; else noEpreuves">
+          <div *ngFor="let epreuve of analyse.epreuves; let i = index" class="epreuve-item">
+            <div class="epreuve-form">
+              <div class="form-group half-width">
+                <label>Nom :</label>
+                <input [(ngModel)]="epreuve.nom"  [ngModelOptions]="{standalone: true}" placeholder="Nom de l'épreuve" disabled />
+              </div>
+
+              <!-- Champ pour résultat de l'épreuve si elle ne contient pas de tests -->
+              <div class="form-group half-width" *ngIf="epreuve.testAnalyses?.length === 0">
+                <label for="resultatEpreuve{{i}}">Résultat de l'épreuve :</label>
+                <input
+                  type="text"
+                  id="resultatEpreuve{{i}}"
+                  name="resultatEpreuve{{i}}"
+                  [(ngModel)]="epreuve.resultat"
+                  [ngModelOptions]="{standalone: true}"
+                  placeholder="Saisir le résultat de l'épreuve" />
+              </div>
+
+              <!-- Section pour tests analyses -->
+              <div class="TestAnalyse-section">
+                <h4>Tests Analyses</h4>
+                <div *ngIf="epreuve.testAnalyses?.length > 0; else noTestAnalyses">
+                  <div *ngFor="let test of epreuve.testAnalyses; let j = index" class="testAnalyse-item">
+                    <div class="TestAnalyse-form">
+                      <div class="form-group half-width">
+                        <label>Nom :</label>
+                        <input [(ngModel)]="test.nom" [ngModelOptions]="{standalone: true}" placeholder="Nom du test" disabled />
+                      </div>
+                      <div class="form-group half-width">
+                        <label>Description :</label>
+                        <textarea [(ngModel)]="test.description" [ngModelOptions]="{standalone: true}" placeholder="Description du test" disabled></textarea>
+                      </div>
+                      <div class="form-group half-width">
+                        <label>Valeurs de référence :</label>
+                        <input [(ngModel)]="test.valeursDeReference" [ngModelOptions]="{standalone: true}" placeholder="Valeurs de référence" disabled />
+                      </div>
+
+                      <!-- Champ pour résultat du test d'analyse -->
+                      <div class="form-group half-width">
+                        <label for="resultatTest{{i}}-{{j}}">Résultat du test :</label>
+                        <input
+                          type="text"
+                          id="resultatTest{{i}}-{{j}}"
+                          name="resultatTest{{i}}-{{j}}"
+                          [(ngModel)]="test.resultat"
+                          [ngModelOptions]="{standalone: true}"
+                          placeholder="Saisir le résultat du test" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <ng-template #noTestAnalyses>
+                <p>Aucun test disponible pour cette épreuve.</p>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+        <ng-template #noEpreuves>
+          <p>Aucune épreuve disponible pour cette analyse.</p>
+        </ng-template>
+
+      </div>
+
+    </div>
+
+    <!-- Boutons du Formulaire -->
+    <div class="form-buttons">
+      <button type="submit" class="btn btn-primary" [disabled]="!folderForm.valid">Enregistrer</button>
+      <button type="button" class="btn btn-secondary" >Annuler</button>
+      <button type="button" class="btn btn-info"
+              [disabled]="printButtonDisabled"
+              (click)="imprimerAnalyse()">Imprimer</button>
+    </div>
+  </form>
+</div>
+
+
+
+<div class="modal" tabindex="-1" role="dialog" id="confirmationModal" #confirmationModal>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmer les modifications</h5>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Voulez-vous enregistrer les modifications apportées au dossier ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" (click)="confirmUpdate()">Confirmer</button>
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Annuler</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="confirmationModalArchiver" #confirmationModalArchiver>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmer l'archivage</h5>
+        <button type="button" class="close" aria-label="Close" (click)="closeModalArchiver()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Êtes-vous sûr de vouloir archiver ce Dossier ? Cette action est irréversible.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" (click)="confirmArchive()">Confirmer</button>
+        <button type="button" class="btn btn-secondary" (click)="closeModalArchiver()">Annuler</button>
+      </div>
+    </div>
+  </div>
+</div>

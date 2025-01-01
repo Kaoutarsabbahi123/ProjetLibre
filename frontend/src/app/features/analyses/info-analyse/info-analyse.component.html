@@ -41,7 +41,7 @@
     <div *ngIf="analyse.epreuves?.length > 0; else noEpreuves">
     <div *ngFor="let epreuve of analyse.epreuves; let i = index" class="epreuve-item">
       <div class="epreuve-form">
-        <div>
+        <div class="form-group half-width">
           <label>Nom :</label>
           <input [(ngModel)]="epreuve.nom" placeholder="Nom de l'épreuve" />
         </div>

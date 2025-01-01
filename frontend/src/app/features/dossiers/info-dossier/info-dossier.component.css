@@ -1,0 +1,544 @@
+
+
+.add-folder-form {
+  width: 90%;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px var(--shadow-light);
+}
+
+.add-folder-form h2 {
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #201e1e;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  padding-bottom: 8px;
+  font-family: 'Arial', sans-serif;
+}
+
+.add-folder-form h2::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 3px;
+  background: var(--primary-color);
+  margin-top: 5px;
+  border-radius: 2px;
+  animation: lineExpand 1s ease forwards;
+}
+
+@keyframes lineExpand {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    width: 70px;
+    opacity: 1;
+  }
+}
+
+.add-folder-form .form-group-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.add-folder-form .form-group {
+  flex: 1 1 calc(50% - 10px); /* Deux colonnes, espace ajusté */
+  display: flex;
+  flex-direction: column;
+}
+
+.add-folder-form label {
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+.add-folder-form input,
+.add-folder-form select {
+  padding: 10px;
+  border: 1px solid var(--shadow-light);
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.add-folder-form input:focus,
+.add-folder-form select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 4px var(--primary-color);
+}
+
+
+h3 {
+  font-size: 20px;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.info-section,
+.contact-section,
+.address-section {
+  margin-bottom: 30px; /* Espacement entre les sections */
+  padding: 20px;
+  border: 1px solid var(--shadow-light);
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px var(--shadow-light);
+  display: flex;
+  flex-direction: column; /* Alignement vertical des éléments dans chaque section */
+}
+
+form .form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 calc(50% - 20px); /* 2 inputs par ligne */
+}
+
+form .form-group.full-width {
+  flex: 1 1 100%; /* Prend toute la largeur */
+}
+
+form label {
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+form input,
+form select {
+  padding: 10px;
+  border: 1px solid var(--shadow-light);
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+form input:focus,
+form select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 4px var(--primary-color);
+}
+
+.contact-section .form-group,
+.address-section .form-group {
+  margin-bottom: 20px; /* Espacement des groupes de champs */
+}
+
+.contact-section h4,
+.address-section h4,
+ .info-section h4{
+  font-size: 18px;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.address-section .address-container {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px dashed var(--shadow-dark);
+  border-radius: 6px;
+  background-color: var(--hover-color);
+}
+
+
+
+.contact-section .form-actions,
+.address-section .form-actions {
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .contact-section .form-group,
+  .address-section .form-group {
+    flex: 1 1 100%; /* Prend toute la largeur en mode responsive */
+  }
+}
+.form-buttons {
+  display: flex;
+  justify-content: flex-end; /* Aligner les boutons à droite */
+  gap: 10px; /* Espace entre les boutons */
+  margin-top: 20px; /* Ajouter un espace au-dessus */
+}
+
+.form-buttons button {
+  flex: 0 0 150px; /* Fixe la largeur des boutons à 150px */
+  padding: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center; /* Centrer le texte */
+}
+
+.form-buttons button[type="submit"] {
+  background-color: var(--primary-color); /* Couleur principale */
+  color: white; /* Couleur du texte */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animation au survol */
+}
+
+.form-buttons button[type="submit"]:hover {
+  transform: scale(1.05); /* Légère mise en relief au survol */
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2); /* Ombre douce */
+}
+
+.form-buttons button[type="button"] {
+  background-color: #ccc; /* Couleur de fond gris clair */
+  color: #333; /* Couleur du texte */
+}
+
+.form-buttons button[type="button"]:hover {
+  background-color: #bbb; /* Couleur plus foncée au survol */
+  transform: scale(1.05); /* Mise en relief */
+}
+
+.error-messageAdd {
+  width: 90%;
+  background-color: #f8d7da; /* Rouge clair */
+  color: #721c24; /* Texte rouge foncé */
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-weight: bold;
+  animation: fadeIn 0.5s ease-in-out;
+  margin: 20px auto;
+}
+
+/* Animation d'apparition */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.form-header-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px; /* Espacement entre les boutons */
+  margin-bottom: 10px;
+  margin-right: 60px;
+}
+.archive-button .btn {
+  padding: 9px 10px;
+  background: linear-gradient(135deg, #ff4d4d, #b30000); /* Dégradé rouge pour Archiver */
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-position 0.4s ease;
+  background-size: 200%;
+  background-position: left;
+}
+.archive-button .btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 14px rgba(255, 0, 0, 0.5);
+  background-position: right;
+}
+
+/* Style spécial pour le bouton Activer */
+.archive-button .btn-success {
+  background: linear-gradient(135deg, #4CAF50, #2E7D32); /* Dégradé vert pour Activer */
+  color: white;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-position 0.4s ease;
+}
+
+.archive-button .btn-success:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 14px rgba(0, 255, 0, 0.5);
+  background-position: right;
+}
+
+/* Taille de l'icône */
+.archive-button .btn i {
+  font-size: 18px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+}
+
+/* Centrer la modale */
+.modal.show {
+  display: flex !important; /* Priorité au display flex */
+  justify-content: center !important; /* Centrage horizontal */
+  align-items: center !important;
+  background-color: rgba(0, 0, 0, 0.6); /* Overlay sombre */
+  position: fixed; /* Assurez-vous qu'il couvre toute la page */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; /* Aucune marge */
+  padding: 0; /* Aucun padding */
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Annule les marges par défaut pour .modal-dialog */
+.modal-dialog {
+  margin: 0 !important;  /* Supprime les marges verticales par défaut */
+  max-width: 600px; /* Largeur maximale */
+  width: 100%;
+}
+
+/* Animation facultative */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Style pour le bouton "close" */
+.modal-header .close {
+  font-size: 1.5rem; /* Taille de l'icône */
+  color: #000; /* Couleur par défaut */
+  background-color: #f8f9fa; /* Fond gris clair */
+  border: none; /* Supprime les bordures */
+  border-radius: 50%; /* Rend le bouton rond */
+  width: 30px; /* Taille fixe */
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.modal-header .close:hover {
+  background-color: #e2e6ea; /* Fond légèrement plus sombre au survol */
+  color: black; /* Couleur rouge au survol */
+}
+.modal-footer button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+.modal-footer button[type="submit"] {
+  background-color: var(--primary-color); /* Couleur de fond inchangée */
+  color: #fff; /* Couleur du texte */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Animation pour le relief et l'ombre */
+}
+
+.modal-footer button[type="submit"]:hover {
+  transform: scale(1.05); /* Légère mise en relief */
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2); /* Ajout d'une ombre douce */
+}
+
+
+.modal-footer button[type="button"] {
+  background-color: #ccc;
+  color: #333;
+}
+
+.modal-footer button[type="button"]:hover {
+  background-color: #bbb; /* Couleur plus foncée au survol */
+  transform: scale(1.05);
+}
+/* Titre de la modal */
+.modal-title {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-top: 10px;
+}
+
+.success-message {
+  width: 90%;
+  background-color: #d4edda; /* Vert clair */
+  color: #155724; /* Texte vert foncé */
+  border: 1px solid #c3e6cb;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  font-weight: bold;
+  animation: fadeIn 0.5s ease-in-out;
+  margin: 20px auto;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 5px;
+}
+.error-message {
+  color: red;
+  font-size: 0.9em;
+}
+.info-section,
+.epreuve-section,
+.TestAnalyse-section {
+  flex: 1 1 100%; /* Chaque section prend toute la largeur */
+}
+.form-container {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px var(--shadow-light);
+  width: 90%;
+  margin: 20px auto;
+}
+
+h3 {
+  font-size: 20px;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.info-section,
+.epreuve-section,
+.TestAnalyse-section {
+  margin-bottom: 30px; /* Espacement entre les sections */
+  padding: 20px;
+  border: 1px solid var(--shadow-light);
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px var(--shadow-light);
+  display: flex;
+  flex-direction: column; /* Alignement vertical des éléments dans chaque section */
+}
+
+form .form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 calc(50% - 20px); /* 2 inputs par ligne */
+}
+
+form .form-group.full-width {
+  flex: 1 1 100%; /* Prend toute la largeur */
+}
+ label {
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+form input,
+form select {
+  padding: 10px;
+  border: 1px solid var(--shadow-light);
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+form input:focus,
+form select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 4px var(--primary-color);
+}
+
+.epreuve-section .form-group,
+.TestAnalyse-section .form-group {
+  margin-bottom: 20px; /* Espacement des groupes de champs */
+}
+
+.epreuve-section h4,
+.TestAnalyse-section h4,
+ .info-section h4{
+  font-size: 18px;
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.TestAnalyse-section .TestAnalyse-container {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px dashed var(--shadow-dark);
+  border-radius: 6px;
+  background-color: var(--hover-color);
+}
+
+
+
+.epreuve-section .form-actions,
+.TestAnalyse-section .form-actions {
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .contact-section .form-group,
+  .address-section .form-group {
+    flex: 1 1 100%; /* Prend toute la largeur en mode responsive */
+  }
+}
+.testAnalyse-item {
+  padding: 15px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.testAnalyse-item.empty {
+  text-align: center;
+  color: #aaa;
+  font-style: italic;
+}
+.epreuve-form,
+.TestAnalyse-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Espacement entre les champs */
+}
+
+/* Pour les champs à moitié large */
+.half-width {
+  flex: 1 1 calc(50% - 10px); /* 50% de largeur moins l'espacement */
+}
+
+/* Pour les champs prenant toute la largeur */
+.full-width {
+  width: 100%;
+}
+.form-group {
+  flex: 1 1 calc(50% - 20px);
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group.full-width {
+  flex: 1 1 100%;
+}
+.btn-info {
+  background-color: #007bff; /* Bleu Bootstrap */
+  border-color: #007bff;
+  color: white;
+}
+
+.btn-info:disabled {
+  background-color: #007bff; /* Forcer la couleur */
+  border-color: #007bff;
+  color: white;
+  opacity: 1; /* Supprime l'effet d'opacité */
+  cursor: not-allowed; /* Indique que le bouton est désactivé */
+}

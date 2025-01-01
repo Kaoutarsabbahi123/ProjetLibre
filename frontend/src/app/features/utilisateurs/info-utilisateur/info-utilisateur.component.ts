@@ -42,7 +42,6 @@ export class InfoUtilisateurComponent implements OnInit {
       (data) => {
         this.user = data; // Récupérer toutes les données
         this.user.laboratoire = data.fkIdLaboratoire; // Associer l'ID du labo pour le select
-        console.log(this.user);
       },
       (error) => {
         console.error('Erreur lors du chargement de l\'utilisateur', error);
